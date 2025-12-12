@@ -14,7 +14,6 @@
       --line: rgba(255,255,255,.10);
       --accent:#4ea1ff;
       --danger:#ff5b6e;
-      --ok:#3ddc97;
       color-scheme: dark;
     }
 
@@ -79,11 +78,10 @@
     .field input:focus, .field select:focus{
       border-color: rgba(78,161,255,.6);
     }
-    /* دعم تلوين القائمة يختلف حسب النظام، لكنه يحل كثيرًا من مشكلة الأبيض/الأبيض */
     .field select option{
       background: #121b2f;
       color: #eef3ff;
-    } /* [web:98] */
+    }
 
     .meta{
       display:flex;
@@ -137,7 +135,6 @@
       display:flex;
       gap: 8px;
       flex-wrap: wrap;
-      align-items: center;
     }
     .badge{
       display:inline-flex;
@@ -145,11 +142,6 @@
       border-radius: 999px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.06);
-    }
-    .badge.ok{
-      border-color: rgba(61,220,151,.45);
-      background: rgba(61,220,151,.14);
-      color: #c8ffe9;
     }
 
     .viewer{
@@ -160,13 +152,20 @@
       background: rgba(0,0,0,.30);
       overflow: hidden;
     }
+
+    .viewer iframe,
+    .viewer video,
     .viewer img{
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: 0;
       display: block;
+    }
+
+    .viewer img{
       object-fit: cover;
     }
 
@@ -190,7 +189,9 @@
       place-items:center;
       transition: transform 0.15s;
     }
-    .playOverlay:active .playBtn{ transform: scale(0.95); }
+    .playOverlay:active .playBtn{
+      transform: scale(0.95);
+    }
     .playBtn:before{
       content:"";
       display:block;
@@ -223,19 +224,6 @@
     .actions a.primary{
       background: rgba(78,161,255,.22);
       border-color: rgba(78,161,255,.4);
-    }
-    .actions button.ok{
-      border-color: rgba(61,220,151,.45);
-      background: rgba(61,220,151,.14);
-      color: #c8ffe9;
-    }
-    .actions button.danger{
-      border-color: rgba(255,91,110,.45);
-      background: rgba(255,91,110,.12);
-    }
-    .actions button:disabled{
-      opacity: .55;
-      cursor: not-allowed;
     }
 
     /* Modal Player */
@@ -275,10 +263,6 @@
       font-weight: 600;
       font-size: 14px;
       color: var(--text);
-      max-width: 42vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
     #playerBar .spacer{ flex: 1; }
     #playerBar a, #playerBar button{
@@ -292,40 +276,15 @@
       text-decoration: none;
       font-family: inherit;
     }
-
-    #playerBody{
-      flex: 1;
-      display:flex;
-      min-height: 0;
+    #playerBar button:hover, #playerBar a:hover{
+      background: rgba(255,255,255,.15);
     }
 
-    #playerStage{
-      flex: 1;
-      min-width: 0;
-      background: #000;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    #playerStage iframe,
-    #playerStage video,
-    #playerStage img,
-    #playerStage object{
+    #playerFrame{
       width: 100%;
-      height: 100%;
       border: 0;
-      display:block;
+      flex: 1;
       background: #000;
-    }
-
-    #playerHint{
-      padding: 10px 12px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      color: var(--muted);
-      font-size: 12px;
-      background: rgba(18,27,47,.95);
-      line-height: 1.6;
     }
 
     .footer{
@@ -340,7 +299,7 @@
       .filters{ grid-template-columns: 1fr; }
       .meta{ justify-content: space-between; }
       #playerBox{ width: 100%; height: 100%; border-radius: 0; }
-      #playerTitle{ max-width: 36vw; }
+      #playerTitle{ font-size: 12px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     }
 
     .empty{
@@ -394,57 +353,26 @@
   </main>
 
   <footer class="footer">
-            <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>Hayl Al-Khadhami</h3>
-                    <p>Automation Engineer | Researcher | Educator</p>
-                </div>
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://www.facebook.com/haylkhadhami" target="_blank" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://github.com/halkhadhami" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved.</p>
-            </div>
-        </div>
+    <span>يعمل على GitHub Pages + Google Sheets</span>
   </footer>
 
   <!-- Modal Player -->
   <div id="playerModal" aria-hidden="true">
     <div id="playerBox" role="dialog" aria-modal="true">
       <div id="playerBar">
-        <button id="closePlayer" type="button">إغلاق</button>
+        <button id="closePlayer" type="button">✕ إغلاق</button>
         <div id="playerTitle"></div>
         <div class="spacer"></div>
-        <a id="openPlayerTab" target="_blank" rel="noopener">فتح أونلاين</a>
-        <a id="downloadPlayerOnline" target="_blank" rel="noopener" download>تنزيل عادي</a>
+        <a id="openPlayerTab" target="_blank" rel="noopener">فتح في تبويب</a>
+        <a id="downloadPlayer" target="_blank" rel="noopener" download>تنزيل</a>
       </div>
-      <div id="playerBody">
-        <div id="playerStage"></div>
-      </div>
-      <div id="playerHint"></div>
+      <iframe id="playerFrame" allow="autoplay; encrypted-media; fullscreen" referrerpolicy="no-referrer"></iframe>
     </div>
   </div>
 
   <script>
-    /***********************
-     * إعدادات
-     ***********************/
     const SHEET_CSV_URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv";
-
-    // لو أردت لاحقًا Proxy (Apps Script) اضع رابط الويب-آب هنا، وإلا اتركه فارغًا.
-    // مثال: const FILE_PROXY_URL = "https://script.google.com/macros/s/XXXX/exec";
-    const FILE_PROXY_URL = "https://script.google.com/macros/s/AKfycbwUd_af8SmQwltMNb-1KTI0uMzBlHAyx0o17ypMB3yIwmtV17dYB9cg2QBxAAIM57csjQ/exec";
 
     const CATEGORY_ORDER = ["Arabic","Art","Chinese","English","Fun","Islamic","Kuran","Math","Other"];
     const CATEGORY_AR = {
@@ -469,76 +397,14 @@
     };
 
     const modal = document.getElementById("playerModal");
+    const frame = document.getElementById("playerFrame");
     const closeBtn = document.getElementById("closePlayer");
     const openTab = document.getElementById("openPlayerTab");
-    const downloadOnlineA = document.getElementById("downloadPlayerOnline");
+    const downloadA = document.getElementById("downloadPlayer");
     const playerTitle = document.getElementById("playerTitle");
-    const playerStage = document.getElementById("playerStage");
-    const playerHint = document.getElementById("playerHint");
 
     let allRows = [];
 
-    /***********************
-     * IndexedDB (Offline)
-     * تخزين Blob داخل IndexedDB مدعوم في المتصفحات الحديثة
-     ***********************/
-    const DB_NAME = "KidsLibraryOffline";
-    const DB_VERSION = 1;
-    const STORE = "files"; // key = LessonID
-
-    function openDB() {
-      return new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, DB_VERSION);
-        req.onupgradeneeded = () => {
-          const db = req.result;
-          if (!db.objectStoreNames.contains(STORE)) {
-            db.createObjectStore(STORE, { keyPath: "key" });
-          }
-        };
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    async function idbGet(key) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE, "readonly");
-        const store = tx.objectStore(STORE);
-        const req = store.get(key);
-        req.onsuccess = () => resolve(req.result || null);
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    async function idbPut(record) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE, "readwrite");
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error);
-        tx.objectStore(STORE).put(record);
-      });
-    }
-
-    async function idbDelete(key) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE, "readwrite");
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error);
-        tx.objectStore(STORE).delete(key);
-      });
-    }
-
-    async function isOfflineAvailable(lessonId) {
-      const rec = await idbGet(lessonId);
-      return !!rec;
-    }
-
-    /***********************
-     * Helpers
-     ***********************/
     function setStatus(msg, isError = false) {
       UI.status.textContent = msg;
       UI.status.style.color = isError ? "var(--danger)" : "var(--muted)";
@@ -567,16 +433,6 @@
       } catch {
         return d.toLocaleDateString();
       }
-    }
-
-    function escapeHtml(s) {
-      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[c]));
     }
 
     function parseCSV(text) {
@@ -664,71 +520,11 @@
       };
     }
 
-    function getNetworkUrlsForRow(r) {
-      const d = driveLinks(r.ContentURL);
-      const onlineOpen = d ? d.preview : r.ContentURL;     // للعرض أونلاين
-      const onlineDownload = d ? d.download : r.ContentURL; // لتحميل الملف نفسه (إن أمكن)
-      const thumb = (d && d.thumb) ? d.thumb : "";
-      return { d, onlineOpen, onlineDownload, thumb };
-    }
-
-    function proxyWrap(url) {
-      if (!FILE_PROXY_URL) return url;
-      // proxy يستقبل ?url=
-      return `${FILE_PROXY_URL}?url=${encodeURIComponent(url)}`;
-    }
-
-    function mimeFromUrl(url) {
-      const u = String(url || "").toLowerCase().split("?")[0];
-      if (u.endsWith(".mp4")) return "video/mp4";
-      if (u.endsWith(".webm")) return "video/webm";
-      if (u.endsWith(".ogg")) return "video/ogg";
-      if (u.endsWith(".pdf")) return "application/pdf";
-      if (u.endsWith(".png")) return "image/png";
-      if (u.endsWith(".jpg") || u.endsWith(".jpeg")) return "image/jpeg";
-      if (u.endsWith(".gif")) return "image/gif";
-      if (u.endsWith(".webp")) return "image/webp";
-      return "application/octet-stream";
-    }
-
-    async function downloadOffline(r, onProgress) {
-      const { onlineDownload } = getNetworkUrlsForRow(r);
-      const fetchUrl = proxyWrap(onlineDownload);
-
-      onProgress?.("جاري التحميل...");
-
-      // قد يفشل بسبب CORS لبعض الروابط، هذا طبيعي بدون Proxy
-      const res = await fetch(fetchUrl);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const mime = res.headers.get("content-type") || mimeFromUrl(onlineDownload);
-      const blob = await res.blob();
-
-      await idbPut({
-        key: r.LessonID,
-        title: r.Title,
-        mime,
-        savedAt: Date.now(),
-        blob
-      });
-
-      onProgress?.("تم الحفظ للأوفلاين");
-      return true;
-    }
-
-    /***********************
-     * Player (Modal)
-     ***********************/
-    function setPlayerHint(text, isError=false) {
-      playerHint.textContent = text || "";
-      playerHint.style.color = isError ? "var(--danger)" : "var(--muted)";
-    }
-
-    function openPlayerBase(title, onlineOpen, onlineDownload) {
+    function openPlayer(title, previewUrl, downloadUrl) {
       playerTitle.textContent = title;
-      openTab.href = onlineOpen;
-      downloadOnlineA.href = onlineDownload;
-
+      frame.src = previewUrl;
+      openTab.href = previewUrl;
+      downloadA.href = downloadUrl;
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -737,109 +533,18 @@
     function closePlayer() {
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
-      playerStage.innerHTML = "";
-      setPlayerHint("");
+      frame.src = "";
       document.body.style.overflow = "";
     }
 
     closeBtn.addEventListener("click", closePlayer);
-    modal.addEventListener("click", (e) => { if (e.target === modal) closePlayer(); });
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closePlayer();
+    });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.classList.contains("open")) closePlayer();
     });
 
-    async function openLesson(r) {
-      const { d, onlineOpen, onlineDownload } = getNetworkUrlsForRow(r);
-      openPlayerBase(r.Title, onlineOpen, onlineDownload);
-
-      const rec = await idbGet(r.LessonID);
-      if (rec && rec.blob) {
-        // تشغيل من الأوفلاين (Blob URL)
-        const url = URL.createObjectURL(rec.blob);
-
-        if (String(rec.mime).startsWith("video/")) {
-          playerStage.innerHTML = "";
-          const v = document.createElement("video");
-          v.controls = true;
-          v.playsInline = true;
-          v.src = url;
-          playerStage.appendChild(v);
-          setPlayerHint("يعمل دون إنترنت (محفوظ داخل المتصفح).");
-        } else if (String(rec.mime).startsWith("image/")) {
-          playerStage.innerHTML = "";
-          const img = document.createElement("img");
-          img.src = url;
-          img.alt = r.Title;
-          playerStage.appendChild(img);
-          setPlayerHint("صورة محفوظة دون إنترنت.");
-        } else if (String(rec.mime).includes("pdf")) {
-          playerStage.innerHTML = "";
-          // عرض PDF من Blob داخل <object> (أفضل من iframe لبعض الأجهزة)
-          const obj = document.createElement("object");
-          obj.data = url;
-          obj.type = "application/pdf";
-          playerStage.appendChild(obj);
-          setPlayerHint("PDF محفوظ دون إنترنت (قد تختلف طريقة العرض حسب الجهاز).");
-        } else {
-          playerStage.innerHTML = `
-            <div style="padding:16px; color:#eef3ff; width:100%; font-size:14px; line-height:1.7;">
-              هذا النوع غير مدعوم للعرض داخل الصفحة.<br>
-              استخدم زر "تنزيل عادي" أو افتح أونلاين.
-            </div>`;
-          setPlayerHint("ملف محفوظ لكن العرض داخل الصفحة غير متاح لهذا النوع.");
-        }
-
-        // تنظيف Blob URL عند الإغلاق
-        const oldClose = closePlayer;
-        // بدون تعقيد إضافي: أزل الرابط بعد 2 ثانية من الإغلاق المحتمل
-        setTimeout(() => URL.revokeObjectURL(url), 60_000);
-        return;
-      }
-
-      // لا يوجد أوفلاين: تشغيل أونلاين
-      playerStage.innerHTML = "";
-      if (d) {
-        const iframe = document.createElement("iframe");
-        iframe.allow = "autoplay; encrypted-media; fullscreen";
-        iframe.referrerPolicy = "no-referrer";
-        iframe.src = onlineOpen;
-        iframe.title = r.Title;
-        playerStage.appendChild(iframe);
-        setPlayerHint("تشغيل أونلاين من Google Drive. لتنزيل للأوفلاين جرّب زر (تنزيل للأوفلاين) من البطاقة.");
-      } else {
-        const t = guessType(r.ContentURL);
-        if (t === "video") {
-          const v = document.createElement("video");
-          v.controls = true;
-          v.playsInline = true;
-          v.src = r.ContentURL;
-          playerStage.appendChild(v);
-          setPlayerHint("تشغيل أونلاين.");
-        } else if (t === "image") {
-          const img = document.createElement("img");
-          img.src = r.ContentURL;
-          img.alt = r.Title;
-          playerStage.appendChild(img);
-          setPlayerHint("عرض أونلاين.");
-        } else if (t === "pdf") {
-          const iframe = document.createElement("iframe");
-          iframe.src = r.ContentURL;
-          iframe.title = r.Title;
-          playerStage.appendChild(iframe);
-          setPlayerHint("عرض PDF أونلاين.");
-        } else {
-          const iframe = document.createElement("iframe");
-          iframe.src = r.ContentURL;
-          iframe.title = r.Title;
-          playerStage.appendChild(iframe);
-          setPlayerHint("فتح أونلاين.");
-        }
-      }
-    }
-
-    /***********************
-     * Data load + UI
-     ***********************/
     async function loadData() {
       setStatus("جاري تحميل البيانات...");
       UI.list.innerHTML = "";
@@ -924,17 +629,12 @@
 
       const head = document.createElement("div");
       head.className = "head";
-
-      // شارة الأوفلاين (تتحدث لاحقًا async)
-      const offlineBadgeId = `offline-${cssSafe(r.LessonID)}`;
-
       head.innerHTML = `
         <div class="item-title">${escapeHtml(r.Title)}</div>
         <div class="sub">
           <span class="badge">${escapeHtml(catLabel)}</span>
           <span class="badge">${escapeHtml(dateLabel)}</span>
           <span class="badge">#${escapeHtml(r.LessonID || "—")}</span>
-          <span class="badge" id="${offlineBadgeId}">أوفلاين: ...</span>
         </div>
       `;
 
@@ -944,121 +644,81 @@
       const actions = document.createElement("div");
       actions.className = "actions";
 
-      const { thumb, onlineOpen, onlineDownload } = getNetworkUrlsForRow(r);
-      const t = guessType(r.ContentURL);
+      const d = driveLinks(r.ContentURL);
+      const openUrl = d ? d.preview : r.ContentURL;
+      const downloadUrl = d ? d.download : r.ContentURL;
 
-      // Thumb + Play overlay للفيديو/Drive
-      if (t === "video" || t === "drive") {
+      const type = guessType(r.ContentURL);
+
+      if (type === "video" || type === "drive") {
         const img = document.createElement("img");
         img.alt = r.Title;
         img.loading = "lazy";
         img.referrerPolicy = "no-referrer";
-        img.src = thumb || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23181818' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='20' font-family='sans-serif'%3EVIDEO%3C/text%3E%3C/svg%3E";
+        img.src = (d && d.thumb) ? d.thumb : "";
 
         const overlay = document.createElement("div");
         overlay.className = "playOverlay";
         overlay.innerHTML = `<div class="playBtn" aria-label="تشغيل"></div>`;
-        overlay.addEventListener("click", () => openLesson(r));
+
+        overlay.addEventListener("click", () => {
+          openPlayer(r.Title, openUrl, downloadUrl);
+        });
 
         viewer.appendChild(img);
         viewer.appendChild(overlay);
-      } else {
+      } else if (type === "pdf") {
+        const iframe = document.createElement("iframe");
+        iframe.src = openUrl;
+        iframe.title = r.Title;
+        viewer.appendChild(iframe);
+      } else if (type === "image") {
         const img = document.createElement("img");
         img.alt = r.Title;
         img.loading = "lazy";
         img.referrerPolicy = "no-referrer";
-        img.src = thumb || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23181818' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='18' font-family='sans-serif'%3EFILE%3C/text%3E%3C/svg%3E";
-        img.addEventListener("click", () => openLesson(r));
+        img.src = d ? d.view : r.ContentURL;
         viewer.appendChild(img);
+      } else {
+        const iframe = document.createElement("iframe");
+        iframe.src = openUrl;
+        iframe.title = r.Title;
+        viewer.appendChild(iframe);
       }
 
-      // أزرار
-      const open = document.createElement("button");
-      open.type = "button";
-      open.className = "ok";
+      const open = document.createElement("a");
+      open.href = openUrl;
+      open.target = "_blank";
+      open.rel = "noopener";
+      open.className = "primary";
       open.textContent = "فتح";
-      open.addEventListener("click", () => openLesson(r));
 
-      const openOnline = document.createElement("a");
-      openOnline.href = onlineOpen;
-      openOnline.target = "_blank";
-      openOnline.rel = "noopener";
-      openOnline.className = "primary";
-      openOnline.textContent = "فتح أونلاين";
-
-      const downloadOfflineBtn = document.createElement("button");
-      downloadOfflineBtn.type = "button";
-      downloadOfflineBtn.textContent = "تنزيل للأوفلاين";
-      downloadOfflineBtn.addEventListener("click", async () => {
-        downloadOfflineBtn.disabled = true;
-        downloadOfflineBtn.textContent = "جاري التنزيل...";
-
-        try {
-          await downloadOffline(r, (msg) => { downloadOfflineBtn.textContent = msg; });
-          await refreshOfflineUI(r.LessonID, offlineBadgeId, downloadOfflineBtn, removeOfflineBtn);
-        } catch (e) {
-          console.error(e);
-          downloadOfflineBtn.textContent = "فشل (CORS/رابط)";
-          setTimeout(() => (downloadOfflineBtn.textContent = "تنزيل للأوفلاين"), 2000);
-        } finally {
-          downloadOfflineBtn.disabled = false;
-        }
-      });
-
-      const removeOfflineBtn = document.createElement("button");
-      removeOfflineBtn.type = "button";
-      removeOfflineBtn.className = "danger";
-      removeOfflineBtn.textContent = "حذف الأوفلاين";
-      removeOfflineBtn.addEventListener("click", async () => {
-        removeOfflineBtn.disabled = true;
-        try {
-          await idbDelete(r.LessonID);
-          await refreshOfflineUI(r.LessonID, offlineBadgeId, downloadOfflineBtn, removeOfflineBtn);
-        } finally {
-          removeOfflineBtn.disabled = false;
-        }
-      });
+      const down = document.createElement("a");
+      down.href = downloadUrl;
+      down.target = "_blank";
+      down.rel = "noopener";
+      down.download = "";
+      down.textContent = "تنزيل";
 
       actions.appendChild(open);
-      actions.appendChild(openOnline);
-      actions.appendChild(downloadOfflineBtn);
-      actions.appendChild(removeOfflineBtn);
+      actions.appendChild(down);
 
       card.appendChild(head);
       card.appendChild(viewer);
       card.appendChild(actions);
-
-      // تحديث حالة الأوفلاين بعد رسم البطاقة
-      refreshOfflineUI(r.LessonID, offlineBadgeId, downloadOfflineBtn, removeOfflineBtn);
-
       return card;
     }
 
-    function cssSafe(s) {
-      return String(s || "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[c]));
     }
 
-    async function refreshOfflineUI(lessonId, badgeElId, downloadBtn, removeBtn) {
-      const badge = document.getElementById(badgeElId);
-      const ok = await isOfflineAvailable(lessonId);
-
-      if (ok) {
-        badge.textContent = "أوفلاين: نعم";
-        badge.classList.add("ok");
-        // اخفاء زر التنزيل إذا موجود أوفلاين
-        downloadBtn.style.display = "none";
-        removeBtn.style.display = "inline-block";
-      } else {
-        badge.textContent = "أوفلاين: لا";
-        badge.classList.remove("ok");
-        downloadBtn.style.display = "inline-block";
-        removeBtn.style.display = "none";
-      }
-    }
-
-    /***********************
-     * Events
-     ***********************/
     UI.q.addEventListener("input", applyFilters);
     UI.category.addEventListener("change", applyFilters);
     UI.time.addEventListener("change", applyFilters);
