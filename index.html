@@ -11,11 +11,7 @@
   <title>مكتبة الدروس | Hayl Al-Khadhami</title>
 
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
-
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
-
-  <!-- Video.js (optional but good for consistent controls & pseudo-fullscreen UI) -->
   <link rel="stylesheet" href="https://vjs.zencdn.net/8.16.1/video-js.css" />
 
   <style>
@@ -47,7 +43,6 @@
       touch-action: manipulation;
     }
 
-    /* Light theme */
     [data-theme="light"]{
       --bg:#f8fafc;
       --card:#ffffff;
@@ -64,7 +59,6 @@
     .safe-top{ padding-top: env(safe-area-inset-top); }
     .safe-bottom{ padding-bottom: env(safe-area-inset-bottom); }
 
-    /* Top bar */
     .topbar{
       position: sticky; top:0; z-index: 50;
       border-bottom: 1px solid var(--line);
@@ -122,7 +116,6 @@
     [data-theme="light"] .iconBtn{ background: rgba(0,0,0,.06); }
     .iconBtn:hover{ transform: rotate(8deg); }
 
-    /* Container */
     .container{
       max-width: 1120px;
       margin: 14px auto 24px;
@@ -138,7 +131,6 @@
     }
     [data-theme="light"] .card{ background: rgba(255,255,255,.92); }
 
-    /* Filters */
     .filters{
       display:grid;
       grid-template-columns: 1fr 190px 190px auto;
@@ -211,7 +203,6 @@
     .btn:hover{ transform: translateY(-1px); background: rgba(78,161,255,.26); }
     .btn:active{ transform: translateY(1px); }
 
-    /* Grid */
     .grid{
       margin-top: 14px;
       display:grid;
@@ -356,7 +347,6 @@
       color: #ffcdd2;
     }
 
-    /* Modal player */
     #playerModal{
       position: fixed; inset: 0;
       z-index: 9999;
@@ -445,7 +435,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Pseudo fullscreen for WebView fallback */
     #playerModal.pseudo-fullscreen #playerBar{
       position:absolute;
       top: env(safe-area-inset-top);
@@ -462,10 +451,9 @@
       padding-bottom: env(safe-area-inset-bottom);
       background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.08));
     }
-    .vjs-volume-panel{ display:none; } /* mobile-friendly */
+    .vjs-volume-panel{ display:none; }
     .vjs-remaining-time{ display:none; }
 
-    /* Offline drawer (simple) */
     #offlinePanel{
       position: fixed;
       inset: auto 0 0 0;
@@ -517,7 +505,6 @@
       white-space: nowrap;
     }
 
-    /* Footer */
     .footer{
       margin-top: 24px;
       border-top: 1px solid var(--line);
@@ -578,7 +565,6 @@
     }
     [data-theme="light"] .footer-bottom{ border-top: 1px solid rgba(0,0,0,.08); }
 
-    /* Toast */
     #toast{
       position: fixed;
       bottom: 20px;
@@ -624,7 +610,7 @@
     <div class="brand">
       <div class="left">
         <div class="title">🎬 مكتبة الدروس</div>
-        <div class="subtitle">تجربة محسّنة للموبايل + Website2APK + أوفلاين (OPFS)</div>
+        <div class="subtitle">عربي • فن • صيني • إنجليزي • ترفيه • إسلاميات • قرآن • رياضيات • أخرى</div>
       </div>
 
       <div class="right">
@@ -679,7 +665,6 @@
     <section id="list" class="grid" aria-label="Lessons"></section>
   </main>
 
-  <!-- Player Modal -->
   <div id="playerModal" aria-hidden="true">
     <div id="playerShell" class="safe-bottom">
       <div id="playerBar" class="safe-top">
@@ -688,14 +673,10 @@
         <a id="btnExternal" class="barLink" href="#" target="_blank" rel="noopener" style="display:none"><i class="fas fa-external-link-alt"></i> فتح خارجي</a>
         <button id="btnPseudoFs" class="barBtn" type="button" title="Fullscreen"><i class="fas fa-expand-alt"></i></button>
       </div>
-
-      <div id="playerStage">
-        <!-- dynamic -->
-      </div>
+      <div id="playerStage"></div>
     </div>
   </div>
 
-  <!-- Offline Panel -->
   <section id="offlinePanel" aria-hidden="true">
     <div class="panelHeader">
       <h3><i class="fas fa-box-archive"></i> Offline Manager</h3>
@@ -713,42 +694,21 @@
         <i class="fas fa-circle-info"></i>
         التخزين الافتراضي: OPFS (خاص بالموقع). التصدير لمجلد جهازك: تجريبي.
       </div>
-
       <div id="offlineList"></div>
     </div>
   </section>
 
-  <!-- Toast -->
   <div id="toast" role="status" aria-live="polite">
     <i class="fas fa-info-circle"></i>
     <span id="toastMessage"></span>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <h3>Hayl Al-Khadhami</h3>
-          <p>Automation Engineer | Researcher | Educator</p>
-        </div>
 
-        <div class="footer-social">
-          <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://www.facebook.com/haylkhadhami" target="_blank" rel="noopener" aria-label="Facebook">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://github.com/halkhadhami" target="_blank" rel="noopener" aria-label="GitHub">
-            <i class="fab fa-github"></i>
-          </a>
-        </div>
-      </div>
 
       <div class="footer-bottom">
-        <p>&copy; <span id="currentYear"></span> Hayl Al-Khadhami. All rights reserved.</p>
-        <p><strong>Progressive Web App</strong></p>
+        <p>&copy; <span id="currentYear"></span> All rights reserved.</p>
+        <p><strong> Hayl Al-Khadhami | Automation Engineer | Researcher | Educator</strong></p>
       </div>
     </div>
   </footer>
@@ -760,9 +720,6 @@
   <script>
   "use strict";
 
-  /***********************
-   * Config
-   ***********************/
   const CONFIG = {
     sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
     categoryOrder: ["Arabic","Art","Chinese","English","Fun","Islamic","Kuran","Math","Other"],
@@ -771,15 +728,10 @@
       Fun:"ترفيه", Islamic:"إسلاميات", Kuran:"قرآن", Math:"رياضيات", Other:"أخرى"
     },
     offline: {
-      // Only direct URLs with CORS will be savable offline by the browser.
-      // If you have a server/proxy that returns video with proper CORS headers, put it here.
-      proxyPrefix: "" // example: "https://your-proxy.example.com/fetch?url="
+      proxyPrefix: ""
     }
   };
 
-  /***********************
-   * Utilities
-   ***********************/
   class Utils {
     static $ (sel, root=document){ return root.querySelector(sel); }
     static $$ (sel, root=document){ return [...root.querySelectorAll(sel)]; }
@@ -914,15 +866,12 @@
     }
   }
 
-  /***********************
-   * Offline Storage (OPFS + optional folder)
-   ***********************/
   class OfflineStore {
     constructor(){
       this.metaKey = "offline_meta_v1";
       this.folderHandleKey = "offline_device_folder_handle_v1";
       this.meta = this._loadMeta();
-      this.deviceFolderHandle = null; // optional: set by showDirectoryPicker()
+      this.deviceFolderHandle = null;
     }
 
     isOpfsSupported(){
@@ -972,12 +921,10 @@
       return URL.createObjectURL(file);
     }
 
-    // ===== Device folder mode (experimental) =====
     async chooseDeviceFolder(){
       if (!this.isFolderPickerSupported()){
         throw new Error("Folder picker not supported on this browser/WebView.");
       }
-      // Must be called from a user click (MDN requirement).
       const handle = await window.showDirectoryPicker();
       this.deviceFolderHandle = handle;
       Utils.toast("تم اختيار مجلد الجهاز (تجريبي).", "success");
@@ -991,7 +938,6 @@
       await writable.close();
     }
 
-    // ===== Save offline =====
     async save(lessonId, title, sourceUrl, onProgress){
       const id = String(lessonId || "");
       if (!id) throw new Error("Missing LessonID");
@@ -1000,26 +946,22 @@
       const filenameBase = Utils.sanitizeFileBase(title || id);
       const filename = `${filenameBase}.mp4`;
 
-      // Try to pre-check quota (best-effort)
       try {
         if (navigator.storage && navigator.storage.estimate){
           const est = await navigator.storage.estimate();
           const free = (est.quota || 0) - (est.usage || 0);
-          // Not strict; just helpful UX.
           if (Number.isFinite(free) && free < 50 * 1024 * 1024){
             Utils.toast("قد تكون المساحة غير كافية للأوفلاين.", "warning", 3200);
           }
         }
       } catch {}
 
-      // Download (stream if possible)
       const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) throw new Error(`Download failed: HTTP ${res.status}`);
 
       const total = Number(res.headers.get("content-length") || 0);
       const mime = res.headers.get("content-type") || "video/mp4";
 
-      // Web stream → OPFS (no need to hold huge blob in RAM)
       if (this.isOpfsSupported()){
         const fh = await this._opfsGetFileHandle(id, filename, true);
         const writable = await fh.createWritable();
@@ -1037,7 +979,6 @@
             }
           }
         } else {
-          // Fallback: blob
           const blob = await res.blob();
           await writable.write(blob);
           received = blob.size;
@@ -1052,7 +993,6 @@
         return;
       }
 
-      // If no OPFS, fallback to blob + (optional) device folder (requires picker support)
       const blob = await res.blob();
       if (this.deviceFolderHandle){
         await this._deviceWriteFile(`${id}__${filename}`, blob);
@@ -1069,7 +1009,6 @@
       const m = this.meta[id];
       if (!m) return;
 
-      // OPFS delete
       if (m.mode === "opfs" && this.isOpfsSupported()){
         try{
           const dir = await this._opfsRootDir();
@@ -1078,7 +1017,6 @@
         } catch {}
       }
 
-      // Device folder delete isn't guaranteed (permissions vary), so only remove index.
       delete this.meta[id];
       this._saveMeta();
     }
@@ -1091,14 +1029,10 @@
         return await this._opfsGetFileUrl(lessonId);
       }
 
-      // Device mode: cannot reliably re-open without storing/reusing handles (complex, browser-dependent).
       return null;
     }
   }
 
-  /***********************
-   * Player Manager
-   ***********************/
   class PlayerManager {
     constructor(){
       this.modal = Utils.$("#playerModal");
@@ -1160,7 +1094,6 @@
       this._mountLoading();
       this._showLoading();
 
-      // Failsafe: never spin forever
       const token = Math.random().toString(36).slice(2);
       this._token = token;
       setTimeout(() => {
@@ -1176,7 +1109,6 @@
         return;
       }
 
-      // iframe
       this._mountIframe(url, title);
     }
 
@@ -1259,7 +1191,6 @@
           await document.exitFullscreen();
         }
       } catch {
-        // WebView fallback
         this.modal.classList.toggle("pseudo-fullscreen");
         this.syncFullscreenUi();
       }
@@ -1293,9 +1224,6 @@
     }
   }
 
-  /***********************
-   * App
-   ***********************/
   class LessonsApp {
     constructor(){
       this.ui = {
@@ -1346,7 +1274,6 @@
         }
       });
 
-      // Safety: if page becomes visible again, reset status
       document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible"){
           Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok");
@@ -1386,7 +1313,6 @@
 
         this.all = data.map(r => this.normalize(r)).filter(x => x.Title && x.ContentURL);
 
-        // Sort by DateUploaded desc
         this.all.sort((a,b) => (b.DateUploaded?.getTime() || 0) - (a.DateUploaded?.getTime() || 0));
 
         this.buildCategoryOptions();
@@ -1475,7 +1401,6 @@
       if (yt) thumb = `https://i.ytimg.com/vi/${yt}/hqdefault.jpg`;
       else if (d) thumb = d.thumb;
 
-      // Player URL + external + download
       let playerUrl = row.ContentURL;
       let externalUrl = row.ContentURL;
       let downloadUrl = row.ContentURL;
@@ -1532,7 +1457,6 @@
       const downloadIcon = m.yt ? "fa-youtube" : "fa-download";
       const downloadAttrs = m.yt ? `target="_blank" rel="noopener"` : `download`;
 
-      // Offline save only for direct video/hls urls (NOT youtube/drive preview)
       const canOffline = (!m.yt && !m.d && (m.type === "video" || m.type === "hls"));
 
       el.innerHTML = `
@@ -1555,7 +1479,6 @@
         <div class="actions">
           <button class="primary" type="button" data-action="open"><i class="fas fa-play"></i> مشاهدة</button>
 
-          <!-- IMPORTANT: download link is NOT intercepted by JS; no loader/status change -->
           <a class="download"
              href="${m.downloadUrl}"
              ${downloadAttrs}
@@ -1572,7 +1495,7 @@
           ` : ""}
 
           ${m.externalUrl ? `
-            <a class="external" href="${m.externalUrl}" target="_blank" rel="noopener" data-action="external">
+            <a href="${m.externalUrl}" target="_blank" rel="noopener" data-action="external">
               <i class="fas fa-external-link-alt"></i> فتح خارجي
             </a>
           ` : ""}
@@ -1587,10 +1510,10 @@
 
       const action = actionEl.dataset.action;
 
-      // Download MUST NOT be handled by JS (prevents stuck loader in WebView)
+      // CRITICAL FIX: Download must NOT be handled by JS (prevents stuck spinner in WebView)
       if (action === "download") {
-        // No status change, no preventDefault, let browser/webview download manager handle it.
-        Utils.toast("بدء التحميل...", "success", 1800);
+        // Just show a quick toast - NO status change, NO preventDefault
+        Utils.toast("جاري التحميل... تحقق من شريط الإشعارات", "success", 2200);
         return;
       }
 
@@ -1603,7 +1526,6 @@
       const m = this.computeMedia(row);
 
       if (action === "open"){
-        // If offline exists, play from OPFS first
         let url = m.playerUrl;
         let type = m.type;
 
@@ -1611,7 +1533,7 @@
           const offlineUrl = await this.offline.getPlayableUrl(row.LessonID);
           if (offlineUrl){
             url = offlineUrl;
-            type = "video"; // stored as file
+            type = "video";
             Utils.toast("تشغيل من الأوفلاين", "success");
           }
         }
@@ -1627,7 +1549,7 @@
 
       if (action === "external"){
         Utils.toast("فتح خارجي...", "success", 1200);
-        return; // let link do its job
+        return;
       }
 
       if (action === "saveOffline"){
@@ -1736,9 +1658,9 @@
     }
   }
 
-  // Init
   Utils.$("#currentYear").textContent = String(new Date().getFullYear());
   window.addEventListener("DOMContentLoaded", () => new LessonsApp());
   </script>
 </body>
 </html>
+
