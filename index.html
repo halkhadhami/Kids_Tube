@@ -1104,37 +1104,11 @@
   <!-- Footer -->
   <footer class="app-footer" role="contentinfo">
     <div class="app-footer__inner">
-      <div class="app-footer__content">
-        <div class="app-footer__brand">
-          <h3>Hayl Al-Khadhami</h3>
-          <p>Automation Engineer | Researcher | Educator</p>
-        </div>
-        <div class="app-footer__social">
-          <a href="https://www.linkedin.com/in/halkhadhami/" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             class="social-link" 
-             aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-          </a>
-          <a href="https://www.facebook.com/haylkhadhami" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             class="social-link" 
-             aria-label="Facebook">
-            <i class="fab fa-facebook-f" aria-hidden="true"></i>
-          </a>
-          <a href="https://github.com/halkhadhami" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             class="social-link" 
-             aria-label="GitHub">
-            <i class="fab fa-github" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
+
       <div class="app-footer__bottom">
-        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved. Built with ❤️</p>
+	  <h3>Hayl Al-Khadhami</h3>
+          <p>Automation Engineer | Researcher | Educator</p>
+        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved. Built with</p>
       </div>
     </div>
   </footer>
@@ -1143,999 +1117,919 @@
   <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
   
   <!-- Application Script -->
-  <script>
-    'use strict';
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 
-    /**
-     * ============================================
-     * 🏗️ APPLICATION ARCHITECTURE
-     * ============================================
-     * 
-     * This is a production-grade, enterprise-level application following
-     * modern software engineering principles:
-     * 
-     * 1. Separation of Concerns
-     * 2. Single Responsibility Principle
-     * 3. Dependency Injection
-     * 4. Observer Pattern for state management
-     * 5. Factory Pattern for component creation
-     * 6. Strategy Pattern for filtering
-     * 7. Error boundaries and graceful degradation
-     * 8. Performance optimization (debouncing, lazy loading, virtual scrolling ready)
-     * 9. Accessibility (ARIA, keyboard navigation, screen reader support)
-     * 10. Comprehensive error handling and logging
-     */
+<script>
+'use strict';
 
-    // ============================================
-    // 📊 CONFIGURATION & CONSTANTS
-    // ============================================
-    const CONFIG = {
-      SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv',
-      DEBOUNCE_DELAY: 300,
-      TOAST_DURATION: 4000,
-      CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
-      MAX_RETRIES: 3,
-      RETRY_DELAY: 1000,
+// ============================================
+// 📊 CONFIGURATION
+// ============================================
+const CONFIG = {
+  SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv',
+  DEBOUNCE_DELAY: 300,
+  TOAST_DURATION: 4000,
+  CACHE_DURATION: 5 * 60 * 1000,
+  MAX_RETRIES: 3,
+  RETRY_DELAY: 1000,
+};
+
+const CATEGORY_CONFIG = {
+  ORDER: ['Arabic', 'Art', 'Chinese', 'English', 'Fun', 'Islamic', 'Kuran', 'Math', 'Other'],
+  TRANSLATIONS: {
+    Arabic: 'عربي',
+    Art: 'فن',
+    Chinese: 'صيني',
+    English: 'إنجليزي',
+    Fun: 'ترفيه',
+    Islamic: 'إسلاميات',
+    Kuran: 'قرآن',
+    Math: 'رياضيات',
+    Other: 'أخرى',
+  },
+};
+
+// ============================================
+// 🛠️ UTILITIES
+// ============================================
+const Utils = {
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
     };
+  },
 
-    const CATEGORY_CONFIG = {
-      ORDER: ['Arabic', 'Art', 'Chinese', 'English', 'Fun', 'Islamic', 'Kuran', 'Math', 'Other'],
-      TRANSLATIONS: {
-        Arabic: 'عربي',
-        Art: 'فن',
-        Chinese: 'صيني',
-        English: 'إنجليزي',
-        Fun: 'ترفيه',
-        Islamic: 'إسلاميات',
-        Kuran: 'قرآن',
-        Math: 'رياضيات',
-        Other: 'أخرى',
-      },
+  escapeHtml(unsafe) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
     };
+    return String(unsafe || '').replace(/[&<>"']/g, (m) => map[m]);
+  },
 
-    // ============================================
-    // 🛠️ UTILITY FUNCTIONS
-    // ============================================
-    const Utils = {
-      /**
-       * Debounce function calls
-       * @param {Function} func - Function to debounce
-       * @param {number} wait - Delay in milliseconds
-       * @returns {Function} Debounced function
-       */
-      debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-          const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-          };
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-        };
-      },
+  parseDate(dateStr) {
+    if (!dateStr) return null;
+    const parts = String(dateStr).trim().split('/');
+    if (parts.length !== 3) return null;
+    const [dd, mm, yyyy] = parts.map(Number);
+    if (!dd || !mm || !yyyy) return null;
+    return new Date(yyyy, mm - 1, dd, 12, 0, 0);
+  },
 
-      /**
-       * Escape HTML to prevent XSS
-       * @param {string} unsafe - Unsafe string
-       * @returns {string} Safe HTML string
-       */
-      escapeHtml(unsafe) {
-        const map = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;',
-        };
-        return String(unsafe || '').replace(/[&<>"']/g, (m) => map[m]);
-      },
+  daysBetween(date1, date2) {
+    const MS_PER_DAY = 86400000;
+    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    return Math.round((d1 - d2) / MS_PER_DAY);
+  },
 
-      /**
-       * Parse DD/MM/YYYY date format
-       * @param {string} dateStr - Date string
-       * @returns {Date|null} Parsed date or null
-       */
-      parseDate(dateStr) {
-        if (!dateStr) return null;
-        const parts = String(dateStr).trim().split('/');
-        if (parts.length !== 3) return null;
-        const [dd, mm, yyyy] = parts.map(Number);
-        if (!dd || !mm || !yyyy) return null;
-        return new Date(yyyy, mm - 1, dd, 12, 0, 0);
-      },
+  formatDate(date) {
+    if (!date) return '—';
+    try {
+      return new Intl.DateTimeFormat('ar', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(date);
+    } catch {
+      return date.toLocaleDateString();
+    }
+  },
 
-      /**
-       * Calculate days between two dates
-       * @param {Date} date1 - First date
-       * @param {Date} date2 - Second date
-       * @returns {number} Days difference
-       */
-      daysBetween(date1, date2) {
-        const MS_PER_DAY = 86400000;
-        const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
-        const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
-        return Math.round((d1 - d2) / MS_PER_DAY);
-      },
+  extractYoutubeId(url) {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = String(url || '').match(regex);
+    return match ? match[1] : null;
+  },
 
-      /**
-       * Format date in Arabic locale
-       * @param {Date} date - Date to format
-       * @returns {string} Formatted date string
-       */
-      formatDate(date) {
-        if (!date) return '—';
-        try {
-          return new Intl.DateTimeFormat('ar', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }).format(date);
-        } catch {
-          return date.toLocaleDateString();
-        }
-      },
+  extractDriveId(url) {
+    const str = String(url || '');
+    const patterns = [
+      /\/file\/d\/([^/]+)/,
+      /[?&]id=([^&]+)/,
+      /\/d\/([^/]+)/,
+    ];
+    
+    for (const pattern of patterns) {
+      const match = str.match(pattern);
+      if (match) return match[1];
+    }
+    return null;
+  },
 
-      /**
-       * Extract YouTube video ID from URL
-       * @param {string} url - YouTube URL
-       * @returns {string|null} Video ID or null
-       */
-      extractYoutubeId(url) {
-        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-        const match = String(url || '').match(regex);
-        return match ? match[1] : null;
-      },
+  getDriveUrls(url) {
+    const id = this.extractDriveId(url);
+    if (!id) return null;
+    return {
+      id,
+      preview: `https://drive.google.com/file/d/${id}/preview`,
+      download: `https://drive.google.com/uc?export=download&id=${id}`,
+      view: `https://drive.google.com/file/d/${id}/view`,
+      thumbnail: `https://drive.google.com/thumbnail?id=${id}&sz=w640`,
+    };
+  },
 
-      /**
-       * Extract Google Drive file ID from URL
-       * @param {string} url - Drive URL
-       * @returns {string|null} File ID or null
-       */
-      extractDriveId(url) {
-        const str = String(url || '');
-        const patterns = [
-          /\/file\/d\/([^/]+)/,
-          /[?&]id=([^&]+)/,
-          /\/d\/([^/]+)/,
-        ];
-        
-        for (const pattern of patterns) {
-          const match = str.match(pattern);
-          if (match) return match[1];
-        }
-        return null;
-      },
+  getContentType(url) {
+    const urlLower = String(url || '').toLowerCase();
+    const cleanUrl = urlLower.split('?')[0];
 
-      /**
-       * Get Drive file URLs
-       * @param {string} url - Drive URL
-       * @returns {Object|null} URLs object or null
-       */
-      getDriveUrls(url) {
-        const id = this.extractDriveId(url);
-        if (!id) return null;
-        return {
-          id,
-          preview: `https://drive.google.com/file/d/${id}/preview`,
-          download: `https://drive.google.com/uc?export=download&id=${id}`,
-          view: `https://drive.google.com/file/d/${id}/view`,
-          thumbnail: `https://drive.google.com/thumbnail?id=${id}&sz=w640`,
-        };
-      },
+    if (this.extractYoutubeId(url)) return 'youtube';
+    if (urlLower.includes('drive.google.com')) return 'drive';
+    if (/\.(mp4|webm|ogg|mov|m4v)$/i.test(cleanUrl)) return 'video';
+    if (/\.(pdf)$/i.test(cleanUrl)) return 'pdf';
+    if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(cleanUrl)) return 'image';
+    return 'link';
+  },
 
-      /**
-       * Determine content type from URL
-       * @param {string} url - Content URL
-       * @returns {string} Content type
-       */
-      getContentType(url) {
-        const urlLower = String(url || '').toLowerCase();
-        const cleanUrl = urlLower.split('?')[0];
+  parseCSV(csv) {
+    const rows = [];
+    let row = [];
+    let current = '';
+    let inQuotes = false;
 
-        if (this.extractYoutubeId(url)) return 'youtube';
-        if (urlLower.includes('drive.google.com')) return 'drive';
-        if (/\.(mp4|webm|ogg|mov|m4v)$/i.test(cleanUrl)) return 'video';
-        if (/\.(pdf)$/i.test(cleanUrl)) return 'pdf';
-        if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(cleanUrl)) return 'image';
-        return 'link';
-      },
+    for (let i = 0; i < csv.length; i++) {
+      const char = csv[i];
+      const next = csv[i + 1];
 
-      /**
-       * Parse CSV string to array
-       * @param {string} csv - CSV string
-       * @returns {Array<Array<string>>} Parsed rows
-       */
-      parseCSV(csv) {
-        const rows = [];
-        let row = [];
-        let current = '';
-        let inQuotes = false;
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+        continue;
+      }
 
-        for (let i = 0; i < csv.length; i++) {
-          const char = csv[i];
-          const next = csv[i + 1];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+        continue;
+      }
 
-          if (char === '"' && inQuotes && next === '"') {
-            current += '"';
-            i++;
-            continue;
-          }
-
-          if (char === '"') {
-            inQuotes = !inQuotes;
-            continue;
-          }
-
-          if (!inQuotes && char === ',') {
-            row.push(current);
-            current = '';
-            continue;
-          }
-
-          if (!inQuotes && (char === '\n' || char === '\r')) {
-            if (char === '\r' && next === '\n') i++;
-            row.push(current);
-            current = '';
-            if (row.some((c) => String(c).trim() !== '')) {
-              rows.push(row);
-            }
-            row = [];
-            continue;
-          }
-
-          current += char;
-        }
-
+      if (!inQuotes && char === ',') {
         row.push(current);
+        current = '';
+        continue;
+      }
+
+      if (!inQuotes && (char === '\n' || char === '\r')) {
+        if (char === '\r' && next === '\n') i++;
+        row.push(current);
+        current = '';
         if (row.some((c) => String(c).trim() !== '')) {
           rows.push(row);
         }
-
-        return rows;
-      },
-
-      /**
-       * Simple in-memory cache implementation
-       * @returns {Object} Cache object with get/set/clear methods
-       */
-      createCache() {
-        const cache = new Map();
-        return {
-          get(key) {
-            const item = cache.get(key);
-            if (!item) return null;
-            if (Date.now() > item.expiry) {
-              cache.delete(key);
-              return null;
-            }
-            return item.value;
-          },
-          set(key, value, ttl = CONFIG.CACHE_DURATION) {
-            cache.set(key, {
-              value,
-              expiry: Date.now() + ttl,
-            });
-          },
-          clear() {
-            cache.clear();
-          },
-        };
-      },
-    };
-
-    // ============================================
-    // 🎨 UI COMPONENTS
-    // ============================================
-    const UI = {
-      /**
-       * Toast notification system
-       */
-      Toast: {
-        container: document.getElementById('toast-container'),
-
-        /**
-         * Show toast notification
-         * @param {string} message - Message to display
-         * @param {string} type - Toast type (success, error, warning, info)
-         * @param {number} duration - Display duration in ms
-         */
-        show(message, type = 'info', duration = CONFIG.TOAST_DURATION) {
-          const toast = document.createElement('div');
-          toast.className = `toast toast--${type}`;
-          toast.setAttribute('role', 'alert');
-
-          const icons = {
-            success: 'fa-check-circle',
-            error: 'fa-exclamation-circle',
-            warning: 'fa-exclamation-triangle',
-            info: 'fa-info-circle',
-          };
-
-          toast.innerHTML = `
-            <div class="toast__icon">
-              <i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i>
-            </div>
-            <div class="toast__message">${Utils.escapeHtml(message)}</div>
-            <button class="toast__close" type="button" aria-label="إغلاق">
-              <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
-          `;
-
-          const closeBtn = toast.querySelector('.toast__close');
-          const remove = () => {
-            toast.style.animation = 'slideInDown var(--transition-base) reverse';
-            setTimeout(() => toast.remove(), 250);
-          };
-
-          closeBtn.addEventListener('click', remove);
-          this.container.appendChild(toast);
-
-          if (duration > 0) {
-            setTimeout(remove, duration);
-          }
-        },
-
-        success(message) {
-          this.show(message, 'success');
-        },
-
-        error(message) {
-          this.show(message, 'error');
-        },
-
-        warning(message) {
-          this.show(message, 'warning');
-        },
-
-        info(message) {
-          this.show(message, 'info');
-        },
-      },
-
-      /**
-       * Status badge component
-       */
-      StatusBadge: {
-        element: document.getElementById('status-badge'),
-
-        update(text, state = 'default') {
-          this.element.textContent = text;
-          this.element.className = 'status-badge';
-          if (state !== 'default') {
-            this.element.classList.add(`status-badge--${state}`);
-          }
-        },
-
-        loading(text = 'جاري التحميل...') {
-          this.update(text, 'loading');
-        },
-
-        success(text) {
-          this.update(text, 'success');
-        },
-
-        error(text) {
-          this.update(text, 'error');
-        },
-
-        default(text = 'جاهز') {
-          this.update(text, 'default');
-        },
-      },
-
-      /**
-       * Loading skeleton generator
-       */
-      Skeleton: {
-        create(count = 6) {
-          const skeletons = [];
-          for (let i = 0; i < count; i++) {
-            const skeleton = document.createElement('div');
-            skeleton.className = 'skeleton-card';
-            skeleton.setAttribute('aria-busy', 'true');
-            skeleton.setAttribute('aria-label', 'جاري التحميل');
-            skeleton.innerHTML = `
-              <div class="skeleton-card__header">
-                <div class="skeleton-card__title skeleton"></div>
-                <div class="skeleton-card__meta skeleton"></div>
-              </div>
-              <div class="skeleton-card__thumbnail skeleton"></div>
-              <div class="skeleton-card__actions">
-                <div class="skeleton-card__button skeleton"></div>
-                <div class="skeleton-card__button skeleton"></div>
-              </div>
-            `;
-            skeletons.push(skeleton);
-          }
-          return skeletons;
-        },
-      },
-
-      /**
-       * Empty state component
-       */
-      EmptyState: {
-        create(title, description, icon = 'fa-inbox') {
-          const empty = document.createElement('div');
-          empty.className = 'empty-state';
-          empty.innerHTML = `
-            <div class="empty-state__icon">
-              <i class="fas ${icon}" aria-hidden="true"></i>
-            </div>
-            <h3 class="empty-state__title">${Utils.escapeHtml(title)}</h3>
-            <p class="empty-state__description">${Utils.escapeHtml(description)}</p>
-          `;
-          return empty;
-        },
-      },
-
-      /**
-       * Video card component factory
-       */
-      VideoCard: {
-        create(lesson, onPlay) {
-          const card = document.createElement('article');
-          card.className = 'video-card';
-          card.setAttribute('role', 'listitem');
-          card.dataset.lessonId = lesson.id;
-
-          const categoryLabel = CATEGORY_CONFIG.TRANSLATIONS[lesson.category] || lesson.category;
-          const contentType = Utils.getContentType(lesson.url);
-          const driveUrls = Utils.getDriveUrls(lesson.url);
-          const youtubeId = Utils.extractYoutubeId(lesson.url);
-
-          // Determine thumbnail
-          let thumbnail = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360"%3E%3Crect fill="%230b1220" width="640" height="360"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%239fb0d0" font-size="20" font-family="sans-serif"%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E';
-          
-          if (youtubeId) {
-            thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
-          } else if (driveUrls) {
-            thumbnail = driveUrls.thumbnail;
-          }
-
-          // Determine download URL
-          let downloadUrl = lesson.url;
-          if (driveUrls) {
-            downloadUrl = driveUrls.download;
-          }
-
-          card.innerHTML = `
-            <div class="video-card__header">
-              <h3 class="video-card__title">${Utils.escapeHtml(lesson.title)}</h3>
-              <div class="video-card__meta">
-                <span class="badge badge--category">
-                  <i class="fas fa-folder" aria-hidden="true"></i>
-                  ${Utils.escapeHtml(categoryLabel)}
-                </span>
-                <span class="badge">
-                  <i class="fas fa-calendar" aria-hidden="true"></i>
-                  ${Utils.escapeHtml(Utils.formatDate(lesson.date))}
-                </span>
-                ${lesson.id ? `<span class="badge">#${Utils.escapeHtml(lesson.id)}</span>` : ''}
-              </div>
-            </div>
-            <div class="video-card__thumbnail" role="button" tabindex="0" aria-label="تشغيل ${Utils.escapeHtml(lesson.title)}">
-              <img 
-                src="${thumbnail}" 
-                alt="${Utils.escapeHtml(lesson.title)}"
-                class="video-card__thumbnail-img"
-                loading="lazy"
-                referrerpolicy="no-referrer">
-              <div class="video-card__thumbnail-overlay">
-                <button class="play-button" type="button" aria-label="تشغيل"></button>
-              </div>
-            </div>
-            <div class="video-card__actions">
-              <button class="btn btn--primary btn-play" type="button">
-                <i class="fas fa-play" aria-hidden="true"></i>
-                مشاهدة
-              </button>
-              ${youtubeId 
-                ? `<a href="https://www.youtube.com/watch?v=${youtubeId}" target="_blank" rel="noopener" class="btn btn--success">
-                     <i class="fab fa-youtube" aria-hidden="true"></i>
-                     يوتيوب
-                   </a>`
-                : `<a href="${downloadUrl}" target="_blank" rel="noopener" download class="btn btn--success">
-                     <i class="fas fa-download" aria-hidden="true"></i>
-                     تحميل
-                   </a>`
-              }
-            </div>
-          `;
-
-          // Event listeners
-          const handlePlay = (e) => {
-            e.preventDefault();
-            onPlay(lesson);
-          };
-
-          card.querySelector('.video-card__thumbnail').addEventListener('click', handlePlay);
-          card.querySelector('.btn-play').addEventListener('click', handlePlay);
-          
-          // Keyboard navigation for thumbnail
-          card.querySelector('.video-card__thumbnail').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handlePlay(e);
-            }
-          });
-
-          return card;
-        },
-      },
-    };
-
-    // ============================================
-    // 📡 DATA SERVICE LAYER
-    // ============================================
-    const DataService = {
-      cache: Utils.createCache(),
-
-      /**
-       * Fetch data with retry logic
-       * @param {string} url - URL to fetch
-       * @param {number} retries - Number of retries
-       * @returns {Promise<string>} Response text
-       */
-      async fetchWithRetry(url, retries = CONFIG.MAX_RETRIES) {
-        for (let i = 0; i < retries; i++) {
-          try {
-            const response = await fetch(url, {
-              cache: 'no-store',
-              headers: {
-                'Accept': 'text/csv',
-              },
-            });
-
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            return await response.text();
-          } catch (error) {
-            if (i === retries - 1) throw error;
-            await new Promise((resolve) => setTimeout(resolve, CONFIG.RETRY_DELAY * (i + 1)));
-          }
-        }
-      },
-
-      /**
-       * Load lessons from Google Sheets
-       * @param {boolean} forceRefresh - Force refresh cache
-       * @returns {Promise<Array>} Lessons array
-       */
-      async loadLessons(forceRefresh = false) {
-        const cacheKey = 'lessons_data';
-
-        if (!forceRefresh) {
-          const cached = this.cache.get(cacheKey);
-          if (cached) return cached;
-        }
-
-        const csv = await this.fetchWithRetry(CONFIG.SHEET_CSV_URL);
-        const rows = Utils.parseCSV(csv);
-
-        if (rows.length < 2) {
-          throw new Error('CSV file is empty or invalid');
-        }
-
-        const headers = rows[0].map((h) => String(h).trim());
-        const data = rows.slice(1).map((cols) => {
-          const obj = {};
-          headers.forEach((header, index) => {
-            obj[header] = cols[index] || '';
-          });
-          return obj;
-        });
-
-        const lessons = data
-          .map((row) => ({
-            id: (row.LessonID || '').trim(),
-            title: (row.Title || 'بدون عنوان').trim(),
-            category: (row.Category || 'Other').trim(),
-            date: Utils.parseDate((row.DateUploaded || '').trim()),
-            url: (row.ContentURL || '').trim(),
-          }))
-          .filter((lesson) => lesson.title && lesson.url);
-
-        // Sort by date (newest first)
-        lessons.sort((a, b) => {
-          const dateA = a.date ? a.date.getTime() : 0;
-          const dateB = b.date ? b.date.getTime() : 0;
-          return dateB - dateA;
-        });
-
-        this.cache.set(cacheKey, lessons);
-        return lessons;
-      },
-
-      /**
-       * Get unique categories from lessons
-       * @param {Array} lessons - Lessons array
-       * @returns {Array<string>} Categories array
-       */
-      getCategories(lessons) {
-        const uniqueCategories = new Set(lessons.map((l) => l.category || 'Other'));
-        const sortedCategories = CATEGORY_CONFIG.ORDER.filter((c) => uniqueCategories.has(c));
-        const otherCategories = [...uniqueCategories].filter((c) => !CATEGORY_CONFIG.ORDER.includes(c));
-        return [...sortedCategories, ...otherCategories];
-      },
-    };
-
-    // ============================================
-    // 🎯 FILTER STRATEGIES
-    // ============================================
-    const FilterStrategies = {
-      /**
-       * Text search filter
-       * @param {Array} lessons - Lessons to filter
-       * @param {string} query - Search query
-       * @returns {Array} Filtered lessons
-       */
-      search(lessons, query) {
-        if (!query) return lessons;
-        const lowerQuery = query.toLowerCase();
-        return lessons.filter((lesson) => lesson.title.toLowerCase().includes(lowerQuery));
-      },
-
-      /**
-       * Category filter
-       * @param {Array} lessons - Lessons to filter
-       * @param {string} category - Category to filter by
-       * @returns {Array} Filtered lessons
-       */
-      category(lessons, category) {
-        if (!category || category === 'all') return lessons;
-        return lessons.filter((lesson) => lesson.category === category);
-      },
-
-      /**
-       * Time range filter
-       * @param {Array} lessons - Lessons to filter
-       * @param {string} timeRange - Time range ('today', 'yesterday', 'week', 'month', 'year')
-       * @returns {Array} Filtered lessons
-       */
-      timeRange(lessons, timeRange) {
-        if (!timeRange || timeRange === 'all') return lessons;
-
-        const now = new Date();
-        const predicates = {
-          today: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 0,
-          yesterday: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 1,
-          week: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 7,
-          month: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 30,
-          year: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 365,
-        };
-
-        const predicate = predicates[timeRange];
-        return predicate ? lessons.filter(predicate) : lessons;
-      },
-    };
-
-    // ============================================
-    // 🎬 VIDEO PLAYER MANAGER
-    // ============================================
-    const PlayerManager = {
-      modal: document.getElementById('player-modal'),
-      backdrop: document.getElementById('modal-backdrop'),
-      stage: document.getElementById('player-stage'),
-      title: document.getElementById('player-modal-title'),
-      closeBtn: document.getElementById('close-modal-btn'),
-      externalBtn: document.getElementById('external-link-btn'),
-      currentPlayer: null,
-
-      init() {
-        this.closeBtn.addEventListener('click', () => this.close());
-        this.backdrop.addEventListener('click', () => this.close());
-        
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && this.modal.classList.contains('is-active')) {
-            this.close();
-          }
-        });
-      },
-
-      /**
-       * Open player with lesson
-       * @param {Object} lesson - Lesson object
-       */
-      async open(lesson) {
-        this.title.textContent = lesson.title;
-        this.modal.classList.add('is-active');
-        this.backdrop.classList.add('is-active');
-        this.modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-
-        this.stage.innerHTML = `
-          <div class="player-modal__loading">
-            <div class="spinner"></div>
-            <p>جاري التحميل...</p>
-          </div>
-        `;
-
-        try {
-          await this.loadContent(lesson);
-        } catch (error) {
-          console.error('Player error:', error);
-          this.stage.innerHTML = `
-            <div class="player-modal__loading">
-              <p style="color: var(--color-danger);">
-                <i class="fas fa-exclamation-triangle"></i>
-                حدث خطأ في تحميل المحتوى
-              </p>
-            </div>
-          `;
-          UI.Toast.error('فشل تحميل المحتوى');
-        }
-      },
-
-      /**
-       * Load content based on type
-       * @param {Object} lesson - Lesson object
-       */
-      async loadContent(lesson) {
-        const contentType = Utils.getContentType(lesson.url);
-        const youtubeId = Utils.extractYoutubeId(lesson.url);
-        const driveUrls = Utils.getDriveUrls(lesson.url);
-
-        // YouTube content
-        if (youtubeId) {
-          this.externalBtn.href = `https://www.youtube.com/watch?v=${youtubeId}`;
-          this.externalBtn.style.display = 'inline-flex';
-
-          const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
-          this.stage.innerHTML = `<div id="plyr-player" data-plyr-provider="youtube" data-plyr-embed-id="${youtubeId}"></div>`;
-          
-          this.currentPlayer = new Plyr('#plyr-player', {
-            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-            youtube: {
-              noCookie: true,
-              rel: 0,
-              showinfo: 0,
-              iv_load_policy: 3,
-              modestbranding: 1,
-            },
-          });
-          return;
-        }
-
-        // Google Drive content
-        if (driveUrls) {
-          this.externalBtn.href = driveUrls.view;
-          this.externalBtn.style.display = 'inline-flex';
-
-          this.stage.innerHTML = `<iframe src="${driveUrls.preview}" allowfullscreen allow="autoplay"></iframe>`;
-          return;
-        }
-
-        // Direct video file
-        if (contentType === 'video') {
-          this.externalBtn.href = lesson.url;
-          this.externalBtn.style.display = 'inline-flex';
-
-          this.stage.innerHTML = `<video id="plyr-player" playsinline controls><source src="${lesson.url}"></video>`;
-          
-          this.currentPlayer = new Plyr('#plyr-player', {
-            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
-          });
-          return;
-        }
-
-        // Fallback: iframe
-        this.externalBtn.href = lesson.url;
-        this.externalBtn.style.display = 'inline-flex';
-        this.stage.innerHTML = `<iframe src="${lesson.url}" allowfullscreen></iframe>`;
-      },
-
-      /**
-       * Close player
-       */
-      close() {
-        if (this.currentPlayer) {
-          this.currentPlayer.destroy();
-          this.currentPlayer = null;
-        }
-
-        this.stage.innerHTML = '';
-        this.modal.classList.remove('is-active');
-        this.backdrop.classList.remove('is-active');
-        this.modal.setAttribute('aria-hidden', 'true');
-        this.externalBtn.style.display = 'none';
-        document.body.style.overflow = '';
-      },
-    };
-
-    // ============================================
-    // 🎮 APPLICATION CONTROLLER
-    // ============================================
-    const App = {
-      state: {
-        lessons: [],
-        filteredLessons: [],
-        filters: {
-          search: '',
-          category: 'all',
-          timeRange: 'all',
-        },
-      },
-
-      elements: {
-        contentGrid: document.getElementById('content-grid'),
-        searchInput: document.getElementById('search-input'),
-        categorySelect: document.getElementById('category-select'),
-        timeSelect: document.getElementById('time-select'),
-        refreshBtn: document.getElementById('refresh-btn'),
-      },
-
-      /**
-       * Initialize application
-       */
-      async init() {
-        console.log('🚀 Initializing application...');
-        
-        // Initialize player
-        PlayerManager.init();
-
-        // Setup event listeners
-        this.setupEventListeners();
-
-        // Initial data load
-        await this.loadData();
-
-        console.log('✅ Application initialized successfully');
-      },
-
-      /**
-       * Setup event listeners
-       */
-      setupEventListeners() {
-        // Search input (debounced)
-        this.elements.searchInput.addEventListener(
-          'input',
-          Utils.debounce((e) => {
-            this.state.filters.search = e.target.value;
-            this.applyFilters();
-          }, CONFIG.DEBOUNCE_DELAY)
-        );
-
-        // Category select
-        this.elements.categorySelect.addEventListener('change', (e) => {
-          this.state.filters.category = e.target.value;
-          this.applyFilters();
-        });
-
-        // Time range select
-        this.elements.timeSelect.addEventListener('change', (e) => {
-          this.state.filters.timeRange = e.target.value;
-          this.applyFilters();
-        });
-
-        // Refresh button
-        this.elements.refreshBtn.addEventListener('click', () => {
-          this.loadData(true);
-        });
-      },
-
-      /**
-       * Load data from API
-       * @param {boolean} forceRefresh - Force refresh cache
-       */
-      async loadData(forceRefresh = false) {
-        try {
-          UI.StatusBadge.loading('جاري التحميل...');
-          
-          // Show skeletons
-          this.elements.contentGrid.innerHTML = '';
-          UI.Skeleton.create(6).forEach((skeleton) => {
-            this.elements.contentGrid.appendChild(skeleton);
-          });
-
-          // Fetch data
-          this.state.lessons = await DataService.loadLessons(forceRefresh);
-
-          // Update category select
-          this.updateCategorySelect();
-
-          // Apply filters and render
-          this.applyFilters();
-
-          UI.StatusBadge.success(`✓ ${this.state.lessons.length} درس`);
-          
-          if (forceRefresh) {
-            UI.Toast.success('تم تحديث البيانات بنجاح');
-          }
-        } catch (error) {
-          console.error('Load data error:', error);
-          UI.StatusBadge.error('خطأ في التحميل');
-          UI.Toast.error('فشل تحميل البيانات. يرجى المحاولة مرة أخرى.');
-
-          this.elements.contentGrid.innerHTML = '';
-          this.elements.contentGrid.appendChild(
-            UI.EmptyState.create(
-              'فشل تحميل البيانات',
-              'حدث خطأ أثناء تحميل البيانات. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.',
-              'fa-exclamation-triangle'
-            )
-          );
-        }
-      },
-
-      /**
-       * Update category select options
-       */
-      updateCategorySelect() {
-        const categories = DataService.getCategories(this.state.lessons);
-        
-        this.elements.categorySelect.innerHTML = '<option value="all">كل المواد</option>';
-        
-        categories.forEach((category) => {
-          const option = document.createElement('option');
-          option.value = category;
-          option.textContent = CATEGORY_CONFIG.TRANSLATIONS[category] || category;
-          this.elements.categorySelect.appendChild(option);
-        });
-      },
-
-      /**
-       * Apply all filters and render
-       */
-      applyFilters() {
-        let filtered = [...this.state.lessons];
-
-        // Apply filters sequentially
-        filtered = FilterStrategies.search(filtered, this.state.filters.search);
-        filtered = FilterStrategies.category(filtered, this.state.filters.category);
-        filtered = FilterStrategies.timeRange(filtered, this.state.filters.timeRange);
-
-        this.state.filteredLessons = filtered;
-        this.render();
-      },
-
-      /**
-       * Render lessons to DOM
-       */
-      render() {
-        this.elements.contentGrid.innerHTML = '';
-
-        if (this.state.filteredLessons.length === 0) {
-          const emptyState = UI.EmptyState.create(
-            'لا توجد نتائج',
-            'لم يتم العثور على دروس تطابق معايير البحث. حاول تغيير الفلاتر.',
-            'fa-search'
-          );
-          this.elements.contentGrid.appendChild(emptyState);
-          return;
-        }
-
-        this.state.filteredLessons.forEach((lesson) => {
-          const card = UI.VideoCard.create(lesson, (lesson) => {
-            PlayerManager.open(lesson);
-          });
-          this.elements.contentGrid.appendChild(card);
-        });
-      },
-    };
-
-    // ============================================
-    // 🎬 APPLICATION START
-    // ============================================
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => App.init());
-    } else {
-      App.init();
+        row = [];
+        continue;
+      }
+
+      current += char;
     }
 
-    // Global error handler
-    window.addEventListener('error', (event) => {
-      console.error('Global error:', event.error);
-      UI.Toast.error('حدث خطأ غير متوقع');
+    row.push(current);
+    if (row.some((c) => String(c).trim() !== '')) {
+      rows.push(row);
+    }
+
+    return rows;
+  },
+
+  createCache() {
+    const cache = new Map();
+    return {
+      get(key) {
+        const item = cache.get(key);
+        if (!item) return null;
+        if (Date.now() > item.expiry) {
+          cache.delete(key);
+          return null;
+        }
+        return item.value;
+      },
+      set(key, value, ttl = CONFIG.CACHE_DURATION) {
+        cache.set(key, {
+          value,
+          expiry: Date.now() + ttl,
+        });
+      },
+      clear() {
+        cache.clear();
+      },
+    };
+  },
+};
+
+// ============================================
+// 🎨 UI COMPONENTS
+// ============================================
+const UI = {
+  Toast: {
+    container: document.getElementById('toast-container'),
+
+    show(message, type = 'info', duration = CONFIG.TOAST_DURATION) {
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.setAttribute('role', 'alert');
+
+      const icons = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        warning: 'fa-exclamation-triangle',
+        info: 'fa-info-circle',
+      };
+
+      toast.innerHTML = `
+        <div class="toast__icon">
+          <i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i>
+        </div>
+        <div class="toast__message">${Utils.escapeHtml(message)}</div>
+        <button class="toast__close" type="button" aria-label="إغلاق">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      `;
+
+      const closeBtn = toast.querySelector('.toast__close');
+      const remove = () => {
+        toast.style.animation = 'slideInDown var(--transition-base) reverse';
+        setTimeout(() => toast.remove(), 250);
+      };
+
+      closeBtn.addEventListener('click', remove);
+      this.container.appendChild(toast);
+
+      if (duration > 0) {
+        setTimeout(remove, duration);
+      }
+    },
+
+    success(message) {
+      this.show(message, 'success');
+    },
+
+    error(message) {
+      this.show(message, 'error');
+    },
+
+    warning(message) {
+      this.show(message, 'warning');
+    },
+
+    info(message) {
+      this.show(message, 'info');
+    },
+  },
+
+  StatusBadge: {
+    element: document.getElementById('status-badge'),
+
+    update(text, state = 'default') {
+      this.element.textContent = text;
+      this.element.className = 'status-badge';
+      if (state !== 'default') {
+        this.element.classList.add(`status-badge--${state}`);
+      }
+    },
+
+    loading(text = 'جاري التحميل...') {
+      this.update(text, 'loading');
+    },
+
+    success(text) {
+      this.update(text, 'success');
+    },
+
+    error(text) {
+      this.update(text, 'error');
+    },
+
+    default(text = 'جاهز') {
+      this.update(text, 'default');
+    },
+  },
+
+  Skeleton: {
+    create(count = 6) {
+      const skeletons = [];
+      for (let i = 0; i < count; i++) {
+        const skeleton = document.createElement('div');
+        skeleton.className = 'skeleton-card';
+        skeleton.setAttribute('aria-busy', 'true');
+        skeleton.setAttribute('aria-label', 'جاري التحميل');
+        skeleton.innerHTML = `
+          <div class="skeleton-card__header">
+            <div class="skeleton-card__title skeleton"></div>
+            <div class="skeleton-card__meta skeleton"></div>
+          </div>
+          <div class="skeleton-card__thumbnail skeleton"></div>
+          <div class="skeleton-card__actions">
+            <div class="skeleton-card__button skeleton"></div>
+            <div class="skeleton-card__button skeleton"></div>
+          </div>
+        `;
+        skeletons.push(skeleton);
+      }
+      return skeletons;
+    },
+  },
+
+  EmptyState: {
+    create(title, description, icon = 'fa-inbox') {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.innerHTML = `
+        <div class="empty-state__icon">
+          <i class="fas ${icon}" aria-hidden="true"></i>
+        </div>
+        <h3 class="empty-state__title">${Utils.escapeHtml(title)}</h3>
+        <p class="empty-state__description">${Utils.escapeHtml(description)}</p>
+      `;
+      return empty;
+    },
+  },
+
+  VideoCard: {
+    create(lesson, onPlay) {
+      const card = document.createElement('article');
+      card.className = 'video-card';
+      card.setAttribute('role', 'listitem');
+      card.dataset.lessonId = lesson.id;
+
+      const categoryLabel = CATEGORY_CONFIG.TRANSLATIONS[lesson.category] || lesson.category;
+      const contentType = Utils.getContentType(lesson.url);
+      const driveUrls = Utils.getDriveUrls(lesson.url);
+      const youtubeId = Utils.extractYoutubeId(lesson.url);
+
+      let thumbnail = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360"%3E%3Crect fill="%230b1220" width="640" height="360"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%239fb0d0" font-size="20" font-family="sans-serif"%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E';
+      
+      if (youtubeId) {
+        thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+      } else if (driveUrls) {
+        thumbnail = driveUrls.thumbnail;
+      }
+
+      let downloadUrl = lesson.url;
+      if (driveUrls) {
+        downloadUrl = driveUrls.download;
+      }
+
+      card.innerHTML = `
+        <div class="video-card__header">
+          <h3 class="video-card__title">${Utils.escapeHtml(lesson.title)}</h3>
+          <div class="video-card__meta">
+            <span class="badge badge--category">
+              <i class="fas fa-folder" aria-hidden="true"></i>
+              ${Utils.escapeHtml(categoryLabel)}
+            </span>
+            <span class="badge">
+              <i class="fas fa-calendar" aria-hidden="true"></i>
+              ${Utils.escapeHtml(Utils.formatDate(lesson.date))}
+            </span>
+            ${lesson.id ? `<span class="badge">#${Utils.escapeHtml(lesson.id)}</span>` : ''}
+          </div>
+        </div>
+        <div class="video-card__thumbnail" role="button" tabindex="0" aria-label="تشغيل ${Utils.escapeHtml(lesson.title)}">
+          <img 
+            src="${thumbnail}" 
+            alt="${Utils.escapeHtml(lesson.title)}"
+            class="video-card__thumbnail-img"
+            loading="lazy"
+            referrerpolicy="no-referrer">
+          <div class="video-card__thumbnail-overlay">
+            <button class="play-button" type="button" aria-label="تشغيل"></button>
+          </div>
+        </div>
+        <div class="video-card__actions">
+          <button class="btn btn--primary btn-play" type="button">
+            <i class="fas fa-play" aria-hidden="true"></i>
+            مشاهدة
+          </button>
+          ${youtubeId 
+            ? `<a href="https://www.youtube.com/watch?v=${youtubeId}" target="_blank" rel="noopener" class="btn btn--success">
+                 <i class="fab fa-youtube" aria-hidden="true"></i>
+                 يوتيوب
+               </a>`
+            : `<a href="${downloadUrl}" target="_blank" rel="noopener" download class="btn btn--success">
+                 <i class="fas fa-download" aria-hidden="true"></i>
+                 تحميل
+               </a>`
+          }
+        </div>
+      `;
+
+      // IMPORTANT: Only "Watch" button and thumbnail trigger the player modal
+      const handlePlay = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onPlay(lesson);
+      };
+
+      card.querySelector('.video-card__thumbnail').addEventListener('click', handlePlay);
+      card.querySelector('.btn-play').addEventListener('click', handlePlay);
+      
+      card.querySelector('.video-card__thumbnail').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handlePlay(e);
+        }
+      });
+
+      return card;
+    },
+  },
+};
+
+// ============================================
+// 📡 DATA SERVICE
+// ============================================
+const DataService = {
+  cache: Utils.createCache(),
+
+  async fetchWithRetry(url, retries = CONFIG.MAX_RETRIES) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url, {
+          cache: 'no-store',
+          headers: {
+            'Accept': 'text/csv',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        return await response.text();
+      } catch (error) {
+        if (i === retries - 1) throw error;
+        await new Promise((resolve) => setTimeout(resolve, CONFIG.RETRY_DELAY * (i + 1)));
+      }
+    }
+  },
+
+  async loadLessons(forceRefresh = false) {
+    const cacheKey = 'lessons_data';
+
+    if (!forceRefresh) {
+      const cached = this.cache.get(cacheKey);
+      if (cached) return cached;
+    }
+
+    const csv = await this.fetchWithRetry(CONFIG.SHEET_CSV_URL);
+    const rows = Utils.parseCSV(csv);
+
+    if (rows.length < 2) {
+      throw new Error('CSV file is empty or invalid');
+    }
+
+    const headers = rows[0].map((h) => String(h).trim());
+    const data = rows.slice(1).map((cols) => {
+      const obj = {};
+      headers.forEach((header, index) => {
+        obj[header] = cols[index] || '';
+      });
+      return obj;
     });
 
-    window.addEventListener('unhandledrejection', (event) => {
-      console.error('Unhandled rejection:', event.reason);
-      UI.Toast.error('حدث خطأ في معالجة البيانات');
+    const lessons = data
+      .map((row) => ({
+        id: (row.LessonID || '').trim(),
+        title: (row.Title || 'بدون عنوان').trim(),
+        category: (row.Category || 'Other').trim(),
+        date: Utils.parseDate((row.DateUploaded || '').trim()),
+        url: (row.ContentURL || '').trim(),
+      }))
+      .filter((lesson) => lesson.title && lesson.url);
+
+    lessons.sort((a, b) => {
+      const dateA = a.date ? a.date.getTime() : 0;
+      const dateB = b.date ? b.date.getTime() : 0;
+      return dateB - dateA;
     });
+
+    this.cache.set(cacheKey, lessons);
+    return lessons;
+  },
+
+  getCategories(lessons) {
+    const uniqueCategories = new Set(lessons.map((l) => l.category || 'Other'));
+    const sortedCategories = CATEGORY_CONFIG.ORDER.filter((c) => uniqueCategories.has(c));
+    const otherCategories = [...uniqueCategories].filter((c) => !CATEGORY_CONFIG.ORDER.includes(c));
+    return [...sortedCategories, ...otherCategories];
+  },
+};
+
+// ============================================
+// 🎯 FILTERS
+// ============================================
+const FilterStrategies = {
+  search(lessons, query) {
+    if (!query) return lessons;
+    const lowerQuery = query.toLowerCase();
+    return lessons.filter((lesson) => lesson.title.toLowerCase().includes(lowerQuery));
+  },
+
+  category(lessons, category) {
+    if (!category || category === 'all') return lessons;
+    return lessons.filter((lesson) => lesson.category === category);
+  },
+
+  timeRange(lessons, timeRange) {
+    if (!timeRange || timeRange === 'all') return lessons;
+
+    const now = new Date();
+    const predicates = {
+      today: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 0,
+      yesterday: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 1,
+      week: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 7,
+      month: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 30,
+      year: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 365,
+    };
+
+    const predicate = predicates[timeRange];
+    return predicate ? lessons.filter(predicate) : lessons;
+  },
+};
+
+// ============================================
+// 🎬 PLAYER MANAGER (FIXED)
+// ============================================
+const PlayerManager = {
+  modal: document.getElementById('player-modal'),
+  backdrop: document.getElementById('modal-backdrop'),
+  stage: document.getElementById('player-stage'),
+  title: document.getElementById('player-modal-title'),
+  closeBtn: document.getElementById('close-modal-btn'),
+  externalBtn: document.getElementById('external-link-btn'),
+  currentPlayer: null,
+  loadingOverlay: null,
+  readyTimeout: null,
+  sessionToken: 0,
+
+  init() {
+    this.closeBtn.addEventListener('click', () => this.close());
+    this.backdrop.addEventListener('click', () => this.close());
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('is-active')) {
+        this.close();
+      }
+    });
+  },
+
+  hideLoading() {
+    if (this.loadingOverlay) {
+      this.loadingOverlay.style.display = 'none';
+    }
+    clearTimeout(this.readyTimeout);
+  },
+
+  showLoading() {
+    if (this.loadingOverlay) {
+      this.loadingOverlay.style.display = 'flex';
+    }
+  },
+
+  async open(lesson) {
+    const token = ++this.sessionToken;
+
+    this.title.textContent = lesson.title;
+    this.modal.classList.add('is-active');
+    this.backdrop.classList.add('is-active');
+    this.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Build stage structure
+    this.stage.innerHTML = `
+      <div style="position:relative; width:100%; height:100%;">
+        <div id="player-mount" style="position:absolute; inset:0;"></div>
+        <div id="player-loading" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); z-index:999;">
+          <div class="spinner"></div>
+          <p style="margin:0; color:#9fb0d0; font-weight:700; font-size:14px;">جاري التحميل...</p>
+        </div>
+      </div>
+    `;
+
+    this.loadingOverlay = document.getElementById('player-loading');
+    const mountPoint = document.getElementById('player-mount');
+
+    // Set timeout to auto-hide loader after 10 seconds
+    this.readyTimeout = setTimeout(() => {
+      if (token === this.sessionToken) {
+        this.hideLoading();
+        UI.Toast.warning('يستغرق التحميل وقتًا. جرب زر "فتح خارجي"');
+      }
+    }, 10000);
+
+    try {
+      await this.loadContent(lesson, mountPoint, token);
+    } catch (error) {
+      console.error('Player error:', error);
+      this.hideLoading();
+      mountPoint.innerHTML = `
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--color-danger); padding:20px; text-align:center;">
+          <i class="fas fa-exclamation-triangle" style="font-size:48px; margin-bottom:16px;"></i>
+          <p style="font-size:16px; font-weight:700;">فشل تحميل المحتوى</p>
+          <p style="font-size:14px; color:var(--color-text-secondary); margin-top:8px;">جرب زر "فتح خارجي" أسفل العنوان</p>
+        </div>
+      `;
+      UI.Toast.error('فشل تحميل المحتوى');
+    }
+  },
+
+  async loadContent(lesson, mountEl, token) {
+    const isStale = () => token !== this.sessionToken;
+
+    const contentType = Utils.getContentType(lesson.url);
+    const youtubeId = Utils.extractYoutubeId(lesson.url);
+    const driveUrls = Utils.getDriveUrls(lesson.url);
+
+    this.externalBtn.style.display = 'none';
+
+    // YouTube
+    if (youtubeId) {
+      const ytUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+      this.externalBtn.href = ytUrl;
+      this.externalBtn.style.display = 'inline-flex';
+
+      mountEl.innerHTML = `<div id="plyr-youtube" data-plyr-provider="youtube" data-plyr-embed-id="${youtubeId}"></div>`;
+      
+      try {
+        this.currentPlayer = new Plyr('#plyr-youtube', {
+          controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','airplay','fullscreen'],
+          youtube: { noCookie: true, rel: 0, showinfo: 0, iv_load_policy: 3, modestbranding: 1 },
+        });
+
+        this.currentPlayer.on('ready', () => {
+          if (!isStale()) this.hideLoading();
+        });
+
+        this.currentPlayer.on('playing', () => {
+          if (!isStale()) this.hideLoading();
+        });
+      } catch (e) {
+        console.error('Plyr YouTube error:', e);
+        this.hideLoading();
+      }
+      return;
+    }
+
+    // Google Drive
+    if (driveUrls) {
+      this.externalBtn.href = driveUrls.view;
+      this.externalBtn.style.display = 'inline-flex';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = driveUrls.preview;
+      iframe.style.cssText = 'width:100%; height:100%; border:0;';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      
+      iframe.addEventListener('load', () => {
+        if (!isStale()) {
+          setTimeout(() => this.hideLoading(), 500);
+        }
+      });
+
+      iframe.addEventListener('error', () => {
+        if (!isStale()) this.hideLoading();
+      });
+
+      mountEl.appendChild(iframe);
+      return;
+    }
+
+    // Direct video file
+    if (contentType === 'video') {
+      this.externalBtn.href = lesson.url;
+      this.externalBtn.style.display = 'inline-flex';
+
+      const video = document.createElement('video');
+      video.controls = true;
+      video.preload = 'metadata';
+      video.style.cssText = 'width:100%; height:100%; object-fit:contain;';
+      video.setAttribute('playsinline', '');
+      
+      const source = document.createElement('source');
+      source.src = lesson.url;
+      video.appendChild(source);
+
+      const handleReady = () => {
+        if (!isStale()) this.hideLoading();
+      };
+
+      video.addEventListener('loadedmetadata', handleReady, { once: true });
+      video.addEventListener('canplay', handleReady, { once: true });
+      video.addEventListener('playing', handleReady, { once: true });
+      video.addEventListener('error', () => {
+        if (!isStale()) {
+          this.hideLoading();
+          UI.Toast.error('فشل تشغيل الفيديو. جرب التحميل الخارجي.');
+        }
+      });
+
+      mountEl.appendChild(video);
+      return;
+    }
+
+    // Fallback iframe
+    this.externalBtn.href = lesson.url;
+    this.externalBtn.style.display = 'inline-flex';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = lesson.url;
+    iframe.style.cssText = 'width:100%; height:100%; border:0;';
+    iframe.setAttribute('allowfullscreen', '');
+    
+    iframe.addEventListener('load', () => {
+      if (!isStale()) {
+        setTimeout(() => this.hideLoading(), 500);
+      }
+    });
+
+    mountEl.appendChild(iframe);
+  },
+
+  close() {
+    clearTimeout(this.readyTimeout);
+
+    if (this.currentPlayer) {
+      try {
+        this.currentPlayer.destroy();
+      } catch (e) {
+        console.error('Player destroy error:', e);
+      }
+      this.currentPlayer = null;
+    }
+
+    this.stage.innerHTML = '';
+    this.loadingOverlay = null;
+    this.modal.classList.remove('is-active');
+    this.backdrop.classList.remove('is-active');
+    this.modal.setAttribute('aria-hidden', 'true');
+    this.externalBtn.style.display = 'none';
+    document.body.style.overflow = '';
+  },
+};
+
+// ============================================
+// 🎮 APP CONTROLLER
+// ============================================
+const App = {
+  state: {
+    lessons: [],
+    filteredLessons: [],
+    filters: {
+      search: '',
+      category: 'all',
+      timeRange: 'all',
+    },
+  },
+
+  elements: {
+    contentGrid: document.getElementById('content-grid'),
+    searchInput: document.getElementById('search-input'),
+    categorySelect: document.getElementById('category-select'),
+    timeSelect: document.getElementById('time-select'),
+    refreshBtn: document.getElementById('refresh-btn'),
+  },
+
+  async init() {
+    console.log('🚀 Initializing application...');
+    
+    PlayerManager.init();
+    this.setupEventListeners();
+    await this.loadData();
+
+    console.log('✅ Application ready');
+  },
+
+  setupEventListeners() {
+    this.elements.searchInput.addEventListener(
+      'input',
+      Utils.debounce((e) => {
+        this.state.filters.search = e.target.value;
+        this.applyFilters();
+      }, CONFIG.DEBOUNCE_DELAY)
+    );
+
+    this.elements.categorySelect.addEventListener('change', (e) => {
+      this.state.filters.category = e.target.value;
+      this.applyFilters();
+    });
+
+    this.elements.timeSelect.addEventListener('change', (e) => {
+      this.state.filters.timeRange = e.target.value;
+      this.applyFilters();
+    });
+
+    this.elements.refreshBtn.addEventListener('click', () => {
+      this.loadData(true);
+    });
+  },
+
+  async loadData(forceRefresh = false) {
+    try {
+      UI.StatusBadge.loading('جاري التحميل...');
+      
+      this.elements.contentGrid.innerHTML = '';
+      UI.Skeleton.create(6).forEach((skeleton) => {
+        this.elements.contentGrid.appendChild(skeleton);
+      });
+
+      this.state.lessons = await DataService.loadLessons(forceRefresh);
+      this.updateCategorySelect();
+      this.applyFilters();
+
+      UI.StatusBadge.success(`✓ ${this.state.lessons.length} درس`);
+      
+      if (forceRefresh) {
+        UI.Toast.success('تم تحديث البيانات بنجاح');
+      }
+    } catch (error) {
+      console.error('Load data error:', error);
+      UI.StatusBadge.error('خطأ في التحميل');
+      UI.Toast.error('فشل تحميل البيانات. يرجى المحاولة مرة أخرى.');
+
+      this.elements.contentGrid.innerHTML = '';
+      this.elements.contentGrid.appendChild(
+        UI.EmptyState.create(
+          'فشل تحميل البيانات',
+          'حدث خطأ أثناء تحميل البيانات. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.',
+          'fa-exclamation-triangle'
+        )
+      );
+    }
+  },
+
+  updateCategorySelect() {
+    const categories = DataService.getCategories(this.state.lessons);
+    
+    this.elements.categorySelect.innerHTML = '<option value="all">كل المواد</option>';
+    
+    categories.forEach((category) => {
+      const option = document.createElement('option');
+      option.value = category;
+      option.textContent = CATEGORY_CONFIG.TRANSLATIONS[category] || category;
+      this.elements.categorySelect.appendChild(option);
+    });
+  },
+
+  applyFilters() {
+    let filtered = [...this.state.lessons];
+
+    filtered = FilterStrategies.search(filtered, this.state.filters.search);
+    filtered = FilterStrategies.category(filtered, this.state.filters.category);
+    filtered = FilterStrategies.timeRange(filtered, this.state.filters.timeRange);
+
+    this.state.filteredLessons = filtered;
+    this.render();
+  },
+
+  render() {
+    this.elements.contentGrid.innerHTML = '';
+
+    if (this.state.filteredLessons.length === 0) {
+      const emptyState = UI.EmptyState.create(
+        'لا توجد نتائج',
+        'لم يتم العثور على دروس تطابق معايير البحث. حاول تغيير الفلاتر.',
+        'fa-search'
+      );
+      this.elements.contentGrid.appendChild(emptyState);
+      return;
+    }
+
+    this.state.filteredLessons.forEach((lesson) => {
+      const card = UI.VideoCard.create(lesson, (lesson) => {
+        PlayerManager.open(lesson);
+      });
+      this.elements.contentGrid.appendChild(card);
+    });
+  },
+};
+
+// ============================================
+// 🎬 START
+// ============================================
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => App.init());
+} else {
+  App.init();
+}
+
+window.addEventListener('error', (event) => {
+  console.error('Global error:', event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled rejection:', event.reason);
+});
+</script>
+
   </script>
 </body>
 </html>
