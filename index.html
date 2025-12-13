@@ -1,2035 +1,1744 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0b1220">
-  <meta name="description" content="مكتبة تعليمية تفاعلية للأطفال - Educational Library by Hayl Al-Khadhami">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.plyr.io https://cdn.jsdelivr.net https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://cdn.plyr.io https://cdnjs.cloudflare.com; img-src 'self' data: https:; media-src 'self' https:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com https://drive.google.com;">
-  
-  <title>مكتبة الدروس التفاعلية | Hayl Al-Khadhami</title>
-  
-  <!-- Favicon -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Interactive lessons library - Hayl Al-Khadhami" />
+  <title>مكتبة الدروس | Hayl Al-Khadhami</title>
+
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
-  
-  <!-- Preconnect to external domains for performance -->
-  <link rel="preconnect" href="https://cdn.plyr.io">
-  <link rel="preconnect" href="https://docs.google.com">
-  <link rel="preconnect" href="https://i.ytimg.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  
-  <!-- Progressive Web App Manifest -->
-  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItin2YTZhdin2YPYqtio2Kkg2KfZhNiq2LnZhNmK2YXZitipIiwKICAic2hvcnRfbmFtZSI6ICLZhdin2YPYqtio2Kkg2KfZhNiv2LHZiNizIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYjEyMjAiLAogICJ0aGVtZV9jb2xvciI6ICIjMGIxMjIwIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hhbGtoYWRoYW1pL2hhbGtoYWRoYW1pLmdpdGh1Yi5pby9tYXN0ZXIvaW1hZ2VzL2Zhdmljb24ucG5nIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
-  
-  <!-- External Libraries -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-  
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
+
+  <!-- Video.js (optional but good for consistent controls & pseudo-fullscreen UI) -->
+  <link rel="stylesheet" href="https://vjs.zencdn.net/8.16.1/video-js.css" />
+
   <style>
-    /* ============================================
-       🎨 CSS CUSTOM PROPERTIES (Design System)
-       ============================================ */
-    :root {
-      /* Color Palette */
-      --color-primary: #4ea1ff;
-      --color-primary-dark: #3d8ae6;
-      --color-primary-light: #6fb4ff;
-      --color-secondary: #b46eff;
-      --color-success: #3ddc97;
-      --color-danger: #ff5b6e;
-      --color-warning: #ffb946;
-      --color-info: #4ea1ff;
-      
-      /* Neutral Colors */
-      --color-bg-primary: #0b1220;
-      --color-bg-secondary: #121b2f;
-      --color-bg-tertiary: #1a2538;
-      --color-surface: rgba(18, 27, 47, 0.92);
-      --color-text-primary: #eef3ff;
-      --color-text-secondary: #9fb0d0;
-      --color-text-muted: #6b7a99;
-      --color-border: rgba(255, 255, 255, 0.1);
-      --color-border-focus: rgba(78, 161, 255, 0.5);
-      
-      /* Spacing Scale */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
-      --space-2xl: 48px;
-      
-      /* Typography */
-      --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      --font-size-xs: 11px;
-      --font-size-sm: 13px;
-      --font-size-base: 15px;
-      --font-size-lg: 17px;
-      --font-size-xl: 20px;
-      --font-size-2xl: 24px;
-      --font-size-3xl: 32px;
-      --font-weight-normal: 400;
-      --font-weight-medium: 600;
-      --font-weight-bold: 700;
-      --font-weight-black: 900;
-      --line-height-tight: 1.25;
-      --line-height-normal: 1.5;
-      --line-height-loose: 1.75;
-      
-      /* Border Radius */
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-      --radius-full: 9999px;
-      
-      /* Shadows */
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
-      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
-      
-      /* Transitions */
-      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-      
-      /* Z-index Scale */
-      --z-dropdown: 1000;
-      --z-sticky: 1020;
-      --z-fixed: 1030;
-      --z-modal-backdrop: 1040;
-      --z-modal: 1050;
-      --z-popover: 1060;
-      --z-tooltip: 1070;
-      
-      /* Layout */
-      --container-max-width: 1280px;
-      --header-height: 64px;
-      --safe-area-inset-top: env(safe-area-inset-top, 0px);
-      --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-      --safe-area-inset-left: env(safe-area-inset-left, 0px);
-      --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    :root{
+      --bg:#0b1220;
+      --card:#121b2f;
+      --muted:#9fb0d0;
+      --text:#eef3ff;
+      --line: rgba(255,255,255,.10);
+      --accent:#4ea1ff;
+      --danger:#ff5b6e;
+      --warning:#ffc107;
+      --ok:#3ddc97;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --transition: all .25s cubic-bezier(.4,0,.2,1);
+      --vjs-primary: var(--accent);
     }
-
-    /* ============================================
-       🔧 BASE & RESET
-       ============================================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-family-base);
-      font-size: var(--font-size-base);
-      line-height: var(--line-height-normal);
-      color: var(--color-text-primary);
-      background: 
-        radial-gradient(1200px 600px at 70% 10%, rgba(78, 161, 255, 0.15), transparent),
-        radial-gradient(900px 500px at 10% 30%, rgba(180, 110, 255, 0.12), transparent),
-        var(--color-bg-primary);
-      min-height: 100vh;
+    html, body { height: 100%; margin: 0; }
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 70% 10%, rgba(78,161,255,.20), transparent),
+        radial-gradient(900px 500px at 10% 30%, rgba(180,110,255,.14), transparent),
+        var(--bg);
+      color: var(--text);
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
-    /* ============================================
-       🎯 UTILITY CLASSES
-       ============================================ */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
+    /* Light theme */
+    [data-theme="light"]{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --muted:#64748b;
+      --text:#0f172a;
+      --line: rgba(0,0,0,.10);
+      --accent:#3b82f6;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --ok:#10b981;
+      --shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+
+    .safe-top{ padding-top: env(safe-area-inset-top); }
+    .safe-bottom{ padding-bottom: env(safe-area-inset-bottom); }
+
+    /* Top bar */
+    .topbar{
+      position: sticky; top:0; z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,18,32,.92);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+    [data-theme="light"] .topbar{
+      background: rgba(248,250,252,.92);
+    }
+
+    .brand{
+      display:flex; align-items:flex-start; justify-content: space-between;
+      gap: 12px; padding: 14px 14px;
+    }
+    .brand .title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      background: linear-gradient(90deg, var(--accent), #9c6dff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand .subtitle{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .brand .right{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; justify-content:flex-end; }
+    .pill{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      font-size: 12px; color: var(--muted);
       white-space: nowrap;
-      border-width: 0;
-    }
-
-    .skeleton {
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.05) 25%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.05) 75%
-      );
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* ============================================
-       🎪 TOAST NOTIFICATION SYSTEM
-       ============================================ */
-    .toast-container {
-      position: fixed;
-      top: calc(var(--header-height) + var(--space-md) + var(--safe-area-inset-top));
-      left: var(--space-md);
-      right: var(--space-md);
-      z-index: var(--z-tooltip);
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    .toast {
-      padding: var(--space-md);
-      border-radius: var(--radius-md);
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-lg);
-      pointer-events: auto;
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      animation: slideInDown var(--transition-base);
-      backdrop-filter: blur(12px);
-    }
-
-    .toast--success { border-color: var(--color-success); }
-    .toast--error { border-color: var(--color-danger); }
-    .toast--warning { border-color: var(--color-warning); }
-    .toast--info { border-color: var(--color-info); }
-
-    .toast__icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      display: grid;
-      place-items: center;
-      border-radius: var(--radius-full);
-    }
-
-    .toast--success .toast__icon { background: var(--color-success); color: #fff; }
-    .toast--error .toast__icon { background: var(--color-danger); color: #fff; }
-    .toast--warning .toast__icon { background: var(--color-warning); color: #000; }
-    .toast--info .toast__icon { background: var(--color-info); color: #fff; }
-
-    .toast__message {
-      flex: 1;
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-medium);
-    }
-
-    .toast__close {
-      flex-shrink: 0;
-      background: none;
-      border: none;
-      color: var(--color-text-secondary);
-      cursor: pointer;
-      padding: var(--space-xs);
-      opacity: 0.7;
-      transition: opacity var(--transition-fast);
-    }
-
-    .toast__close:hover {
-      opacity: 1;
-    }
-
-    /* ============================================
-       📱 HEADER
-       ============================================ */
-    .app-header {
-      position: sticky;
-      top: 0;
-      z-index: var(--z-sticky);
-      background: rgba(11, 18, 32, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      padding-top: var(--safe-area-inset-top);
-    }
-
-    .app-header__inner {
-      max-width: var(--container-max-width);
-      margin: 0 auto;
-      padding: var(--space-md);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-md);
-      min-height: var(--header-height);
-    }
-
-    .app-header__brand {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .app-header__title {
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-black);
-      color: var(--color-text-primary);
-      margin: 0;
-      letter-spacing: -0.025em;
-    }
-
-    .app-header__subtitle {
-      font-size: var(--font-size-xs);
-      color: var(--color-text-secondary);
-      margin-top: var(--space-xs);
-      display: none;
-    }
-
-    @media (min-width: 640px) {
-      .app-header__subtitle {
-        display: block;
-      }
-    }
-
-    .app-header__actions {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-md);
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-bold);
-      font-family: inherit;
-      line-height: 1;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      border: 1px solid transparent;
-      white-space: nowrap;
+      transition: var(--transition);
       user-select: none;
     }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
+    [data-theme="light"] .pill{ background: rgba(0,0,0,.06); }
+    .pill strong{ color: var(--text); font-weight: 900; }
+    .pill:hover{ transform: translateY(-1px); box-shadow: 0 4px 12px rgba(78,161,255,.18); }
+    .iconBtn{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition: var(--transition);
+      color: var(--text);
     }
+    [data-theme="light"] .iconBtn{ background: rgba(0,0,0,.06); }
+    .iconBtn:hover{ transform: rotate(8deg); }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
+    /* Container */
+    .container{
+      max-width: 1120px;
+      margin: 14px auto 24px;
+      padding: 0 12px;
     }
-
-    .btn--primary {
-      background: linear-gradient(135deg, rgba(78, 161, 255, 0.3), rgba(78, 161, 255, 0.2));
-      border-color: rgba(78, 161, 255, 0.5);
-      color: var(--color-text-primary);
-      box-shadow: 0 2px 8px rgba(78, 161, 255, 0.2);
+    .card{
+      background: rgba(18,27,47,.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      overflow: hidden;
     }
+    [data-theme="light"] .card{ background: rgba(255,255,255,.92); }
 
-    .btn--primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, rgba(78, 161, 255, 0.4), rgba(78, 161, 255, 0.3));
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(78, 161, 255, 0.3);
+    /* Filters */
+    .filters{
+      display:grid;
+      grid-template-columns: 1fr 190px 190px auto;
+      gap: 12px;
+      padding: 14px;
+      align-items: end;
     }
-
-    .btn--primary:active:not(:disabled) {
-      transform: translateY(0);
+    .field label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 800;
     }
-
-    .btn--ghost {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--color-border);
-      color: var(--color-text-primary);
-    }
-
-    .btn--ghost:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--color-border-focus);
-    }
-
-    .btn--success {
-      background: rgba(61, 220, 151, 0.15);
-      border-color: rgba(61, 220, 151, 0.4);
-      color: #c8ffe9;
-    }
-
-    .btn--success:hover:not(:disabled) {
-      background: rgba(61, 220, 151, 0.25);
-    }
-
-    .btn--icon {
-      width: 40px;
-      height: 40px;
-      padding: 0;
-      border-radius: var(--radius-full);
-    }
-
-    /* ============================================
-       🎛️ FILTERS SECTION
-       ============================================ */
-    .filters-section {
-      max-width: var(--container-max-width);
-      margin: var(--space-lg) auto;
-      padding: 0 var(--space-md);
-    }
-
-    .filters-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      box-shadow: var(--shadow-md);
-      animation: fadeIn var(--transition-base);
-    }
-
-    .filters-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-md);
-    }
-
-    @media (min-width: 640px) {
-      .filters-grid {
-        grid-template-columns: 2fr 1fr 1fr;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .filters-grid {
-        grid-template-columns: 2fr 1fr 1fr auto;
-      }
-    }
-
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    .form-label {
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-secondary);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .form-input,
-    .form-select {
+    .field input, .field select{
       width: 100%;
-      padding: 12px var(--space-md);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--color-text-primary);
-      font-size: var(--font-size-base);
-      font-family: inherit;
-      transition: all var(--transition-fast);
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.10);
+      color: var(--text);
       outline: none;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+    [data-theme="light"] .field input,
+    [data-theme="light"] .field select{
+      background: rgba(0,0,0,.05);
+    }
+    .field input:focus, .field select:focus{
+      border-color: rgba(78,161,255,.6);
+      box-shadow: 0 0 0 3px rgba(78,161,255,.14);
+    }
+    .field select option{
+      background: var(--card);
+      color: var(--text);
     }
 
-    .form-input:focus,
-    .form-select:focus {
-      border-color: var(--color-border-focus);
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 0 0 3px rgba(78, 161, 255, 0.15);
+    .meta{
+      display:flex; align-items:center; justify-content:flex-end;
+      gap: 10px; white-space: nowrap;
     }
-
-    .form-input::placeholder {
-      color: var(--color-text-muted);
+    .status{
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 44vw;
+      overflow:hidden; text-overflow: ellipsis;
+      display:flex; align-items:center; gap: 8px;
     }
-
-    .form-select option {
-      background: var(--color-bg-secondary);
-      color: var(--color-text-primary);
+    .status.error{ color: var(--danger); }
+    .status.warn{ color: var(--warning); }
+    .status.ok{ color: var(--ok); }
+    .btn{
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(78,161,255,.35);
+      background: rgba(78,161,255,.18);
+      color: var(--text);
+      cursor:pointer;
+      font-size: 13px;
+      font-weight: 900;
+      transition: var(--transition);
+      display:inline-flex; align-items:center; gap: 8px;
+      user-select: none;
     }
-
-    .filters-meta {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--space-md);
-      grid-column: 1 / -1;
+    [data-theme="light"] .btn{
+      background: rgba(59,130,246,.15);
+      border-color: rgba(59,130,246,.30);
     }
+    .btn:hover{ transform: translateY(-1px); background: rgba(78,161,255,.26); }
+    .btn:active{ transform: translateY(1px); }
 
-    @media (min-width: 1024px) {
-      .filters-meta {
-        grid-column: auto;
-        flex-direction: column;
-        align-items: stretch;
-      }
+    /* Grid */
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
     }
+    .item{ grid-column: span 12; display:flex; flex-direction: column; }
+    @media (min-width: 720px){ .item{ grid-column: span 6; } }
+    @media (min-width: 1020px){ .item{ grid-column: span 4; } }
 
-    .status-badge {
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--radius-sm);
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-bold);
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--color-text-secondary);
-      text-align: center;
+    .item .head{ padding: 16px 16px 12px; border-bottom: 1px solid var(--line); }
+    .item .item-title{
+      font-size: 16px; font-weight: 900;
+      margin:0 0 8px; line-height: 1.35;
+      display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden;
     }
-
-    .status-badge--loading {
-      background: rgba(78, 161, 255, 0.15);
-      color: var(--color-primary-light);
+    .item .sub{
+      font-size: 12px; color: var(--muted);
+      display:flex; gap: 10px; flex-wrap: wrap; align-items:center;
     }
-
-    .status-badge--error {
-      background: rgba(255, 91, 110, 0.15);
-      color: var(--color-danger);
+    .badge{
+      display:inline-flex; padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      line-height: 1.2;
+      font-size: 11px;
+      transition: var(--transition);
     }
+    [data-theme="light"] .badge{ background: rgba(0,0,0,.05); }
+    .badge.offline{ border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.12); color: #c8ffe9; }
 
-    .status-badge--success {
-      background: rgba(61, 220, 151, 0.15);
-      color: var(--color-success);
-    }
-
-    /* ============================================
-       🎬 CONTENT GRID
-       ============================================ */
-    .content-section {
-      max-width: var(--container-max-width);
-      margin: 0 auto var(--space-2xl);
-      padding: 0 var(--space-md);
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: var(--space-lg);
-      animation: fadeIn var(--transition-slow);
-    }
-
-    @media (min-width: 640px) {
-      .content-grid {
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      }
-    }
-
-    /* Loading Skeletons */
-    .skeleton-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .skeleton-card__header {
-      padding: var(--space-md);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .skeleton-card__title {
-      height: 20px;
-      width: 80%;
-      border-radius: var(--radius-sm);
-    }
-
-    .skeleton-card__meta {
-      height: 14px;
-      width: 60%;
-      border-radius: var(--radius-sm);
-    }
-
-    .skeleton-card__thumbnail {
-      width: 100%;
-      padding-bottom: 56.25%;
-      position: relative;
-    }
-
-    .skeleton-card__actions {
-      padding: var(--space-md);
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    .skeleton-card__button {
-      flex: 1;
-      height: 40px;
-      border-radius: var(--radius-md);
-    }
-
-    /* Video Card */
-    .video-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: all var(--transition-base);
-      animation: scaleIn var(--transition-base);
-      position: relative;
-    }
-
-    .video-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(78, 161, 255, 0.3);
-    }
-
-    .video-card__header {
-      padding: var(--space-md);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .video-card__title {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-primary);
-      margin: 0 0 var(--space-sm);
-      line-height: var(--line-height-tight);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .video-card__meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xs);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      padding: 4px var(--space-sm);
-      border-radius: var(--radius-full);
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-bold);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-secondary);
-    }
-
-    .badge--category {
-      background: rgba(78, 161, 255, 0.15);
-      border-color: rgba(78, 161, 255, 0.3);
-      color: var(--color-primary-light);
-    }
-
-    .video-card__thumbnail {
+    .viewer{
       position: relative;
       width: 100%;
       padding-bottom: 56.25%;
+      height: 0;
       background: #000;
       overflow: hidden;
       cursor: pointer;
       user-select: none;
+      transition: var(--transition);
     }
-
-    .video-card__thumbnail-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--transition-slow);
+    .viewer img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit: cover; display:block; border:0;
+      filter: saturate(1.05);
+      transform: scale(1.01);
+      transition: var(--transition);
     }
-
-    .video-card:hover .video-card__thumbnail-img {
-      transform: scale(1.05);
+    .viewer:hover img{
+      transform: scale(1.03);
+      filter: brightness(1.05) saturate(1.1);
     }
-
-    .video-card__thumbnail-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.2),
-        rgba(0, 0, 0, 0.6)
-      );
-      transition: background var(--transition-base);
+    .viewer .overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.12), rgba(0,0,0,.62));
+      display:flex; align-items:center; justify-content:center;
+      opacity: 0;
+      transition: var(--transition);
     }
-
-    .video-card:hover .video-card__thumbnail-overlay {
-      background: rgba(0, 0, 0, 0.3);
+    .viewer:hover .overlay{ opacity: 1; }
+    .viewer .play{
+      width: 62px; height: 62px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,.88);
+      background: rgba(0,0,0,.35);
+      display:grid; place-items:center;
+      box-shadow: 0 12px 30px rgba(0,0,0,.55);
+      transition: var(--transition);
     }
-
-    .play-button {
-      width: 68px;
-      height: 68px;
-      border-radius: var(--radius-full);
-      background: rgba(255, 255, 255, 0.95);
-      border: none;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all var(--transition-base);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    .video-card:hover .play-button {
-      transform: scale(1.15);
-      background: #fff;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-    }
-
-    .play-button::before {
-      content: '';
-      width: 0;
-      height: 0;
+    .viewer:hover .play{ transform: scale(1.08); border-color: rgba(255,255,255,1); }
+    .viewer .play:before{
+      content:"";
+      width:0; height:0;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;
-      border-left: 18px solid var(--color-primary);
+      border-left: 18px solid rgba(255,255,255,.96);
       margin-left: 4px;
+      display:block;
     }
 
-    .video-card__actions {
-      padding: var(--space-md);
-      display: flex;
-      gap: var(--space-sm);
-      border-top: 1px solid var(--color-border);
-      background: rgba(0, 0, 0, 0.2);
+    .actions{
+      padding: 12px 16px 16px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.14);
+    }
+    [data-theme="light"] .actions{ background: rgba(0,0,0,.03); }
+    .actions button, .actions a{
+      flex: 1 1 140px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
+      cursor:pointer;
+      font-size: 13px;
+      font-weight: 900;
+      font-family: inherit;
+      text-align:center;
+      white-space: nowrap;
+      transition: var(--transition);
+      display:flex; align-items:center; justify-content:center; gap: 8px;
+      user-select: none;
+    }
+    [data-theme="light"] .actions button,
+    [data-theme="light"] .actions a{
+      background: rgba(0,0,0,.04);
+    }
+    .actions button:hover, .actions a:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,.18);
+    }
+    .actions .primary{
+      background: rgba(78,161,255,.18);
+      border-color: rgba(78,161,255,.35);
+    }
+    .actions .download{
+      background: rgba(61,220,151,.12);
+      border-color: rgba(61,220,151,.33);
+      color: #c8ffe9;
+    }
+    [data-theme="light"] .actions .download{
+      background: rgba(16,185,129,.10);
+      border-color: rgba(16,185,129,.30);
+      color: #059669;
+    }
+    .actions .offline{
+      background: rgba(255,193,7,.10);
+      border-color: rgba(255,193,7,.25);
+      color: #ffe9a8;
+    }
+    [data-theme="light"] .actions .offline{ color: #7c5b00; }
+    .actions .danger{
+      background: rgba(255,91,110,.12);
+      border-color: rgba(255,91,110,.25);
+      color: #ffcdd2;
     }
 
-    .video-card__actions .btn {
-      flex: 1;
-    }
-
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: var(--space-2xl) var(--space-lg);
-      animation: fadeIn var(--transition-slow);
-    }
-
-    .empty-state__icon {
-      font-size: 64px;
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-lg);
-    }
-
-    .empty-state__title {
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-primary);
-      margin-bottom: var(--space-sm);
-    }
-
-    .empty-state__description {
-      font-size: var(--font-size-base);
-      color: var(--color-text-secondary);
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    /* ============================================
-       🎥 VIDEO PLAYER MODAL
-       ============================================ */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: var(--z-modal-backdrop);
+    /* Modal player */
+    #playerModal{
+      position: fixed; inset: 0;
+      z-index: 9999;
+      display: none;
+      background: rgba(0,0,0,.95);
+      backdrop-filter: blur(10px);
       opacity: 0;
-      transition: opacity var(--transition-base);
-      pointer-events: none;
+      transition: opacity .25s ease;
     }
-
-    .modal-backdrop.is-active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .player-modal {
-      position: fixed;
-      inset: 0;
-      z-index: var(--z-modal);
-      display: flex;
+    #playerModal.open{ display:flex; opacity: 1; }
+    #playerShell{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display:flex;
       flex-direction: column;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all var(--transition-base);
-      pointer-events: none;
+    }
+    #playerBar{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 14px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(11,18,32,.95);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    [data-theme="light"] #playerBar{
+      background: rgba(248,250,252,.95);
+      border-bottom: 1px solid rgba(0,0,0,.10);
+    }
+    #playerTitle{
+      flex: 1; min-width: 0;
+      font-size: 14px; font-weight: 900;
+      overflow:hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .barBtn, .barLink{
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: var(--transition);
+      display:inline-flex; align-items:center; gap: 8px;
+      user-select: none;
+    }
+    [data-theme="light"] .barBtn,
+    [data-theme="light"] .barLink{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(0,0,0,.10);
+    }
+    .barBtn:hover, .barLink:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); }
+    [data-theme="light"] .barBtn:hover,
+    [data-theme="light"] .barLink:hover{ background: rgba(0,0,0,.10); }
+    .barBtn:active, .barLink:active{ transform: translateY(1px); }
+
+    #playerStage{
+      flex: 1 1 auto;
+      min-height: 0;
+      background: #000;
+      position: relative;
+      display:flex; align-items:center; justify-content:center;
     }
 
-    .player-modal.is-active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
+    .player-loading{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap: 12px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(2px);
+      z-index: 2;
     }
-
-    .player-modal__header {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      gap: var(--space-md);
-      padding: var(--space-md);
-      padding-top: calc(var(--space-md) + var(--safe-area-inset-top));
-      background: var(--color-bg-primary);
-      border-bottom: 1px solid var(--color-border);
+    .player-loading.is-hidden{ display:none; }
+    .spinner{
+      width: 44px; height: 44px;
+      border-radius: 999px;
+      border: 4px solid rgba(255,255,255,.12);
+      border-top-color: var(--accent);
+      animation: spin 1s linear infinite;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .player-modal__title {
-      flex: 1;
-      min-width: 0;
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-primary);
-      overflow: hidden;
-      text-overflow: ellipsis;
+    /* Pseudo fullscreen for WebView fallback */
+    #playerModal.pseudo-fullscreen #playerBar{
+      position:absolute;
+      top: env(safe-area-inset-top);
+      left: 0; right: 0;
+      border-bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+    #playerModal.pseudo-fullscreen #playerStage{
+      position:absolute;
+      inset: 0;
+    }
+    .video-js{ width: 100%; height: 100%; }
+    .vjs-control-bar{
+      padding-bottom: env(safe-area-inset-bottom);
+      background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.08));
+    }
+    .vjs-volume-panel{ display:none; } /* mobile-friendly */
+    .vjs-remaining-time{ display:none; }
+
+    /* Offline drawer (simple) */
+    #offlinePanel{
+      position: fixed;
+      inset: auto 0 0 0;
+      transform: translateY(110%);
+      transition: transform .25s ease;
+      z-index: 9998;
+      background: rgba(18,27,47,.97);
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -12px 40px rgba(0,0,0,.45);
+      padding-bottom: env(safe-area-inset-bottom);
+      max-height: 78vh;
+      overflow:auto;
+    }
+    [data-theme="light"] #offlinePanel{ background: rgba(255,255,255,.97); }
+    #offlinePanel.open{ transform: translateY(0); }
+    #offlinePanel .panelHeader{
+      padding: 14px 14px;
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+      border-bottom: 1px solid var(--line);
+      position: sticky; top: 0;
+      background: inherit;
+      backdrop-filter: blur(12px);
+      z-index: 2;
+    }
+    #offlinePanel .panelHeader h3{
+      margin:0; font-size: 14px; font-weight: 900;
+    }
+    #offlinePanel .panelBody{ padding: 14px; }
+    .panelRow{
+      display:flex; gap: 12px; align-items:center; justify-content: space-between;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      margin-bottom: 10px;
+    }
+    [data-theme="light"] .panelRow{ background: rgba(0,0,0,.04); }
+    .panelRow .metaTxt{ color: var(--muted); font-size: 12px; margin-top: 6px; }
+    .miniBtn{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 900;
+      display:inline-flex; align-items:center; gap: 8px;
+      transition: var(--transition);
       white-space: nowrap;
     }
 
-    .player-modal__stage {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-      position: relative;
+    /* Footer */
+    .footer{
+      margin-top: 24px;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      transition: var(--transition);
     }
-
-    .player-modal__stage video,
-    .player-modal__stage iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-
-    .player-modal__stage video {
-      object-fit: contain;
-    }
-
-    .player-modal__loading {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-md);
-      color: var(--color-text-secondary);
-    }
-
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--color-primary);
-      border-radius: var(--radius-full);
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ============================================
-       👣 FOOTER
-       ============================================ */
-    .app-footer {
-      margin-top: var(--space-2xl);
-      border-top: 1px solid var(--color-border);
-      background: rgba(0, 0, 0, 0.3);
-      padding: var(--space-xl) var(--space-md);
-      padding-bottom: calc(var(--space-xl) + var(--safe-area-inset-bottom));
-    }
-
-    .app-footer__inner {
-      max-width: var(--container-max-width);
-      margin: 0 auto;
-    }
-
-    .app-footer__content {
-      display: flex;
-      flex-wrap: wrap;
+    [data-theme="light"] .footer{ background: rgba(0,0,0,.03); border-top: 1px solid rgba(0,0,0,.08); }
+    .footer .container{ max-width: 1100px; margin: 0 auto; padding: 28px 12px; }
+    .footer-content{
+      display:flex;
+      gap: 24px;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-lg);
-      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
     }
-
-    .app-footer__brand h3 {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-black);
-      color: var(--color-text-primary);
-      margin: 0 0 var(--space-xs);
+    .footer-logo h3{
+      margin:0;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--accent), #9c6dff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
-    .app-footer__brand p {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      margin: 0;
+    .footer-logo p{
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
     }
-
-    .app-footer__social {
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    .social-link {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--color-text-primary);
-      text-decoration: none;
-      transition: all var(--transition-fast);
+    .footer-social{ display:flex; gap: 14px; align-items:center; }
+    .footer-social a{
+      width: 48px; height: 48px;
+      display:grid; place-items:center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
+      transition: var(--transition);
       font-size: 18px;
     }
-
-    .social-link:hover {
-      background: rgba(78, 161, 255, 0.2);
-      border-color: var(--color-primary);
-      transform: translateY(-2px);
+    [data-theme="light"] .footer-social a{ background: rgba(0,0,0,.05); }
+    .footer-social a:hover{
+      transform: translateY(-3px);
+      background: rgba(78,161,255,.2);
+      border-color: rgba(78,161,255,.4);
     }
+    .footer-bottom{
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 13px;
+      text-align:center;
+      line-height: 1.6;
+    }
+    [data-theme="light"] .footer-bottom{ border-top: 1px solid rgba(0,0,0,.08); }
 
-    .app-footer__bottom {
-      padding-top: var(--space-lg);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    /* Toast */
+    #toast{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      opacity: 0;
+      background: rgba(30,41,59,.95);
+      color: var(--text);
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      z-index: 10000;
+      display:flex; align-items:center; gap: 10px;
+      transition: transform .25s ease, opacity .25s ease;
+      max-width: 92vw;
       text-align: center;
+      font-weight: 800;
+    }
+    [data-theme="light"] #toast{ background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.1); }
+    #toast.show{ transform: translateX(-50%) translateY(0); opacity: 1; }
+    #toast.success{ border-color: rgba(61,220,151,.4); }
+    #toast.error{ border-color: rgba(255,91,110,.4); }
+    #toast.warning{ border-color: rgba(255,193,7,.4); }
+
+    @media (max-width: 820px){
+      .filters{ grid-template-columns: 1fr; }
+      .meta{ justify-content: space-between; }
+      .actions button, .actions a{ flex: 1 1 100%; }
+      .status{ max-width: 55vw; }
     }
 
-    .app-footer__bottom p {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-muted);
-      margin: 0;
-    }
-
-    /* ============================================
-       📱 RESPONSIVE ADJUSTMENTS
-       ============================================ */
-    @media (max-width: 640px) {
-      :root {
-        --space-md: 12px;
-        --space-lg: 20px;
-      }
-
-      .app-header__title {
-        font-size: var(--font-size-lg);
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .video-card__actions {
-        flex-direction: column;
-      }
-
-      .video-card__actions .btn {
-        width: 100%;
-      }
-    }
-
-    /* ============================================
-       ♿ ACCESSIBILITY
-       ============================================ */
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Focus visible for keyboard navigation */
-    :focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
-
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-      :root {
-        --color-border: rgba(255, 255, 255, 0.3);
-      }
+    @media (prefers-reduced-motion: reduce){
+      *{ transition: none !important; animation: none !important; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Toast Notification Container -->
-  <div id="toast-container" class="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div class="safe-top"></div>
 
-  <!-- App Header -->
-  <header class="app-header" role="banner">
-    <div class="app-header__inner">
-      <div class="app-header__brand">
-        <h1 class="app-header__title">🎬 مكتبة الدروس</h1>
-        <p class="app-header__subtitle">منصة تعليمية تفاعلية للأطفال</p>
+  <header class="topbar">
+    <div class="brand">
+      <div class="left">
+        <div class="title">🎬 مكتبة الدروس</div>
+        <div class="subtitle">تجربة محسّنة للموبايل + Website2APK + أوفلاين (OPFS)</div>
       </div>
-      <div class="app-header__actions">
-        <button 
-          id="refresh-btn" 
-          class="btn btn--primary" 
-          type="button"
-          aria-label="إعادة تحميل البيانات">
-          <i class="fas fa-sync-alt" aria-hidden="true"></i>
-          <span>تحديث</span>
+
+      <div class="right">
+        <button class="iconBtn" id="themeToggle" title="تبديل المظهر" type="button" aria-label="Theme">
+          <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="pill" title="عدد الدروس">
+          <i class="fas fa-list"></i>
+          <strong id="countPill">0</strong>
+        </div>
+
+        <button class="pill" id="btnOfflinePanel" type="button" title="إدارة الأوفلاين">
+          <i class="fas fa-box-archive"></i>
+          <span>Offline</span>
+          <strong id="offlineCountPill">0</strong>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main id="app-main" role="main">
-    <!-- Filters Section -->
-    <section class="filters-section" aria-label="خيارات البحث والتصفية">
-      <div class="filters-card">
-        <form id="filters-form" class="filters-grid" role="search">
-          <div class="form-field">
-            <label for="search-input" class="form-label">
-              <i class="fas fa-search" aria-hidden="true"></i>
-              بحث
-            </label>
-            <input 
-              type="search" 
-              id="search-input" 
-              class="form-input" 
-              placeholder="ابحث بالعنوان..."
-              autocomplete="off"
-              aria-label="البحث في الدروس">
-          </div>
+  <main class="container">
+    <section class="filters card" aria-label="Filters">
+      <div class="field">
+        <label for="q">بحث</label>
+        <input id="q" type="search" placeholder="ابحث بالعنوان..." autocomplete="off" />
+      </div>
 
-          <div class="form-field">
-            <label for="category-select" class="form-label">
-              <i class="fas fa-folder" aria-hidden="true"></i>
-              المادة
-            </label>
-            <select 
-              id="category-select" 
-              class="form-select"
-              aria-label="اختر المادة">
-              <option value="all">كل المواد</option>
-            </select>
-          </div>
+      <div class="field">
+        <label for="category">المادة</label>
+        <select id="category"></select>
+      </div>
 
-          <div class="form-field">
-            <label for="time-select" class="form-label">
-              <i class="fas fa-calendar" aria-hidden="true"></i>
-              الفترة
-            </label>
-            <select 
-              id="time-select" 
-              class="form-select"
-              aria-label="اختر الفترة الزمنية">
-              <option value="all">الكل</option>
-              <option value="today">اليوم</option>
-              <option value="yesterday">أمس</option>
-              <option value="week">آخر أسبوع</option>
-              <option value="month">آخر شهر</option>
-              <option value="year">آخر سنة</option>
-            </select>
-          </div>
+      <div class="field">
+        <label for="time">الفترة</label>
+        <select id="time">
+          <option value="all">الكل</option>
+          <option value="today">اليوم</option>
+          <option value="yesterday">أمس</option>
+          <option value="week">آخر أسبوع</option>
+          <option value="month">آخر شهر</option>
+          <option value="year">آخر سنة</option>
+        </select>
+      </div>
 
-          <div class="filters-meta">
-            <div id="status-badge" class="status-badge" role="status" aria-live="polite">
-              جاهز
-            </div>
-          </div>
-        </form>
+      <div class="meta">
+        <div id="status" class="status ok"><i class="fas fa-check-circle"></i> جاهز</div>
+        <button id="reload" class="btn" type="button"><i class="fas fa-sync-alt"></i> تحديث</button>
       </div>
     </section>
 
-    <!-- Content Grid -->
-    <section class="content-section">
-      <div id="content-grid" class="content-grid" role="list" aria-label="قائمة الدروس"></div>
-    </section>
+    <section id="list" class="grid" aria-label="Lessons"></section>
   </main>
 
-  <!-- Video Player Modal -->
-  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true"></div>
-  <div id="player-modal" class="player-modal" role="dialog" aria-modal="true" aria-labelledby="player-modal-title" aria-hidden="true">
-    <div class="player-modal__header">
-      <button 
-        id="close-modal-btn" 
-        class="btn btn--ghost" 
-        type="button"
-        aria-label="إغلاق المشغل">
-        <i class="fas fa-times" aria-hidden="true"></i>
-        إغلاق
-      </button>
-      <h2 id="player-modal-title" class="player-modal__title"></h2>
-      <a 
-        id="external-link-btn" 
-        href="#" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        class="btn btn--ghost"
-        style="display: none;"
-        aria-label="فتح في نافذة جديدة">
-        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-        <span class="sr-only">فتح خارجي</span>
-      </a>
+  <!-- Player Modal -->
+  <div id="playerModal" aria-hidden="true">
+    <div id="playerShell" class="safe-bottom">
+      <div id="playerBar" class="safe-top">
+        <button id="btnClose" class="barBtn" type="button"><i class="fas fa-times"></i> إغلاق</button>
+        <div id="playerTitle"></div>
+        <a id="btnExternal" class="barLink" href="#" target="_blank" rel="noopener" style="display:none"><i class="fas fa-external-link-alt"></i> فتح خارجي</a>
+        <button id="btnPseudoFs" class="barBtn" type="button" title="Fullscreen"><i class="fas fa-expand-alt"></i></button>
+      </div>
+
+      <div id="playerStage">
+        <!-- dynamic -->
+      </div>
     </div>
-    <div id="player-stage" class="player-modal__stage"></div>
+  </div>
+
+  <!-- Offline Panel -->
+  <section id="offlinePanel" aria-hidden="true">
+    <div class="panelHeader">
+      <h3><i class="fas fa-box-archive"></i> Offline Manager</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <button id="btnChooseFolder" class="miniBtn" type="button" title="اختيار مجلد (تجريبي)">
+          <i class="fas fa-folder-open"></i> Device Folder (Exp)
+        </button>
+        <button id="btnCloseOfflinePanel" class="miniBtn" type="button">
+          <i class="fas fa-chevron-down"></i> إغلاق
+        </button>
+      </div>
+    </div>
+    <div class="panelBody">
+      <div class="badge" style="margin-bottom:10px;">
+        <i class="fas fa-circle-info"></i>
+        التخزين الافتراضي: OPFS (خاص بالموقع). التصدير لمجلد جهازك: تجريبي.
+      </div>
+
+      <div id="offlineList"></div>
+    </div>
+  </section>
+
+  <!-- Toast -->
+  <div id="toast" role="status" aria-live="polite">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage"></span>
   </div>
 
   <!-- Footer -->
-  <footer class="app-footer" role="contentinfo">
-    <div class="app-footer__inner">
-
-      <div class="app-footer__bottom">
-	  <h3>Hayl Al-Khadhami</h3>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h3>Hayl Al-Khadhami</h3>
           <p>Automation Engineer | Researcher | Educator</p>
-        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved. Built with</p>
+        </div>
+
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.facebook.com/haylkhadhami" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://github.com/halkhadhami" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> Hayl Al-Khadhami. All rights reserved.</p>
+        <p><strong>Progressive Web App</strong></p>
       </div>
     </div>
   </footer>
 
-  <!-- External Libraries -->
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-  
-  <!-- Application Script -->
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <div class="safe-bottom"></div>
 
-<script>
-'use strict';
+  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
 
-// ============================================
-// 📊 CONFIGURATION
-// ============================================
-const CONFIG = {
-  SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv',
-  DEBOUNCE_DELAY: 300,
-  TOAST_DURATION: 4000,
-  CACHE_DURATION: 5 * 60 * 1000,
-  MAX_RETRIES: 3,
-  RETRY_DELAY: 1000,
-};
+  <script>
+  "use strict";
 
-const CATEGORY_CONFIG = {
-  ORDER: ['Arabic', 'Art', 'Chinese', 'English', 'Fun', 'Islamic', 'Kuran', 'Math', 'Other'],
-  TRANSLATIONS: {
-    Arabic: 'عربي',
-    Art: 'فن',
-    Chinese: 'صيني',
-    English: 'إنجليزي',
-    Fun: 'ترفيه',
-    Islamic: 'إسلاميات',
-    Kuran: 'قرآن',
-    Math: 'رياضيات',
-    Other: 'أخرى',
-  },
-};
+  /***********************
+   * Config
+   ***********************/
+  const CONFIG = {
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
+    categoryOrder: ["Arabic","Art","Chinese","English","Fun","Islamic","Kuran","Math","Other"],
+    categoryAr: {
+      Arabic:"عربي", Art:"فن", Chinese:"صيني", English:"إنجليزي",
+      Fun:"ترفيه", Islamic:"إسلاميات", Kuran:"قرآن", Math:"رياضيات", Other:"أخرى"
+    },
+    offline: {
+      // Only direct URLs with CORS will be savable offline by the browser.
+      // If you have a server/proxy that returns video with proper CORS headers, put it here.
+      proxyPrefix: "" // example: "https://your-proxy.example.com/fetch?url="
+    }
+  };
 
-// ============================================
-// 🛠️ UTILITIES
-// ============================================
-const Utils = {
-  debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
+  /***********************
+   * Utilities
+   ***********************/
+  class Utils {
+    static $ (sel, root=document){ return root.querySelector(sel); }
+    static $$ (sel, root=document){ return [...root.querySelectorAll(sel)]; }
+
+    static escapeHtml(s){
+      return String(s ?? "").replace(/[&<>"']/g, c => (
+        { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[c]
+      ));
+    }
+
+    static parseDDMMYYYY(s){
+      if (!s) return null;
+      const parts = String(s).trim().split("/");
+      if (parts.length !== 3) return null;
+      const [dd, mm, yyyy] = parts.map(Number);
+      if (!dd || !mm || !yyyy) return null;
+      return new Date(yyyy, mm-1, dd, 12, 0, 0);
+    }
+
+    static formatDateAr(d){
+      if (!d) return "—";
+      try { return new Intl.DateTimeFormat("ar", {year:"numeric",month:"2-digit",day:"2-digit"}).format(d); }
+      catch { return d.toLocaleDateString(); }
+    }
+
+    static daysBetween(a, b){
+      const MS = 86400000;
+      const d1 = new Date(a.getFullYear(), a.getMonth(), a.getDate());
+      const d2 = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+      return Math.round((d1 - d2) / MS);
+    }
+
+    static parseCSV(text){
+      const rows = [];
+      let row = [];
+      let cur = "";
+      let inQuotes = false;
+
+      for (let i=0; i<text.length; i++){
+        const ch = text[i];
+        const next = text[i+1];
+
+        if (ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
+        if (ch === '"'){ inQuotes = !inQuotes; continue; }
+
+        if (!inQuotes && ch === ","){ row.push(cur); cur=""; continue; }
+        if (!inQuotes && (ch === "\n" || ch === "\r")){
+          if (ch === "\r" && next === "\n") i++;
+          row.push(cur); cur="";
+          if (row.some(c => String(c).trim() !== "")) rows.push(row);
+          row = [];
+          continue;
+        }
+        cur += ch;
+      }
+      row.push(cur);
+      if (row.some(c => String(c).trim() !== "")) rows.push(row);
+      return rows;
+    }
+
+    static extractYoutubeId(url){
+      const s = String(url || "");
+      const m = s.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+      return m ? m[1] : null;
+    }
+
+    static extractDriveId(url){
+      const s = String(url || "");
+      const m1 = s.match(/\/file\/d\/([^/]+)/); if (m1) return m1[1];
+      const m2 = s.match(/[?&]id=([^&]+)/); if (m2) return m2[1];
+      const m3 = s.match(/\/d\/([^/]+)/); if (m3) return m3[1];
+      return null;
+    }
+
+    static driveLinks(url){
+      const id = this.extractDriveId(url);
+      if (!id) return null;
+      return {
+        id,
+        preview: `https://drive.google.com/file/d/${id}/preview`,
+        view: `https://drive.google.com/file/d/${id}/view`,
+        download: `https://drive.google.com/uc?export=download&id=${id}`,
+        thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
       };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  },
-
-  escapeHtml(unsafe) {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;',
-    };
-    return String(unsafe || '').replace(/[&<>"']/g, (m) => map[m]);
-  },
-
-  parseDate(dateStr) {
-    if (!dateStr) return null;
-    const parts = String(dateStr).trim().split('/');
-    if (parts.length !== 3) return null;
-    const [dd, mm, yyyy] = parts.map(Number);
-    if (!dd || !mm || !yyyy) return null;
-    return new Date(yyyy, mm - 1, dd, 12, 0, 0);
-  },
-
-  daysBetween(date1, date2) {
-    const MS_PER_DAY = 86400000;
-    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
-    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
-    return Math.round((d1 - d2) / MS_PER_DAY);
-  },
-
-  formatDate(date) {
-    if (!date) return '—';
-    try {
-      return new Intl.DateTimeFormat('ar', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }).format(date);
-    } catch {
-      return date.toLocaleDateString();
     }
-  },
 
-  extractYoutubeId(url) {
-    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-    const match = String(url || '').match(regex);
-    return match ? match[1] : null;
-  },
-
-  extractDriveId(url) {
-    const str = String(url || '');
-    const patterns = [
-      /\/file\/d\/([^/]+)/,
-      /[?&]id=([^&]+)/,
-      /\/d\/([^/]+)/,
-    ];
-    
-    for (const pattern of patterns) {
-      const match = str.match(pattern);
-      if (match) return match[1];
+    static guessType(url){
+      const u = String(url||"").toLowerCase();
+      const clean = u.split("?")[0];
+      if (this.extractYoutubeId(url)) return "youtube";
+      if (u.includes("drive.google.com")) return "drive";
+      if (/\.(mp4|webm|ogg|m4v|mov)$/i.test(clean)) return "video";
+      if (/\.(m3u8)$/i.test(clean)) return "hls";
+      if (/\.(pdf)$/i.test(clean)) return "pdf";
+      if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(clean)) return "image";
+      return "link";
     }
-    return null;
-  },
 
-  getDriveUrls(url) {
-    const id = this.extractDriveId(url);
-    if (!id) return null;
-    return {
-      id,
-      preview: `https://drive.google.com/file/d/${id}/preview`,
-      download: `https://drive.google.com/uc?export=download&id=${id}`,
-      view: `https://drive.google.com/file/d/${id}/view`,
-      thumbnail: `https://drive.google.com/thumbnail?id=${id}&sz=w640`,
-    };
-  },
+    static formatBytes(bytes){
+      if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+      const k = 1024;
+      const sizes = ["B","KB","MB","GB","TB"];
+      const i = Math.floor(Math.log(bytes)/Math.log(k));
+      const val = bytes / Math.pow(k, i);
+      return `${val.toFixed(val >= 10 || i===0 ? 0 : 1)} ${sizes[i]}`;
+    }
 
-  getContentType(url) {
-    const urlLower = String(url || '').toLowerCase();
-    const cleanUrl = urlLower.split('?')[0];
+    static toastTimer = null;
+    static toast(message, type="info", ms=2600){
+      const t = Utils.$("#toast");
+      const msg = Utils.$("#toastMessage");
+      msg.textContent = message;
+      t.className = "";
+      t.classList.add(type);
+      t.classList.add("show");
+      clearTimeout(Utils.toastTimer);
+      Utils.toastTimer = setTimeout(() => t.classList.remove("show"), ms);
+    }
 
-    if (this.extractYoutubeId(url)) return 'youtube';
-    if (urlLower.includes('drive.google.com')) return 'drive';
-    if (/\.(mp4|webm|ogg|mov|m4v)$/i.test(cleanUrl)) return 'video';
-    if (/\.(pdf)$/i.test(cleanUrl)) return 'pdf';
-    if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(cleanUrl)) return 'image';
-    return 'link';
-  },
+    static setStatus(html, css="ok"){
+      const el = Utils.$("#status");
+      el.className = `status ${css}`;
+      el.innerHTML = html;
+    }
 
-  parseCSV(csv) {
-    const rows = [];
-    let row = [];
-    let current = '';
-    let inQuotes = false;
+    static sanitizeFileBase(name){
+      return String(name || "video")
+        .replace(/[^\p{L}\p{N}\-_ ]/gu, "")
+        .trim()
+        .replace(/\s+/g, "_")
+        .slice(0, 80) || "video";
+    }
+  }
 
-    for (let i = 0; i < csv.length; i++) {
-      const char = csv[i];
-      const next = csv[i + 1];
+  /***********************
+   * Offline Storage (OPFS + optional folder)
+   ***********************/
+  class OfflineStore {
+    constructor(){
+      this.metaKey = "offline_meta_v1";
+      this.folderHandleKey = "offline_device_folder_handle_v1";
+      this.meta = this._loadMeta();
+      this.deviceFolderHandle = null; // optional: set by showDirectoryPicker()
+    }
 
-      if (char === '"' && inQuotes && next === '"') {
-        current += '"';
-        i++;
-        continue;
+    isOpfsSupported(){
+      return !!(navigator.storage && navigator.storage.getDirectory);
+    }
+
+    isFolderPickerSupported(){
+      return typeof window.showDirectoryPicker === "function";
+    }
+
+    _loadMeta(){
+      try { return JSON.parse(localStorage.getItem(this.metaKey) || "{}"); }
+      catch { return {}; }
+    }
+    _saveMeta(){
+      localStorage.setItem(this.metaKey, JSON.stringify(this.meta));
+    }
+
+    list(){
+      return Object.values(this.meta).sort((a,b) => (b.savedAt||0)-(a.savedAt||0));
+    }
+
+    has(lessonId){
+      return !!this.meta[String(lessonId||"")];
+    }
+
+    getMeta(lessonId){
+      return this.meta[String(lessonId||"")] || null;
+    }
+
+    async _opfsRootDir(){
+      const root = await navigator.storage.getDirectory();
+      return await root.getDirectoryHandle("offline-videos", { create: true });
+    }
+
+    async _opfsGetFileHandle(lessonId, filename, create=false){
+      const dir = await this._opfsRootDir();
+      const safe = `${String(lessonId)}__${filename}`;
+      return await dir.getFileHandle(safe, { create });
+    }
+
+    async _opfsGetFileUrl(lessonId){
+      const m = this.getMeta(lessonId);
+      if (!m || !this.isOpfsSupported()) return null;
+      const fh = await this._opfsGetFileHandle(lessonId, m.filename, false);
+      const file = await fh.getFile();
+      return URL.createObjectURL(file);
+    }
+
+    // ===== Device folder mode (experimental) =====
+    async chooseDeviceFolder(){
+      if (!this.isFolderPickerSupported()){
+        throw new Error("Folder picker not supported on this browser/WebView.");
       }
+      // Must be called from a user click (MDN requirement).
+      const handle = await window.showDirectoryPicker();
+      this.deviceFolderHandle = handle;
+      Utils.toast("تم اختيار مجلد الجهاز (تجريبي).", "success");
+    }
 
-      if (char === '"') {
-        inQuotes = !inQuotes;
-        continue;
-      }
+    async _deviceWriteFile(filename, blob){
+      if (!this.deviceFolderHandle) throw new Error("No device folder selected.");
+      const fh = await this.deviceFolderHandle.getFileHandle(filename, { create: true });
+      const writable = await fh.createWritable();
+      await writable.write(blob);
+      await writable.close();
+    }
 
-      if (!inQuotes && char === ',') {
-        row.push(current);
-        current = '';
-        continue;
-      }
+    // ===== Save offline =====
+    async save(lessonId, title, sourceUrl, onProgress){
+      const id = String(lessonId || "");
+      if (!id) throw new Error("Missing LessonID");
 
-      if (!inQuotes && (char === '\n' || char === '\r')) {
-        if (char === '\r' && next === '\n') i++;
-        row.push(current);
-        current = '';
-        if (row.some((c) => String(c).trim() !== '')) {
-          rows.push(row);
+      const url = CONFIG.offline.proxyPrefix ? (CONFIG.offline.proxyPrefix + encodeURIComponent(sourceUrl)) : sourceUrl;
+      const filenameBase = Utils.sanitizeFileBase(title || id);
+      const filename = `${filenameBase}.mp4`;
+
+      // Try to pre-check quota (best-effort)
+      try {
+        if (navigator.storage && navigator.storage.estimate){
+          const est = await navigator.storage.estimate();
+          const free = (est.quota || 0) - (est.usage || 0);
+          // Not strict; just helpful UX.
+          if (Number.isFinite(free) && free < 50 * 1024 * 1024){
+            Utils.toast("قد تكون المساحة غير كافية للأوفلاين.", "warning", 3200);
+          }
         }
-        row = [];
-        continue;
+      } catch {}
+
+      // Download (stream if possible)
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Download failed: HTTP ${res.status}`);
+
+      const total = Number(res.headers.get("content-length") || 0);
+      const mime = res.headers.get("content-type") || "video/mp4";
+
+      // Web stream → OPFS (no need to hold huge blob in RAM)
+      if (this.isOpfsSupported()){
+        const fh = await this._opfsGetFileHandle(id, filename, true);
+        const writable = await fh.createWritable();
+
+        let received = 0;
+        if (res.body && res.body.getReader){
+          const reader = res.body.getReader();
+          while (true){
+            const {done, value} = await reader.read();
+            if (done) break;
+            await writable.write(value);
+            received += value.byteLength || value.length || 0;
+            if (typeof onProgress === "function" && total > 0){
+              onProgress(Math.min(1, received / total), received, total);
+            }
+          }
+        } else {
+          // Fallback: blob
+          const blob = await res.blob();
+          await writable.write(blob);
+          received = blob.size;
+          if (typeof onProgress === "function"){
+            onProgress(1, received, received);
+          }
+        }
+        await writable.close();
+
+        this.meta[id] = { lessonId: id, title, filename, mime, size: received || total || 0, savedAt: Date.now(), mode: "opfs" };
+        this._saveMeta();
+        return;
       }
 
-      current += char;
+      // If no OPFS, fallback to blob + (optional) device folder (requires picker support)
+      const blob = await res.blob();
+      if (this.deviceFolderHandle){
+        await this._deviceWriteFile(`${id}__${filename}`, blob);
+        this.meta[id] = { lessonId: id, title, filename, mime, size: blob.size, savedAt: Date.now(), mode: "device" };
+        this._saveMeta();
+        return;
+      }
+
+      throw new Error("Offline not supported (no OPFS, and no device folder selected).");
     }
 
-    row.push(current);
-    if (row.some((c) => String(c).trim() !== '')) {
-      rows.push(row);
+    async remove(lessonId){
+      const id = String(lessonId || "");
+      const m = this.meta[id];
+      if (!m) return;
+
+      // OPFS delete
+      if (m.mode === "opfs" && this.isOpfsSupported()){
+        try{
+          const dir = await this._opfsRootDir();
+          const safe = `${id}__${m.filename}`;
+          await dir.removeEntry(safe);
+        } catch {}
+      }
+
+      // Device folder delete isn't guaranteed (permissions vary), so only remove index.
+      delete this.meta[id];
+      this._saveMeta();
     }
 
-    return rows;
-  },
+    async getPlayableUrl(lessonId){
+      const m = this.getMeta(lessonId);
+      if (!m) return null;
 
-  createCache() {
-    const cache = new Map();
-    return {
-      get(key) {
-        const item = cache.get(key);
-        if (!item) return null;
-        if (Date.now() > item.expiry) {
-          cache.delete(key);
-          return null;
+      if (m.mode === "opfs" && this.isOpfsSupported()){
+        return await this._opfsGetFileUrl(lessonId);
+      }
+
+      // Device mode: cannot reliably re-open without storing/reusing handles (complex, browser-dependent).
+      return null;
+    }
+  }
+
+  /***********************
+   * Player Manager
+   ***********************/
+  class PlayerManager {
+    constructor(){
+      this.modal = Utils.$("#playerModal");
+      this.stage = Utils.$("#playerStage");
+      this.titleEl = Utils.$("#playerTitle");
+      this.btnClose = Utils.$("#btnClose");
+      this.btnExternal = Utils.$("#btnExternal");
+      this.btnPseudoFs = Utils.$("#btnPseudoFs");
+
+      this.vjs = null;
+      this.loadingEl = null;
+
+      this._bind();
+    }
+
+    _bind(){
+      this.btnClose.addEventListener("click", () => this.close());
+      this.modal.addEventListener("click", (e) => { if (e.target === this.modal) this.close(); });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && this.modal.classList.contains("open")) this.close();
+      });
+      this.btnPseudoFs.addEventListener("click", () => this.toggleFullscreenMode());
+      document.addEventListener("fullscreenchange", () => this.syncFullscreenUi());
+    }
+
+    _mountLoading(){
+      const el = document.createElement("div");
+      el.className = "player-loading";
+      el.innerHTML = `<div class="spinner"></div><div style="color:var(--muted);font-weight:900">جاري التحميل...</div>`;
+      this.stage.appendChild(el);
+      this.loadingEl = el;
+      return el;
+    }
+    _hideLoading(){
+      if (this.loadingEl) this.loadingEl.classList.add("is-hidden");
+    }
+    _showLoading(){
+      if (this.loadingEl) this.loadingEl.classList.remove("is-hidden");
+    }
+
+    open({title, type, url, externalUrl}){
+      this.close(true);
+
+      this.titleEl.textContent = title || "—";
+      if (externalUrl){
+        this.btnExternal.href = externalUrl;
+        this.btnExternal.style.display = "inline-flex";
+      } else {
+        this.btnExternal.style.display = "none";
+      }
+
+      this.modal.classList.add("open");
+      this.modal.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      this.stage.innerHTML = "";
+      this.modal.classList.remove("pseudo-fullscreen");
+      this.btnPseudoFs.innerHTML = `<i class="fas fa-expand-alt"></i>`;
+
+      this._mountLoading();
+      this._showLoading();
+
+      // Failsafe: never spin forever
+      const token = Math.random().toString(36).slice(2);
+      this._token = token;
+      setTimeout(() => {
+        if (this._token === token) this._hideLoading();
+      }, 12000);
+
+      if (type === "video" || type === "hls"){
+        this._mountVideoJs(url, type);
+        return;
+      }
+      if (type === "image"){
+        this._mountImage(url, title);
+        return;
+      }
+
+      // iframe
+      this._mountIframe(url, title);
+    }
+
+    _mountVideoJs(src, type){
+      const video = document.createElement("video");
+      video.className = "video-js vjs-default-skin vjs-big-play-centered";
+      video.setAttribute("controls", "");
+      video.setAttribute("preload", "metadata");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+      video.setAttribute("crossorigin", "anonymous");
+      this.stage.appendChild(video);
+
+      const player = videojs(video, {
+        fluid: true,
+        responsive: true,
+        controls: true,
+        autoplay: false,
+        preload: "metadata",
+        html5: { vhs: { overrideNative: true }, nativeVideoTracks: false, nativeAudioTracks: false, nativeTextTracks: false },
+        controlBar: {
+          children: ["playToggle","progressControl","currentTimeDisplay","timeDivider","durationDisplay","fullscreenToggle"]
+        },
+        userActions: { doubleClick: false, hotkeys: true }
+      });
+
+      const sourceType = type === "hls"
+        ? "application/x-mpegURL"
+        : (src.toLowerCase().includes(".webm") ? "video/webm" : "video/mp4");
+
+      player.ready(() => {
+        player.src({ src, type: sourceType });
+      });
+
+      const done = () => this._hideLoading();
+      player.on("loadedmetadata", done);
+      player.on("playing", done);
+      player.on("canplay", done);
+      player.on("error", () => {
+        done();
+        Utils.toast("تعذر تشغيل الفيديو داخل WebView. جرّب فتح خارجي.", "warning", 3500);
+      });
+
+      this.vjs = player;
+    }
+
+    _mountImage(src, title){
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = title || "image";
+      img.style.maxWidth = "92%";
+      img.style.maxHeight = "92%";
+      img.style.objectFit = "contain";
+      img.onload = () => this._hideLoading();
+      img.onerror = () => this._hideLoading();
+      this.stage.appendChild(img);
+    }
+
+    _mountIframe(src, title){
+      const iframe = document.createElement("iframe");
+      iframe.title = title || "frame";
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+      iframe.referrerPolicy = "no-referrer";
+      iframe.src = src;
+      iframe.addEventListener("load", () => setTimeout(() => this._hideLoading(), 350));
+      iframe.addEventListener("error", () => this._hideLoading());
+      this.stage.appendChild(iframe);
+    }
+
+    async toggleFullscreenMode(){
+      try{
+        const target = this.stage;
+        if (!document.fullscreenElement){
+          await target.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
         }
-        return item.value;
-      },
-      set(key, value, ttl = CONFIG.CACHE_DURATION) {
-        cache.set(key, {
-          value,
-          expiry: Date.now() + ttl,
+      } catch {
+        // WebView fallback
+        this.modal.classList.toggle("pseudo-fullscreen");
+        this.syncFullscreenUi();
+      }
+    }
+
+    syncFullscreenUi(){
+      const isRealFs = !!document.fullscreenElement;
+      const isPseudo = this.modal.classList.contains("pseudo-fullscreen");
+      this.btnPseudoFs.innerHTML = (isRealFs || isPseudo) ? `<i class="fas fa-compress-alt"></i>` : `<i class="fas fa-expand-alt"></i>`;
+    }
+
+    close(quiet=false){
+      this._token = null;
+
+      if (this.vjs){
+        try { this.vjs.pause(); this.vjs.dispose(); } catch {}
+        this.vjs = null;
+      }
+
+      if (!quiet && document.fullscreenElement){
+        document.exitFullscreen().catch(()=>{});
+      }
+
+      this.stage.innerHTML = "";
+      this.loadingEl = null;
+
+      this.modal.classList.remove("open");
+      this.modal.classList.remove("pseudo-fullscreen");
+      this.modal.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+  }
+
+  /***********************
+   * App
+   ***********************/
+  class LessonsApp {
+    constructor(){
+      this.ui = {
+        q: Utils.$("#q"),
+        category: Utils.$("#category"),
+        time: Utils.$("#time"),
+        list: Utils.$("#list"),
+        reload: Utils.$("#reload"),
+        countPill: Utils.$("#countPill"),
+        offlineCountPill: Utils.$("#offlineCountPill"),
+        themeToggle: Utils.$("#themeToggle"),
+        btnOfflinePanel: Utils.$("#btnOfflinePanel"),
+        offlinePanel: Utils.$("#offlinePanel"),
+        btnCloseOfflinePanel: Utils.$("#btnCloseOfflinePanel"),
+        offlineList: Utils.$("#offlineList"),
+        btnChooseFolder: Utils.$("#btnChooseFolder")
+      };
+
+      this.player = new PlayerManager();
+      this.offline = new OfflineStore();
+      this.all = [];
+
+      this.currentTheme = localStorage.getItem("theme") || "dark";
+      this._applyTheme(this.currentTheme);
+
+      this._bind();
+      this.load();
+      this.refreshOfflineUI();
+    }
+
+    _bind(){
+      this.ui.q.addEventListener("input", () => this.render());
+      this.ui.category.addEventListener("change", () => this.render());
+      this.ui.time.addEventListener("change", () => this.render());
+      this.ui.reload.addEventListener("click", () => this.load(true));
+      this.ui.list.addEventListener("click", (e) => this.onListClick(e));
+      this.ui.themeToggle.addEventListener("click", () => this.toggleTheme());
+
+      this.ui.btnOfflinePanel.addEventListener("click", () => this.openOfflinePanel());
+      this.ui.btnCloseOfflinePanel.addEventListener("click", () => this.closeOfflinePanel());
+
+      this.ui.btnChooseFolder.addEventListener("click", async () => {
+        try{
+          await this.offline.chooseDeviceFolder();
+          Utils.toast("Device folder mode enabled (experimental).", "success", 3200);
+        } catch (err){
+          Utils.toast(err.message || "Folder picker failed.", "error", 3400);
+        }
+      });
+
+      // Safety: if page becomes visible again, reset status
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible"){
+          Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok");
+        }
+      });
+    }
+
+    _applyTheme(theme){
+      document.documentElement.setAttribute("data-theme", theme);
+      const icon = this.ui.themeToggle.querySelector("i");
+      icon.className = theme === "dark" ? "fas fa-moon" : "fas fa-sun";
+    }
+    toggleTheme(){
+      this.currentTheme = (this.currentTheme === "dark") ? "light" : "dark";
+      localStorage.setItem("theme", this.currentTheme);
+      this._applyTheme(this.currentTheme);
+      Utils.toast(this.currentTheme === "dark" ? "Dark mode" : "Light mode", "success");
+    }
+
+    async load(force=false){
+      Utils.setStatus(`<i class="fas fa-spinner fa-spin"></i> جاري التحميل...`, "warn");
+      this.ui.list.innerHTML = "";
+
+      try{
+        const res = await fetch(CONFIG.sheetCsvUrl, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const csv = await res.text();
+        const parsed = Utils.parseCSV(csv);
+        if (parsed.length < 2) throw new Error("CSV فارغ/غير صالح");
+
+        const headers = parsed[0].map(h => String(h).trim());
+        const data = parsed.slice(1).map(cols => {
+          const obj = {};
+          headers.forEach((h,i) => obj[h] = cols[i] ?? "");
+          return obj;
         });
-      },
-      clear() {
-        cache.clear();
-      },
-    };
-  },
-};
 
-// ============================================
-// 🎨 UI COMPONENTS
-// ============================================
-const UI = {
-  Toast: {
-    container: document.getElementById('toast-container'),
+        this.all = data.map(r => this.normalize(r)).filter(x => x.Title && x.ContentURL);
 
-    show(message, type = 'info', duration = CONFIG.TOAST_DURATION) {
-      const toast = document.createElement('div');
-      toast.className = `toast toast--${type}`;
-      toast.setAttribute('role', 'alert');
+        // Sort by DateUploaded desc
+        this.all.sort((a,b) => (b.DateUploaded?.getTime() || 0) - (a.DateUploaded?.getTime() || 0));
 
-      const icons = {
-        success: 'fa-check-circle',
-        error: 'fa-exclamation-circle',
-        warning: 'fa-exclamation-triangle',
-        info: 'fa-info-circle',
-      };
+        this.buildCategoryOptions();
+        this.render();
 
-      toast.innerHTML = `
-        <div class="toast__icon">
-          <i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i>
-        </div>
-        <div class="toast__message">${Utils.escapeHtml(message)}</div>
-        <button class="toast__close" type="button" aria-label="إغلاق">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </button>
-      `;
-
-      const closeBtn = toast.querySelector('.toast__close');
-      const remove = () => {
-        toast.style.animation = 'slideInDown var(--transition-base) reverse';
-        setTimeout(() => toast.remove(), 250);
-      };
-
-      closeBtn.addEventListener('click', remove);
-      this.container.appendChild(toast);
-
-      if (duration > 0) {
-        setTimeout(remove, duration);
-      }
-    },
-
-    success(message) {
-      this.show(message, 'success');
-    },
-
-    error(message) {
-      this.show(message, 'error');
-    },
-
-    warning(message) {
-      this.show(message, 'warning');
-    },
-
-    info(message) {
-      this.show(message, 'info');
-    },
-  },
-
-  StatusBadge: {
-    element: document.getElementById('status-badge'),
-
-    update(text, state = 'default') {
-      this.element.textContent = text;
-      this.element.className = 'status-badge';
-      if (state !== 'default') {
-        this.element.classList.add(`status-badge--${state}`);
-      }
-    },
-
-    loading(text = 'جاري التحميل...') {
-      this.update(text, 'loading');
-    },
-
-    success(text) {
-      this.update(text, 'success');
-    },
-
-    error(text) {
-      this.update(text, 'error');
-    },
-
-    default(text = 'جاهز') {
-      this.update(text, 'default');
-    },
-  },
-
-  Skeleton: {
-    create(count = 6) {
-      const skeletons = [];
-      for (let i = 0; i < count; i++) {
-        const skeleton = document.createElement('div');
-        skeleton.className = 'skeleton-card';
-        skeleton.setAttribute('aria-busy', 'true');
-        skeleton.setAttribute('aria-label', 'جاري التحميل');
-        skeleton.innerHTML = `
-          <div class="skeleton-card__header">
-            <div class="skeleton-card__title skeleton"></div>
-            <div class="skeleton-card__meta skeleton"></div>
-          </div>
-          <div class="skeleton-card__thumbnail skeleton"></div>
-          <div class="skeleton-card__actions">
-            <div class="skeleton-card__button skeleton"></div>
-            <div class="skeleton-card__button skeleton"></div>
+        this.ui.countPill.textContent = String(this.all.length);
+        Utils.setStatus(`<i class="fas fa-check-circle"></i> تم التحميل (${this.all.length})`, "ok");
+        setTimeout(() => Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok"), 1200);
+      } catch (err){
+        console.error(err);
+        Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> خطأ: ${Utils.escapeHtml(err.message)}`, "error");
+        this.ui.list.innerHTML = `
+          <div class="card" style="grid-column: span 12; padding: 22px; text-align:center">
+            <i class="fas fa-exclamation-triangle" style="font-size:48px; color: var(--danger)"></i>
+            <h3 style="margin:12px 0 8px; font-weight: 900">تعذر تحميل البيانات</h3>
+            <p style="margin:0; color: var(--muted); line-height:1.6">
+              تأكد من رابط Google Sheet المنشور (CSV) ومن الاتصال.
+            </p>
           </div>
         `;
-        skeletons.push(skeleton);
       }
-      return skeletons;
-    },
-  },
+    }
 
-  EmptyState: {
-    create(title, description, icon = 'fa-inbox') {
-      const empty = document.createElement('div');
-      empty.className = 'empty-state';
-      empty.innerHTML = `
-        <div class="empty-state__icon">
-          <i class="fas ${icon}" aria-hidden="true"></i>
+    normalize(r){
+      return {
+        LessonID: String(r.LessonID ?? "").trim(),
+        Title: String(r.Title ?? "").trim(),
+        Category: String(r.Category ?? "Other").trim() || "Other",
+        DateUploaded: Utils.parseDDMMYYYY(String(r.DateUploaded ?? "").trim()),
+        ContentURL: String(r.ContentURL ?? "").trim()
+      };
+    }
+
+    buildCategoryOptions(){
+      const set = new Set(this.all.map(x => x.Category || "Other"));
+      const cats = CONFIG.categoryOrder.filter(c => set.has(c)).concat([...set].filter(c => !CONFIG.categoryOrder.includes(c)));
+
+      this.ui.category.innerHTML = "";
+      const optAll = document.createElement("option");
+      optAll.value = "all";
+      optAll.textContent = "كل المواد";
+      this.ui.category.appendChild(optAll);
+
+      cats.forEach(c => {
+        const o = document.createElement("option");
+        o.value = c;
+        o.textContent = CONFIG.categoryAr[c] || c;
+        this.ui.category.appendChild(o);
+      });
+    }
+
+    filterRows(){
+      const q = this.ui.q.value.trim().toLowerCase();
+      const cat = this.ui.category.value;
+      const timeKey = this.ui.time.value;
+      const now = new Date();
+
+      const timePred = (row) => {
+        if (timeKey === "all") return true;
+        if (!row.DateUploaded) return false;
+        const diff = Utils.daysBetween(now, row.DateUploaded);
+        switch (timeKey){
+          case "today": return diff === 0;
+          case "yesterday": return diff === 1;
+          case "week": return diff >= 0 && diff <= 7;
+          case "month": return diff >= 0 && diff <= 30;
+          case "year": return diff >= 0 && diff <= 365;
+          default: return true;
+        }
+      };
+
+      return this.all.filter(r => {
+        const okQ = !q || r.Title.toLowerCase().includes(q);
+        const okCat = (cat === "all") || (r.Category === cat);
+        const okTime = timePred(r);
+        return okQ && okCat && okTime;
+      });
+    }
+
+    computeMedia(row){
+      const type = Utils.guessType(row.ContentURL);
+      const yt = Utils.extractYoutubeId(row.ContentURL);
+      const d = Utils.driveLinks(row.ContentURL);
+
+      let thumb = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23121b2f' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239fb0d0' font-size='18' font-family='sans-serif'%3EPreview%3C/text%3E%3C/svg%3E`;
+      if (yt) thumb = `https://i.ytimg.com/vi/${yt}/hqdefault.jpg`;
+      else if (d) thumb = d.thumb;
+
+      // Player URL + external + download
+      let playerUrl = row.ContentURL;
+      let externalUrl = row.ContentURL;
+      let downloadUrl = row.ContentURL;
+
+      if (yt){
+        playerUrl = `https://www.youtube-nocookie.com/embed/${yt}?rel=0&modestbranding=1`;
+        externalUrl = `https://www.youtube.com/watch?v=${yt}`;
+        downloadUrl = externalUrl;
+      } else if (d){
+        playerUrl = d.preview;
+        externalUrl = d.view;
+        downloadUrl = d.download;
+      }
+
+      return { type, thumb, playerUrl, externalUrl, downloadUrl, yt, d };
+    }
+
+    render(){
+      const rows = this.filterRows();
+      this.ui.list.innerHTML = "";
+
+      if (!rows.length){
+        this.ui.list.innerHTML = `
+          <div class="card" style="grid-column: span 12; padding: 22px; text-align:center">
+            <i class="fas fa-search" style="font-size:48px; color: var(--accent)"></i>
+            <h3 style="margin:12px 0 8px; font-weight: 900">لا توجد نتائج</h3>
+            <p style="margin:0; color: var(--muted); line-height:1.6">
+              جرّب تغيير البحث أو الفلاتر.
+            </p>
+          </div>
+        `;
+        this.ui.countPill.textContent = "0";
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      rows.forEach(r => frag.appendChild(this.renderCard(r)));
+      this.ui.list.appendChild(frag);
+      this.ui.countPill.textContent = String(rows.length);
+    }
+
+    renderCard(row){
+      const m = this.computeMedia(row);
+      const catLabel = CONFIG.categoryAr[row.Category] || row.Category;
+      const isSaved = this.offline.has(row.LessonID);
+
+      const el = document.createElement("article");
+      el.className = "item card";
+      el.dataset.lessonId = row.LessonID;
+
+      const offlineBadge = isSaved ? `<span class="badge offline"><i class="fas fa-check"></i> Offline</span>` : "";
+
+      const downloadLabel = m.yt ? "YouTube" : "تحميل";
+      const downloadIcon = m.yt ? "fa-youtube" : "fa-download";
+      const downloadAttrs = m.yt ? `target="_blank" rel="noopener"` : `download`;
+
+      // Offline save only for direct video/hls urls (NOT youtube/drive preview)
+      const canOffline = (!m.yt && !m.d && (m.type === "video" || m.type === "hls"));
+
+      el.innerHTML = `
+        <div class="head">
+          <div class="item-title">${Utils.escapeHtml(row.Title)}</div>
+          <div class="sub">
+            <span class="badge">${Utils.escapeHtml(catLabel)}</span>
+            <span class="badge">${Utils.escapeHtml(Utils.formatDateAr(row.DateUploaded))}</span>
+            <span class="badge">#${Utils.escapeHtml(row.LessonID)}</span>
+            <span class="badge">${Utils.escapeHtml(m.type.toUpperCase())}</span>
+            ${offlineBadge}
+          </div>
         </div>
-        <h3 class="empty-state__title">${Utils.escapeHtml(title)}</h3>
-        <p class="empty-state__description">${Utils.escapeHtml(description)}</p>
+
+        <div class="viewer" data-action="open" role="button" aria-label="Open">
+          <img src="${m.thumb}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
+          <div class="overlay"><div class="play" aria-hidden="true"></div></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="button" data-action="open"><i class="fas fa-play"></i> مشاهدة</button>
+
+          <!-- IMPORTANT: download link is NOT intercepted by JS; no loader/status change -->
+          <a class="download"
+             href="${m.downloadUrl}"
+             ${downloadAttrs}
+             data-action="download">
+             <i class="fas ${downloadIcon}"></i> ${Utils.escapeHtml(downloadLabel)}
+          </a>
+
+          ${canOffline && !isSaved ? `
+            <button class="offline" type="button" data-action="saveOffline"><i class="fas fa-cloud-arrow-down"></i> حفظ أوفلاين</button>
+          ` : ""}
+
+          ${canOffline && isSaved ? `
+            <button class="danger" type="button" data-action="removeOffline"><i class="fas fa-trash"></i> حذف أوفلاين</button>
+          ` : ""}
+
+          ${m.externalUrl ? `
+            <a class="external" href="${m.externalUrl}" target="_blank" rel="noopener" data-action="external">
+              <i class="fas fa-external-link-alt"></i> فتح خارجي
+            </a>
+          ` : ""}
+        </div>
       `;
-      return empty;
-    },
-  },
+      return el;
+    }
 
-  VideoCard: {
-    create(lesson, onPlay) {
-      const card = document.createElement('article');
-      card.className = 'video-card';
-      card.setAttribute('role', 'listitem');
-      card.dataset.lessonId = lesson.id;
+    async onListClick(e){
+      const actionEl = e.target.closest("[data-action]");
+      if (!actionEl) return;
 
-      const categoryLabel = CATEGORY_CONFIG.TRANSLATIONS[lesson.category] || lesson.category;
-      const contentType = Utils.getContentType(lesson.url);
-      const driveUrls = Utils.getDriveUrls(lesson.url);
-      const youtubeId = Utils.extractYoutubeId(lesson.url);
+      const action = actionEl.dataset.action;
 
-      let thumbnail = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360"%3E%3Crect fill="%230b1220" width="640" height="360"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%239fb0d0" font-size="20" font-family="sans-serif"%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E';
-      
-      if (youtubeId) {
-        thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
-      } else if (driveUrls) {
-        thumbnail = driveUrls.thumbnail;
+      // Download MUST NOT be handled by JS (prevents stuck loader in WebView)
+      if (action === "download") {
+        // No status change, no preventDefault, let browser/webview download manager handle it.
+        Utils.toast("بدء التحميل...", "success", 1800);
+        return;
       }
 
-      let downloadUrl = lesson.url;
-      if (driveUrls) {
-        downloadUrl = driveUrls.download;
-      }
+      const card = e.target.closest(".item");
+      if (!card) return;
+      const lessonId = card.dataset.lessonId;
+      const row = this.all.find(x => String(x.LessonID) === String(lessonId));
+      if (!row) return;
 
-      card.innerHTML = `
-        <div class="video-card__header">
-          <h3 class="video-card__title">${Utils.escapeHtml(lesson.title)}</h3>
-          <div class="video-card__meta">
-            <span class="badge badge--category">
-              <i class="fas fa-folder" aria-hidden="true"></i>
-              ${Utils.escapeHtml(categoryLabel)}
-            </span>
-            <span class="badge">
-              <i class="fas fa-calendar" aria-hidden="true"></i>
-              ${Utils.escapeHtml(Utils.formatDate(lesson.date))}
-            </span>
-            ${lesson.id ? `<span class="badge">#${Utils.escapeHtml(lesson.id)}</span>` : ''}
-          </div>
-        </div>
-        <div class="video-card__thumbnail" role="button" tabindex="0" aria-label="تشغيل ${Utils.escapeHtml(lesson.title)}">
-          <img 
-            src="${thumbnail}" 
-            alt="${Utils.escapeHtml(lesson.title)}"
-            class="video-card__thumbnail-img"
-            loading="lazy"
-            referrerpolicy="no-referrer">
-          <div class="video-card__thumbnail-overlay">
-            <button class="play-button" type="button" aria-label="تشغيل"></button>
-          </div>
-        </div>
-        <div class="video-card__actions">
-          <button class="btn btn--primary btn-play" type="button">
-            <i class="fas fa-play" aria-hidden="true"></i>
-            مشاهدة
-          </button>
-          ${youtubeId 
-            ? `<a href="https://www.youtube.com/watch?v=${youtubeId}" target="_blank" rel="noopener" class="btn btn--success">
-                 <i class="fab fa-youtube" aria-hidden="true"></i>
-                 يوتيوب
-               </a>`
-            : `<a href="${downloadUrl}" target="_blank" rel="noopener" download class="btn btn--success">
-                 <i class="fas fa-download" aria-hidden="true"></i>
-                 تحميل
-               </a>`
+      const m = this.computeMedia(row);
+
+      if (action === "open"){
+        // If offline exists, play from OPFS first
+        let url = m.playerUrl;
+        let type = m.type;
+
+        if (!m.yt && !m.d && (m.type === "video" || m.type === "hls") && this.offline.has(row.LessonID)){
+          const offlineUrl = await this.offline.getPlayableUrl(row.LessonID);
+          if (offlineUrl){
+            url = offlineUrl;
+            type = "video"; // stored as file
+            Utils.toast("تشغيل من الأوفلاين", "success");
           }
-        </div>
-      `;
+        }
 
-      // IMPORTANT: Only "Watch" button and thumbnail trigger the player modal
-      const handlePlay = (e) => {
+        this.player.open({
+          title: row.Title,
+          type,
+          url,
+          externalUrl: m.externalUrl
+        });
+        return;
+      }
+
+      if (action === "external"){
+        Utils.toast("فتح خارجي...", "success", 1200);
+        return; // let link do its job
+      }
+
+      if (action === "saveOffline"){
         e.preventDefault();
-        e.stopPropagation();
-        onPlay(lesson);
-      };
-
-      card.querySelector('.video-card__thumbnail').addEventListener('click', handlePlay);
-      card.querySelector('.btn-play').addEventListener('click', handlePlay);
-      
-      card.querySelector('.video-card__thumbnail').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handlePlay(e);
-        }
-      });
-
-      return card;
-    },
-  },
-};
-
-// ============================================
-// 📡 DATA SERVICE
-// ============================================
-const DataService = {
-  cache: Utils.createCache(),
-
-  async fetchWithRetry(url, retries = CONFIG.MAX_RETRIES) {
-    for (let i = 0; i < retries; i++) {
-      try {
-        const response = await fetch(url, {
-          cache: 'no-store',
-          headers: {
-            'Accept': 'text/csv',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        const canOffline = (!m.yt && !m.d && (m.type === "video" || m.type === "hls"));
+        if (!canOffline){
+          Utils.toast("هذا المصدر لا يمكن حفظه أوفلاين داخل المتصفح.", "warning", 3200);
+          return;
         }
 
-        return await response.text();
-      } catch (error) {
-        if (i === retries - 1) throw error;
-        await new Promise((resolve) => setTimeout(resolve, CONFIG.RETRY_DELAY * (i + 1)));
-      }
-    }
-  },
+        try{
+          Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> تنزيل للأوفلاين...`, "warn");
+          Utils.toast("بدء حفظ الفيديو للأوفلاين...", "success", 2400);
 
-  async loadLessons(forceRefresh = false) {
-    const cacheKey = 'lessons_data';
+          const progressToast = (p, received, total) => {
+            if (total > 0){
+              Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> Offline ${(p*100).toFixed(0)}% (${Utils.formatBytes(received)} / ${Utils.formatBytes(total)})`, "warn");
+            } else {
+              Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> Offline... (${Utils.formatBytes(received)})`, "warn");
+            }
+          };
 
-    if (!forceRefresh) {
-      const cached = this.cache.get(cacheKey);
-      if (cached) return cached;
-    }
+          await this.offline.save(row.LessonID, row.Title, row.ContentURL, progressToast);
 
-    const csv = await this.fetchWithRetry(CONFIG.SHEET_CSV_URL);
-    const rows = Utils.parseCSV(csv);
-
-    if (rows.length < 2) {
-      throw new Error('CSV file is empty or invalid');
-    }
-
-    const headers = rows[0].map((h) => String(h).trim());
-    const data = rows.slice(1).map((cols) => {
-      const obj = {};
-      headers.forEach((header, index) => {
-        obj[header] = cols[index] || '';
-      });
-      return obj;
-    });
-
-    const lessons = data
-      .map((row) => ({
-        id: (row.LessonID || '').trim(),
-        title: (row.Title || 'بدون عنوان').trim(),
-        category: (row.Category || 'Other').trim(),
-        date: Utils.parseDate((row.DateUploaded || '').trim()),
-        url: (row.ContentURL || '').trim(),
-      }))
-      .filter((lesson) => lesson.title && lesson.url);
-
-    lessons.sort((a, b) => {
-      const dateA = a.date ? a.date.getTime() : 0;
-      const dateB = b.date ? b.date.getTime() : 0;
-      return dateB - dateA;
-    });
-
-    this.cache.set(cacheKey, lessons);
-    return lessons;
-  },
-
-  getCategories(lessons) {
-    const uniqueCategories = new Set(lessons.map((l) => l.category || 'Other'));
-    const sortedCategories = CATEGORY_CONFIG.ORDER.filter((c) => uniqueCategories.has(c));
-    const otherCategories = [...uniqueCategories].filter((c) => !CATEGORY_CONFIG.ORDER.includes(c));
-    return [...sortedCategories, ...otherCategories];
-  },
-};
-
-// ============================================
-// 🎯 FILTERS
-// ============================================
-const FilterStrategies = {
-  search(lessons, query) {
-    if (!query) return lessons;
-    const lowerQuery = query.toLowerCase();
-    return lessons.filter((lesson) => lesson.title.toLowerCase().includes(lowerQuery));
-  },
-
-  category(lessons, category) {
-    if (!category || category === 'all') return lessons;
-    return lessons.filter((lesson) => lesson.category === category);
-  },
-
-  timeRange(lessons, timeRange) {
-    if (!timeRange || timeRange === 'all') return lessons;
-
-    const now = new Date();
-    const predicates = {
-      today: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 0,
-      yesterday: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 1,
-      week: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 7,
-      month: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 30,
-      year: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 365,
-    };
-
-    const predicate = predicates[timeRange];
-    return predicate ? lessons.filter(predicate) : lessons;
-  },
-};
-
-// ============================================
-// 🎬 PLAYER MANAGER (FIXED)
-// ============================================
-const PlayerManager = {
-  modal: document.getElementById('player-modal'),
-  backdrop: document.getElementById('modal-backdrop'),
-  stage: document.getElementById('player-stage'),
-  title: document.getElementById('player-modal-title'),
-  closeBtn: document.getElementById('close-modal-btn'),
-  externalBtn: document.getElementById('external-link-btn'),
-  currentPlayer: null,
-  loadingOverlay: null,
-  readyTimeout: null,
-  sessionToken: 0,
-
-  init() {
-    this.closeBtn.addEventListener('click', () => this.close());
-    this.backdrop.addEventListener('click', () => this.close());
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.modal.classList.contains('is-active')) {
-        this.close();
-      }
-    });
-  },
-
-  hideLoading() {
-    if (this.loadingOverlay) {
-      this.loadingOverlay.style.display = 'none';
-    }
-    clearTimeout(this.readyTimeout);
-  },
-
-  showLoading() {
-    if (this.loadingOverlay) {
-      this.loadingOverlay.style.display = 'flex';
-    }
-  },
-
-  async open(lesson) {
-    const token = ++this.sessionToken;
-
-    this.title.textContent = lesson.title;
-    this.modal.classList.add('is-active');
-    this.backdrop.classList.add('is-active');
-    this.modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-
-    // Build stage structure
-    this.stage.innerHTML = `
-      <div style="position:relative; width:100%; height:100%;">
-        <div id="player-mount" style="position:absolute; inset:0;"></div>
-        <div id="player-loading" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); z-index:999;">
-          <div class="spinner"></div>
-          <p style="margin:0; color:#9fb0d0; font-weight:700; font-size:14px;">جاري التحميل...</p>
-        </div>
-      </div>
-    `;
-
-    this.loadingOverlay = document.getElementById('player-loading');
-    const mountPoint = document.getElementById('player-mount');
-
-    // Set timeout to auto-hide loader after 10 seconds
-    this.readyTimeout = setTimeout(() => {
-      if (token === this.sessionToken) {
-        this.hideLoading();
-        UI.Toast.warning('يستغرق التحميل وقتًا. جرب زر "فتح خارجي"');
-      }
-    }, 10000);
-
-    try {
-      await this.loadContent(lesson, mountPoint, token);
-    } catch (error) {
-      console.error('Player error:', error);
-      this.hideLoading();
-      mountPoint.innerHTML = `
-        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--color-danger); padding:20px; text-align:center;">
-          <i class="fas fa-exclamation-triangle" style="font-size:48px; margin-bottom:16px;"></i>
-          <p style="font-size:16px; font-weight:700;">فشل تحميل المحتوى</p>
-          <p style="font-size:14px; color:var(--color-text-secondary); margin-top:8px;">جرب زر "فتح خارجي" أسفل العنوان</p>
-        </div>
-      `;
-      UI.Toast.error('فشل تحميل المحتوى');
-    }
-  },
-
-  async loadContent(lesson, mountEl, token) {
-    const isStale = () => token !== this.sessionToken;
-
-    const contentType = Utils.getContentType(lesson.url);
-    const youtubeId = Utils.extractYoutubeId(lesson.url);
-    const driveUrls = Utils.getDriveUrls(lesson.url);
-
-    this.externalBtn.style.display = 'none';
-
-    // YouTube
-    if (youtubeId) {
-      const ytUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
-      this.externalBtn.href = ytUrl;
-      this.externalBtn.style.display = 'inline-flex';
-
-      mountEl.innerHTML = `<div id="plyr-youtube" data-plyr-provider="youtube" data-plyr-embed-id="${youtubeId}"></div>`;
-      
-      try {
-        this.currentPlayer = new Plyr('#plyr-youtube', {
-          controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','airplay','fullscreen'],
-          youtube: { noCookie: true, rel: 0, showinfo: 0, iv_load_policy: 3, modestbranding: 1 },
-        });
-
-        this.currentPlayer.on('ready', () => {
-          if (!isStale()) this.hideLoading();
-        });
-
-        this.currentPlayer.on('playing', () => {
-          if (!isStale()) this.hideLoading();
-        });
-      } catch (e) {
-        console.error('Plyr YouTube error:', e);
-        this.hideLoading();
-      }
-      return;
-    }
-
-    // Google Drive
-    if (driveUrls) {
-      this.externalBtn.href = driveUrls.view;
-      this.externalBtn.style.display = 'inline-flex';
-
-      const iframe = document.createElement('iframe');
-      iframe.src = driveUrls.preview;
-      iframe.style.cssText = 'width:100%; height:100%; border:0;';
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-      
-      iframe.addEventListener('load', () => {
-        if (!isStale()) {
-          setTimeout(() => this.hideLoading(), 500);
+          Utils.toast("تم الحفظ للأوفلاين.", "success", 2600);
+          Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok");
+          this.refreshOfflineUI();
+          this.render();
+        } catch (err){
+          console.error(err);
+          Utils.toast(err.message || "فشل الحفظ للأوفلاين.", "error", 3400);
+          Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> فشل الأوفلاين`, "error");
+          setTimeout(() => Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok"), 2000);
         }
-      });
+        return;
+      }
 
-      iframe.addEventListener('error', () => {
-        if (!isStale()) this.hideLoading();
-      });
-
-      mountEl.appendChild(iframe);
-      return;
-    }
-
-    // Direct video file
-    if (contentType === 'video') {
-      this.externalBtn.href = lesson.url;
-      this.externalBtn.style.display = 'inline-flex';
-
-      const video = document.createElement('video');
-      video.controls = true;
-      video.preload = 'metadata';
-      video.style.cssText = 'width:100%; height:100%; object-fit:contain;';
-      video.setAttribute('playsinline', '');
-      
-      const source = document.createElement('source');
-      source.src = lesson.url;
-      video.appendChild(source);
-
-      const handleReady = () => {
-        if (!isStale()) this.hideLoading();
-      };
-
-      video.addEventListener('loadedmetadata', handleReady, { once: true });
-      video.addEventListener('canplay', handleReady, { once: true });
-      video.addEventListener('playing', handleReady, { once: true });
-      video.addEventListener('error', () => {
-        if (!isStale()) {
-          this.hideLoading();
-          UI.Toast.error('فشل تشغيل الفيديو. جرب التحميل الخارجي.');
+      if (action === "removeOffline"){
+        e.preventDefault();
+        try{
+          await this.offline.remove(row.LessonID);
+          Utils.toast("تم حذف الأوفلاين.", "success", 2200);
+          this.refreshOfflineUI();
+          this.render();
+        } catch (err){
+          Utils.toast("فشل حذف الأوفلاين.", "error", 2600);
         }
-      });
-
-      mountEl.appendChild(video);
-      return;
-    }
-
-    // Fallback iframe
-    this.externalBtn.href = lesson.url;
-    this.externalBtn.style.display = 'inline-flex';
-
-    const iframe = document.createElement('iframe');
-    iframe.src = lesson.url;
-    iframe.style.cssText = 'width:100%; height:100%; border:0;';
-    iframe.setAttribute('allowfullscreen', '');
-    
-    iframe.addEventListener('load', () => {
-      if (!isStale()) {
-        setTimeout(() => this.hideLoading(), 500);
+        return;
       }
-    });
+    }
 
-    mountEl.appendChild(iframe);
-  },
+    openOfflinePanel(){
+      this.ui.offlinePanel.classList.add("open");
+      this.ui.offlinePanel.setAttribute("aria-hidden","false");
+      this.refreshOfflineUI();
+    }
+    closeOfflinePanel(){
+      this.ui.offlinePanel.classList.remove("open");
+      this.ui.offlinePanel.setAttribute("aria-hidden","true");
+    }
 
-  close() {
-    clearTimeout(this.readyTimeout);
+    refreshOfflineUI(){
+      const items = this.offline.list();
+      this.ui.offlineCountPill.textContent = String(items.length);
 
-    if (this.currentPlayer) {
-      try {
-        this.currentPlayer.destroy();
-      } catch (e) {
-        console.error('Player destroy error:', e);
+      if (!items.length){
+        this.ui.offlineList.innerHTML = `
+          <div class="card" style="padding: 16px; text-align:center">
+            <i class="fas fa-box-open" style="font-size:42px; color: var(--muted)"></i>
+            <div style="margin-top: 10px; font-weight: 900">لا توجد ملفات أوفلاين</div>
+            <div style="margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.6">
+              استخدم زر "حفظ أوفلاين" في بطاقات الفيديو (للروابط المباشرة).
+            </div>
+          </div>
+        `;
+        return;
       }
-      this.currentPlayer = null;
-    }
 
-    this.stage.innerHTML = '';
-    this.loadingOverlay = null;
-    this.modal.classList.remove('is-active');
-    this.backdrop.classList.remove('is-active');
-    this.modal.setAttribute('aria-hidden', 'true');
-    this.externalBtn.style.display = 'none';
-    document.body.style.overflow = '';
-  },
-};
-
-// ============================================
-// 🎮 APP CONTROLLER
-// ============================================
-const App = {
-  state: {
-    lessons: [],
-    filteredLessons: [],
-    filters: {
-      search: '',
-      category: 'all',
-      timeRange: 'all',
-    },
-  },
-
-  elements: {
-    contentGrid: document.getElementById('content-grid'),
-    searchInput: document.getElementById('search-input'),
-    categorySelect: document.getElementById('category-select'),
-    timeSelect: document.getElementById('time-select'),
-    refreshBtn: document.getElementById('refresh-btn'),
-  },
-
-  async init() {
-    console.log('🚀 Initializing application...');
-    
-    PlayerManager.init();
-    this.setupEventListeners();
-    await this.loadData();
-
-    console.log('✅ Application ready');
-  },
-
-  setupEventListeners() {
-    this.elements.searchInput.addEventListener(
-      'input',
-      Utils.debounce((e) => {
-        this.state.filters.search = e.target.value;
-        this.applyFilters();
-      }, CONFIG.DEBOUNCE_DELAY)
-    );
-
-    this.elements.categorySelect.addEventListener('change', (e) => {
-      this.state.filters.category = e.target.value;
-      this.applyFilters();
-    });
-
-    this.elements.timeSelect.addEventListener('change', (e) => {
-      this.state.filters.timeRange = e.target.value;
-      this.applyFilters();
-    });
-
-    this.elements.refreshBtn.addEventListener('click', () => {
-      this.loadData(true);
-    });
-  },
-
-  async loadData(forceRefresh = false) {
-    try {
-      UI.StatusBadge.loading('جاري التحميل...');
-      
-      this.elements.contentGrid.innerHTML = '';
-      UI.Skeleton.create(6).forEach((skeleton) => {
-        this.elements.contentGrid.appendChild(skeleton);
+      this.ui.offlineList.innerHTML = "";
+      items.forEach(m => {
+        const div = document.createElement("div");
+        div.className = "panelRow";
+        div.innerHTML = `
+          <div style="min-width:0">
+            <div style="font-weight: 900; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">
+              ${Utils.escapeHtml(m.title || m.lessonId)}
+            </div>
+            <div class="metaTxt">
+              #${Utils.escapeHtml(m.lessonId)} • ${Utils.escapeHtml(Utils.formatBytes(m.size || 0))} • ${Utils.escapeHtml(m.mode || "opfs")}
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+            <button class="miniBtn" type="button" data-act="remove" data-id="${Utils.escapeHtml(m.lessonId)}">
+              <i class="fas fa-trash"></i> حذف
+            </button>
+          </div>
+        `;
+        div.querySelector('[data-act="remove"]').addEventListener("click", async () => {
+          await this.offline.remove(m.lessonId);
+          Utils.toast("تم الحذف.", "success", 1600);
+          this.refreshOfflineUI();
+          this.render();
+        });
+        this.ui.offlineList.appendChild(div);
       });
-
-      this.state.lessons = await DataService.loadLessons(forceRefresh);
-      this.updateCategorySelect();
-      this.applyFilters();
-
-      UI.StatusBadge.success(`✓ ${this.state.lessons.length} درس`);
-      
-      if (forceRefresh) {
-        UI.Toast.success('تم تحديث البيانات بنجاح');
-      }
-    } catch (error) {
-      console.error('Load data error:', error);
-      UI.StatusBadge.error('خطأ في التحميل');
-      UI.Toast.error('فشل تحميل البيانات. يرجى المحاولة مرة أخرى.');
-
-      this.elements.contentGrid.innerHTML = '';
-      this.elements.contentGrid.appendChild(
-        UI.EmptyState.create(
-          'فشل تحميل البيانات',
-          'حدث خطأ أثناء تحميل البيانات. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.',
-          'fa-exclamation-triangle'
-        )
-      );
     }
-  },
+  }
 
-  updateCategorySelect() {
-    const categories = DataService.getCategories(this.state.lessons);
-    
-    this.elements.categorySelect.innerHTML = '<option value="all">كل المواد</option>';
-    
-    categories.forEach((category) => {
-      const option = document.createElement('option');
-      option.value = category;
-      option.textContent = CATEGORY_CONFIG.TRANSLATIONS[category] || category;
-      this.elements.categorySelect.appendChild(option);
-    });
-  },
-
-  applyFilters() {
-    let filtered = [...this.state.lessons];
-
-    filtered = FilterStrategies.search(filtered, this.state.filters.search);
-    filtered = FilterStrategies.category(filtered, this.state.filters.category);
-    filtered = FilterStrategies.timeRange(filtered, this.state.filters.timeRange);
-
-    this.state.filteredLessons = filtered;
-    this.render();
-  },
-
-  render() {
-    this.elements.contentGrid.innerHTML = '';
-
-    if (this.state.filteredLessons.length === 0) {
-      const emptyState = UI.EmptyState.create(
-        'لا توجد نتائج',
-        'لم يتم العثور على دروس تطابق معايير البحث. حاول تغيير الفلاتر.',
-        'fa-search'
-      );
-      this.elements.contentGrid.appendChild(emptyState);
-      return;
-    }
-
-    this.state.filteredLessons.forEach((lesson) => {
-      const card = UI.VideoCard.create(lesson, (lesson) => {
-        PlayerManager.open(lesson);
-      });
-      this.elements.contentGrid.appendChild(card);
-    });
-  },
-};
-
-// ============================================
-// 🎬 START
-// ============================================
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => App.init());
-} else {
-  App.init();
-}
-
-window.addEventListener('error', (event) => {
-  console.error('Global error:', event.error);
-});
-
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('Unhandled rejection:', event.reason);
-});
-</script>
-
+  // Init
+  Utils.$("#currentYear").textContent = String(new Date().getFullYear());
+  window.addEventListener("DOMContentLoaded", () => new LessonsApp());
   </script>
 </body>
 </html>
