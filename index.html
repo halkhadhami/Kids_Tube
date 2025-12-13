@@ -1,449 +1,1685 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>مكتبة الدروس</title>
-  <link rel="icon" type="image/png" href="https://github.com/halkhadhami/halkhadhami.github.io/blob/master/images/favicon.png?raw=true">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="منصة تعليمية تفاعلية - مواد تعليمية شاملة مع تشغيل فيديوهات وتحميل ملفات">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="مكتبة الدروس">
   
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
-  <!-- Plyr CSS -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-  
+  <title>مكتبة الدروس التفاعلية</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
+
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3H6miEA9KHM9/HKvCCa0syAcXH/2mV3ysLXDnLBYBvpbKhK/c0Y2ixCLrfvhD4l8Ct85lI3SqyA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#121b2f;
-      --muted:#9fb0d0;
-      --text:#eef3ff;
-      --line: rgba(255,255,255,.10);
-      --accent:#4ea1ff;
+    /* ============================================
+       Design System & Color Tokens
+       ============================================ */
+    :root {
+      --color-bg-dark: #0b1220;
+      --color-bg-darker: #050a12;
+      --color-card: #121b2f;
+      --color-card-hover: #162847;
+      --color-text-primary: #eef3ff;
+      --color-text-secondary: #9fb0d0;
+      --color-border: rgba(255, 255, 255, 0.08);
+      --color-border-light: rgba(255, 255, 255, 0.12);
+      --color-accent-blue: #4ea1ff;
+      --color-accent-blue-light: #6eb5ff;
+      --color-accent-blue-dark: #3d7fd4;
+      --color-success: #3ddc97;
+      --color-danger: #ff5b6e;
+      --color-warning: #ffb84d;
       
-      /* Plyr Theme */
-      --plyr-color-main: #4ea1ff;
-      --plyr-video-background: #000;
-      --plyr-menu-background: rgba(18,27,47,.98);
-      --plyr-menu-color: #eef3ff;
-      --plyr-range-thumb-height: 24px; /* تكبير مقبض التحكم للمس */
-      --plyr-range-thumb-width: 24px;
-      --plyr-control-icon-size: 32px; /* أيقونات أكبر */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.5);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      color-scheme: dark;
     }
 
-    *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html,body{ height:100%; margin:0; }
-    body{
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0b1220;
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
+    /* ============================================
+       Reset & Base Styles
+       ============================================ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Topbar */
-    .topbar{
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 70% 10%, rgba(78, 161, 255, 0.15), transparent),
+        radial-gradient(900px 500px at 10% 30%, rgba(180, 110, 255, 0.12), transparent),
+        var(--color-bg-dark);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      height: 100%;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    /* ============================================
+       Utility Classes
+       ============================================ */
+    .safe-top {
+      padding-top: max(14px, env(safe-area-inset-top));
+    }
+
+    .safe-bottom {
+      padding-bottom: max(14px, env(safe-area-inset-bottom));
+    }
+
+    /* ============================================
+       Header & Navigation
+       ============================================ */
+    .header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: rgba(11,18,32,.95);
+      z-index: 40;
+      border-bottom: 1px solid var(--color-border);
+      background: rgba(11, 18, 32, 0.88);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
-      padding: 14px 20px;
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
     }
-    .title{ font-size: 18px; font-weight: 700; margin: 0; }
-    .subtitle{ font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-    /* Main Content */
-    .container{
-      max-width: 1100px;
-      width: 100%;
+    .header-content {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 20px 16px;
-      flex: 1;
+      padding: 16px 20px;
     }
 
-    /* Filters */
-    .filters{
-      background: var(--card);
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      display: grid;
+    .header-brand {
+      display: flex;
+      align-items: center;
       gap: 12px;
-      grid-template-columns: 1fr 1fr; 
-    }
-    .filters .full{ grid-column: span 2; }
-    
-    .field input, .field select{
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      font-size: 14px;
-      outline: none;
     }
 
-    /* Grid */
-    .grid{
+    .header-logo {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-blue-light));
+      border-radius: var(--radius-lg);
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      box-shadow: 0 4px 12px rgba(78, 161, 255, 0.3);
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--color-text-primary);
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    /* ============================================
+       Layout & Container
+       ============================================ */
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 24px 0;
+    }
+
+    /* ============================================
+       Search & Filters Panel
+       ============================================ */
+    .filters-panel {
+      background: rgba(18, 27, 47, 0.88);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .filters-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: 2fr 1fr 1fr auto;
       gap: 16px;
+      align-items: flex-end;
     }
 
-    /* Card */
-    .item{
-      background: var(--card);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--line);
+    .form-group {
       display: flex;
       flex-direction: column;
-    }
-    
-    .item .head{ padding: 16px; }
-    .item-title{ font-weight: 700; margin-bottom: 8px; font-size: 16px; }
-    .badges{ display: flex; gap: 8px; font-size: 12px; color: var(--muted); }
-    .badge{ background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; }
-
-    /* Viewer (Thumbnail) */
-    .viewer{
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      background: #000;
-      cursor: pointer;
-    }
-    .viewer img{
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .play-icon{
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.3);
-    }
-    .play-circle{
-      width: 60px;
-      height: 60px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .play-circle:after{
-      content: "";
-      border-left: 16px solid #fff;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      margin-left: 6px;
+      gap: 8px;
     }
 
-    /* Actions */
-    .actions{
-      padding: 12px;
-      display: flex;
-      gap: 10px;
-      background: rgba(0,0,0,0.2);
+    .form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
     }
-    .btn{
-      flex: 1;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
+
+    .form-input,
+    .form-select {
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      background: rgba(11, 18, 32, 0.5);
+      color: var(--color-text-primary);
       font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: all var(--transition-fast);
     }
-    .btn-primary{ background: rgba(78,161,255,0.2); border-color: rgba(78,161,255,0.4); color: #fff; }
 
-    /* Modal Player (Full Screen Fix) */
-    #playerModal{
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
+    .form-input::placeholder {
+      color: var(--color-text-secondary);
+      opacity: 0.6;
     }
-    #playerModal.open{ display: flex; }
 
-    #playerHeader{
-      display: flex;
-      align-items: center;
-      padding: 12px 16px;
-      background: #121b2f;
-      gap: 12px;
+    .form-input:focus,
+    .form-select:focus {
+      border-color: var(--color-accent-blue);
+      background: rgba(11, 18, 32, 0.7);
+      box-shadow: 0 0 0 3px rgba(78, 161, 255, 0.15);
     }
-    #playerTitle{
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 14px;
-      font-weight: 600;
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%239fb0d0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 10px center;
+      padding-right: 32px;
+      padding-left: 14px;
+      background-color: rgba(11, 18, 32, 0.5);
     }
-    #closeBtn{
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 24px;
+
+    .form-select option {
+      background: var(--color-card);
+      color: var(--color-text-primary);
       padding: 8px;
     }
 
-    #playerContainer{
-      flex: 1;
+    .filter-meta {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    .status-text {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      min-width: 120px;
+      text-align: right;
+    }
+
+    .status-text.loading {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .btn-primary {
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-blue-light));
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 12px rgba(78, 161, 255, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(78, 161, 255, 0.4);
+      background: linear-gradient(135deg, var(--color-accent-blue-light), #7ec5ff);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* ============================================
+       Grid Layout
+       ============================================ */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1024px) {
+      .lessons-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .lessons-grid {
+        grid-template-columns: 1fr;
+      }
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============================================
+       Lesson Card
+       ============================================ */
+    .lesson-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(18, 27, 47, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      height: 100%;
+    }
+
+    .lesson-card:hover {
+      border-color: var(--color-accent-blue);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      background: rgba(18, 27, 47, 0.98);
+    }
+
+    .lesson-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--color-border);
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.05), rgba(180, 110, 255, 0.05));
+    }
+
+    .lesson-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(78, 161, 255, 0.12);
+      border: 1px solid rgba(78, 161, 255, 0.25);
+      color: var(--color-accent-blue-light);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-category {
+      background: rgba(61, 220, 151, 0.12);
+      border-color: rgba(61, 220, 151, 0.25);
+      color: var(--color-success);
+    }
+
+    .badge-date {
+      background: rgba(255, 184, 77, 0.12);
+      border-color: rgba(255, 184, 77, 0.25);
+      color: var(--color-warning);
+    }
+
+    /* ============================================
+       Video Thumbnail & Overlay
+       ============================================ */
+    .lesson-thumbnail {
       position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .thumbnail-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--transition-normal);
+    }
+
+    .lesson-card:hover .thumbnail-image {
+      transform: scale(1.08);
+    }
+
+    .thumbnail-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+      transition: background var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .lesson-card:hover .thumbnail-overlay {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .play-button {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-blue-light));
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(78, 161, 255, 0.4);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .lesson-card:hover .play-button {
+      transform: scale(1.15);
+      box-shadow: 0 12px 32px rgba(78, 161, 255, 0.5);
+    }
+
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-left: 16px solid white;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      margin-left: 3px;
+    }
+
+    /* ============================================
+       Lesson Actions
+       ============================================ */
+    .lesson-actions {
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      border-top: 1px solid var(--color-border);
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    .action-btn,
+    .action-link {
+      flex: 1;
+      min-width: 100px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--color-text-primary);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .action-btn:active,
+    .action-link:active {
+      transform: scale(0.97);
+    }
+
+    .btn-watch {
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.25), rgba(78, 161, 255, 0.15));
+      border-color: rgba(78, 161, 255, 0.4);
+      color: var(--color-accent-blue-light);
+    }
+
+    .btn-download {
+      background: rgba(61, 220, 151, 0.12);
+      border-color: rgba(61, 220, 151, 0.3);
+      color: var(--color-success);
+    }
+
+    /* ============================================
+       Full-Screen Player Modal
+       ============================================ */
+    .player-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(4px);
+      animation: fadeInModal 0.2s ease-in-out;
+    }
+
+    @keyframes fadeInModal {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .player-modal.open {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .player-header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(11, 18, 32, 0.95);
+    }
+
+    .player-title {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 800;
+      color: white;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .player-btn {
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .player-btn:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .player-content {
+      flex: 1;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #000;
       overflow: hidden;
+      position: relative;
+      min-height: 0;
     }
 
-    /* Force Plyr to fit mobile container */
-    .plyr{ width: 100%; height: 100%; max-height: 100%; }
-    .plyr__video-wrapper{ height: 100%; }
-    
-    /* Bigger Controls for Mobile */
-    .plyr__controls__item{ margin-left: 10px; }
-    .plyr--full-ui input[type=range] { height: 20px; } 
+    .player-media {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      background: #000;
+    }
 
-    /* Footer */
+    .player-loading {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+    }
+
+    .loader {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(78, 161, 255, 0.3);
+      border-top-color: var(--color-accent-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============================================
+       Empty State
+       ============================================ */
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(18, 27, 47, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-state-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+    }
+
+    /* ============================================
+       Footer
+       ============================================ */
     .footer {
-      background: #080d16;
-      border-top: 1px solid var(--line);
-      padding: 40px 20px;
       margin-top: auto;
+      border-top: 1px solid var(--color-border);
+      background: rgba(11, 18, 32, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
+
     .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .footer-main {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .footer-author {
       display: flex;
       flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-author-name {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--color-text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .footer-author-role {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
       align-items: center;
-      text-align: center;
-      gap: 20px;
     }
-    .footer-logo h3 { margin: 0 0 8px; font-size: 1.2rem; color: #fff; }
-    .footer-logo p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .footer-social { display: flex; gap: 20px; }
-    .footer-social a {
-      color: #fff;
-      font-size: 1.2rem;
-      opacity: 0.7;
-      transition: 0.2s;
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      transition: all var(--transition-fast);
     }
-    .footer-social a:hover { opacity: 1; color: var(--accent); }
+
+    .social-link:hover {
+      background: rgba(78, 161, 255, 0.2);
+      border-color: var(--color-accent-blue);
+      color: var(--color-accent-blue-light);
+      transform: translateY(-2px);
+    }
+
+    .social-link:active {
+      transform: translateY(0);
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 16px 0;
+    }
+
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 30px;
-      padding-top: 20px;
-      color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 12px;
+      color: var(--color-text-secondary);
       text-align: center;
+    }
+
+    /* ============================================
+       Responsive Design
+       ============================================ */
+    @media (max-width: 820px) {
+      .filters-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .filter-meta {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+      }
+
+      .status-text {
+        text-align: left;
+        min-width: auto;
+      }
+
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .lesson-card {
+        min-height: auto;
+      }
+
+      .header-content {
+        padding: 12px 16px;
+      }
+
+      .header-title {
+        font-size: 18px;
+      }
+
+      .lesson-title {
+        font-size: 15px;
+      }
+
+      .player-title {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .filters-panel {
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+
+      .form-input,
+      .form-select {
+        padding: 10px 12px;
+        font-size: 16px; /* Prevent zoom on iOS */
+      }
+
+      .action-btn,
+      .action-link {
+        padding: 9px 10px;
+        font-size: 11px;
+        min-width: 80px;
+      }
+
+      .play-button {
+        width: 56px;
+        height: 56px;
+      }
+
+      .play-icon {
+        border-left-width: 14px;
+        border-top-width: 9px;
+        border-bottom-width: 9px;
+      }
+
+      .footer-main {
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .main-content {
+        padding: 16px 0;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <h1 class="title">Hayl Al-Khadhami</h1>
-    <div class="subtitle">مكتبة الدروس التفاعلية</div>
-  </header>
-
-  <main class="container">
-    <section class="filters">
-      <div class="field full">
-        <input id="q" type="search" placeholder="🔍 ابحث عن درس..." autocomplete="off">
-      </div>
-      <div class="field">
-        <select id="category"></select>
-      </div>
-      <div class="field">
-        <select id="time">
-          <option value="all">كل الأوقات</option>
-          <option value="today">اليوم</option>
-          <option value="week">أسبوع</option>
-          <option value="month">شهر</option>
-        </select>
-      </div>
-    </section>
-
-    <div id="list" class="grid"></div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-logo">
-            <h3>Hayl Al-Khadhami</h3>
-            <p>Automation Engineer | Researcher | Educator</p>
+  <div class="main-wrapper safe-top">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content container">
+        <div class="header-brand">
+          <div class="header-logo">📚</div>
+          <div>
+            <div class="header-title">مكتبة الدروس</div>
+            <div class="header-subtitle">منصة تعليمية تفاعلية</div>
+          </div>
         </div>
-        <div class="footer-social">
-            <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.facebook.com/haylkhadhami" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://github.com/halkhadhami" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved.</p>
-    </div>
-  </footer>
+      </div>
+    </header>
 
-  <!-- Full Screen Modal Player -->
-  <div id="playerModal">
-    <div id="playerHeader">
-      <button id="closeBtn">✕</button>
-      <div id="playerTitle">درس جديد</div>
-    </div>
-    <div id="playerContainer"></div>
-  </div>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Filters Panel -->
+        <section class="filters-panel">
+          <div class="filters-grid">
+            <div class="form-group">
+              <label class="form-label">🔍 بحث</label>
+              <input
+                id="searchInput"
+                type="search"
+                class="form-input"
+                placeholder="ابحث عن درس..."
+                autocomplete="off"
+              >
+            </div>
 
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-  <script>
-    const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv";
-    
-    // Categories
-    const CATS = {
-      Arabic: "عربي", Art: "فن", Chinese: "صيني", English: "إنجليزي",
-      Fun: "ترفيه", Islamic: "إسلاميات", Kuran: "قرآن", Math: "رياضيات", Other: "أخرى"
-    };
+            <div class="form-group">
+              <label class="form-label">📚 المادة</label>
+              <select id="categorySelect" class="form-select"></select>
+            </div>
 
-    let allRows = [];
-    let currentPlayer = null;
+            <div class="form-group">
+              <label class="form-label">📅 الفترة</label>
+              <select id="timeSelect" class="form-select">
+                <option value="all">الكل</option>
+                <option value="today">اليوم</option>
+                <option value="yesterday">أمس</option>
+                <option value="week">آخر أسبوع</option>
+                <option value="month">آخر شهر</option>
+                <option value="year">آخر سنة</option>
+              </select>
+            </div>
 
-    // Elements
-    const list = document.getElementById('list');
-    const modal = document.getElementById('playerModal');
-    const playerContainer = document.getElementById('playerContainer');
-    const playerTitle = document.getElementById('playerTitle');
-    
-    // Helper: Drive & YouTube
-    function getLinks(url) {
-      const u = url || "";
-      // YouTube
-      const yt = u.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-      if(yt) return { type: 'youtube', id: yt[1], url: u };
-      
-      // Drive
-      const dr = u.match(/\/d\/([^/]+)/) || u.match(/id=([^&]+)/);
-      if(dr) {
-        const id = dr[1];
-        return { 
-          type: 'drive', 
-          id, 
-          preview: `https://drive.google.com/file/d/${id}/preview`,
-          download: `https://drive.google.com/uc?export=download&id=${id}`,
-          thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
-        };
-      }
-      return { type: 'file', url: u };
-    }
-
-    // Load Data
-    fetch(SHEET_CSV).then(r => r.text()).then(txt => {
-      const rows = txt.split(/\r?\n/).map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c=>c.replace(/^"|"$/g,'')));
-      const heads = rows[0];
-      allRows = rows.slice(1).map(r => {
-        let o = {}; heads.forEach((h,i) => o[h] = r[i]); return o;
-      }).filter(o => o.Title && o.ContentURL);
-      
-      // Populate Cats
-      const cats = [...new Set(allRows.map(r=>r.Category))];
-      document.getElementById('category').innerHTML = `<option value="all">كل المواد</option>` + 
-        cats.map(c => `<option value="${c}">${CATS[c]||c}</option>`).join('');
-      
-      render(allRows);
-    });
-
-    // Render
-    function render(rows) {
-      list.innerHTML = rows.map(r => {
-        const l = getLinks(r.ContentURL);
-        let thumb = "https://via.placeholder.com/640x360/0b1220/333?text=Video";
-        if(l.type === 'youtube') thumb = `https://img.youtube.com/vi/${l.id}/hqdefault.jpg`;
-        if(l.type === 'drive') thumb = l.thumb;
-
-        // Download Link
-        let dl = l.type === 'drive' ? l.download : r.ContentURL;
-        if(l.type === 'youtube') dl = r.ContentURL; // YouTube can't download direct
-
-        return `
-        <div class="item">
-          <div class="head">
-            <div class="item-title">${r.Title}</div>
-            <div class="badges">
-              <span class="badge">${CATS[r.Category]||r.Category}</span>
-              <span class="badge">${r.DateUploaded||""}</span>
+            <div class="filter-meta">
+              <div class="status-text" id="statusText">جاهز</div>
+              <button id="refreshBtn" class="btn-primary">
+                <span>⟳</span>
+                <span>تحديث</span>
+              </button>
             </div>
           </div>
-          <div class="viewer" onclick="play('${r.ContentURL}', '${r.Title.replace(/'/g,"")}')">
-            <img src="${thumb}" loading="lazy">
-            <div class="play-icon"><div class="play-circle"></div></div>
-          </div>
-          <div class="actions">
-            <button class="btn btn-primary" onclick="play('${r.ContentURL}', '${r.Title.replace(/'/g,"")}')">▶ مشاهدة</button>
-            <a href="${dl}" target="_blank" class="btn">⬇ تحميل</a>
-          </div>
-        </div>`;
-      }).join('');
-    }
+        </section>
 
-    // Player Logic
-    window.play = (url, title) => {
-      const l = getLinks(url);
-      playerTitle.textContent = title;
-      modal.classList.add('open');
-      playerContainer.innerHTML = '<div style="color:#aaa">جاري التحميل...</div>';
+        <!-- Lessons Grid -->
+        <div id="lessonsGrid" class="lessons-grid"></div>
+      </div>
+    </main>
 
-      if(l.type === 'youtube') {
-        playerContainer.innerHTML = `<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="${l.id}"></div>`;
-        currentPlayer = new Plyr('#player', {
-          controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-          // تحسين للموبايل: إخفاء عناصر التحكم بعد 2 ثانية
-          hideControls: true, 
-          resetOnEnd: true
-        });
-      } else if (l.type === 'drive') {
-        // Drive Iframe (Best for mobile compatibility)
-        playerContainer.innerHTML = `<iframe src="${l.preview}" style="width:100%;height:100%;border:0" allowfullscreen></iframe>`;
-      } else {
-        // Direct Video
-        playerContainer.innerHTML = `<video id="player" playsinline controls><source src="${url}"></video>`;
-        currentPlayer = new Plyr('#player');
+    <!-- Player Modal -->
+    <div id="playerModal" class="player-modal" role="dialog" aria-hidden="true" aria-modal="true">
+      <header class="player-header">
+        <button id="closePlayerBtn" class="player-btn" aria-label="إغلاق">✕</button>
+        <div class="player-title" id="playerTitle"></div>
+        <a id="externalLink" class="player-btn" target="_blank" rel="noopener" style="display: none;">
+          فتح خارجي ↗
+        </a>
+      </header>
+      <div class="player-content" id="playerContent">
+        <div class="player-loading">
+          <div class="loader"></div>
+          <span>جاري التحميل...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer safe-bottom">
+      <div class="footer-content">
+        <div class="footer-main">
+          <div class="footer-author">
+            <div class="footer-author-name">Hayl Al-Khadhami</div>
+            <div class="footer-author-role">Automation Engineer | Researcher | Educator</div>
+          </div>
+          <div class="footer-social">
+            <a
+              href="https://www.linkedin.com/in/halkhadhami/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              title="LinkedIn"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/haylkhadhami"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              title="Facebook"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://github.com/halkhadhami"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              title="GitHub"
+              aria-label="GitHub"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Hayl Al-Khadhami. جميع الحقوق محفوظة. | مدعوم بـ Google Sheets API</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /**
+     * ================================================
+     * Education Library Management System
+     * Enterprise-Grade Application
+     * ================================================
+     */
+
+    /* ============================================
+       Configuration & Constants
+       ============================================ */
+    const CONFIG = {
+      SHEET_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
+      FETCH_TIMEOUT: 8000,
+      CACHE_DURATION: 3600000, // 1 hour
+    };
+
+    const CATEGORIES = {
+      "Arabic": "عربي",
+      "Art": "فن",
+      "Chinese": "صيني",
+      "English": "إنجليزي",
+      "Fun": "ترفيه",
+      "Islamic": "إسلاميات",
+      "Kuran": "قرآن",
+      "Math": "رياضيات",
+      "Other": "أخرى"
+    };
+
+    const CATEGORY_ORDER = Object.keys(CATEGORIES);
+
+    /* ============================================
+       DOM Elements Cache
+       ============================================ */
+    const DOM = {
+      searchInput: document.getElementById("searchInput"),
+      categorySelect: document.getElementById("categorySelect"),
+      timeSelect: document.getElementById("timeSelect"),
+      refreshBtn: document.getElementById("refreshBtn"),
+      statusText: document.getElementById("statusText"),
+      lessonsGrid: document.getElementById("lessonsGrid"),
+      playerModal: document.getElementById("playerModal"),
+      playerContent: document.getElementById("playerContent"),
+      playerTitle: document.getElementById("playerTitle"),
+      closePlayerBtn: document.getElementById("closePlayerBtn"),
+      externalLink: document.getElementById("externalLink"),
+    };
+
+    /* ============================================
+       Application State
+       ============================================ */
+    let appState = {
+      lessons: [],
+      filteredLessons: [],
+      isLoading: false,
+      cache: null,
+      cacheTimestamp: 0,
+    };
+
+    /* ============================================
+       Utility Functions
+       ============================================ */
+    const Utils = {
+      /**
+       * Escape HTML special characters
+       */
+      escapeHtml(str) {
+        const map = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        };
+        return String(str || "").replace(/[&<>"']/g, (c) => map[c]);
+      },
+
+      /**
+       * Parse date from DD/MM/YYYY format
+       */
+      parseDate(dateStr) {
+        if (!dateStr) return null;
+        const parts = String(dateStr).trim().split("/");
+        if (parts.length !== 3) return null;
+        const [day, month, year] = parts.map(Number);
+        if (!day || !month || !year) return null;
+        return new Date(year, month - 1, day, 12, 0, 0);
+      },
+
+      /**
+       * Format date for Arabic display
+       */
+      formatDateArabic(date) {
+        if (!date) return "—";
+        try {
+          return new Intl.DateTimeFormat("ar", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+          }).format(date);
+        } catch {
+          return date.toLocaleDateString();
+        }
+      },
+
+      /**
+       * Calculate days between two dates
+       */
+      daysBetween(date1, date2) {
+        const MS_PER_DAY = 86400000;
+        const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+        return Math.round((d1 - d2) / MS_PER_DAY);
+      },
+
+      /**
+       * Parse CSV text into 2D array
+       */
+      parseCSV(text) {
+        const rows = [];
+        let row = [];
+        let cell = "";
+        let inQuotes = false;
+
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+          const nextChar = text[i + 1];
+
+          if (char === '"' && inQuotes && nextChar === '"') {
+            cell += '"';
+            i++;
+            continue;
+          }
+
+          if (char === '"') {
+            inQuotes = !inQuotes;
+            continue;
+          }
+
+          if (!inQuotes && char === ",") {
+            row.push(cell);
+            cell = "";
+            continue;
+          }
+
+          if (!inQuotes && (char === "\n" || char === "\r")) {
+            if (char === "\r" && nextChar === "\n") i++;
+            row.push(cell);
+            cell = "";
+            if (row.some(c => String(c).trim() !== "")) {
+              rows.push(row);
+            }
+            row = [];
+            continue;
+          }
+
+          cell += char;
+        }
+
+        row.push(cell);
+        if (row.some(c => String(c).trim() !== "")) {
+          rows.push(row);
+        }
+
+        return rows;
+      },
+
+      /**
+       * Extract YouTube video ID from URL
+       */
+      extractYouTubeId(url) {
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = String(url || "").match(regex);
+        return match ? match[1] : null;
+      },
+
+      /**
+       * Extract Google Drive file ID from URL
+       */
+      extractDriveId(url) {
+        const patterns = [
+          /\/file\/d\/([^/]+)/,
+          /[?&]id=([^&]+)/,
+          /\/d\/([^/]+)/
+        ];
+
+        for (const pattern of patterns) {
+          const match = String(url || "").match(pattern);
+          if (match) return match[1];
+        }
+        return null;
+      },
+
+      /**
+       * Generate Drive links
+       */
+      getDriveLinks(url) {
+        const id = this.extractDriveId(url);
+        if (!id) return null;
+
+        return {
+          id,
+          preview: `https://drive.google.com/file/d/${id}/preview`,
+          download: `https://drive.google.com/uc?export=download&id=${id}`,
+          view: `https://drive.google.com/uc?export=view&id=${id}`,
+          thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
+        };
+      },
+
+      /**
+       * Determine content type
+       */
+      getContentType(url) {
+        const urlLower = String(url || "").toLowerCase();
+        const pathOnly = urlLower.split("?")[0];
+
+        if (this.extractYouTubeId(url)) return "youtube";
+        if (urlLower.includes("drive.google.com")) return "drive";
+        if (/\.(mp4|webm|ogg|mov|m4v|mkv|avi)$/.test(pathOnly)) return "video";
+        if (/\.(pdf)$/.test(pathOnly)) return "pdf";
+        if (/\.(png|jpg|jpeg|gif|webp|bmp)$/.test(pathOnly)) return "image";
+
+        return "link";
+      },
+
+      /**
+       * Update status message
+       */
+      setStatus(message, isError = false) {
+        DOM.statusText.textContent = message;
+        DOM.statusText.style.color = isError ? "var(--color-danger)" : "var(--color-text-secondary)";
+        if (message.includes("جاري")) {
+          DOM.statusText.classList.add("loading");
+        } else {
+          DOM.statusText.classList.remove("loading");
+        }
+      },
+
+      /**
+       * Fetch with timeout
+       */
+      async fetchWithTimeout(url, timeout = CONFIG.FETCH_TIMEOUT) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        try {
+          const response = await fetch(url, {
+            signal: controller.signal,
+            cache: "no-store"
+          });
+          clearTimeout(timeoutId);
+          return response;
+        } catch (error) {
+          clearTimeout(timeoutId);
+          throw error;
+        }
       }
     };
 
-    // Close
-    document.getElementById('closeBtn').onclick = () => {
-      if(currentPlayer) currentPlayer.destroy();
-      playerContainer.innerHTML = '';
-      modal.classList.remove('open');
+    /* ============================================
+       Data Management
+       ============================================ */
+    const DataManager = {
+      /**
+       * Normalize lesson data
+       */
+      normalizeLesson(row) {
+        return {
+          id: (row.LessonID ?? "").trim(),
+          title: (row.Title ?? "").trim() || "بدون عنوان",
+          category: (row.Category ?? "").trim() || "Other",
+          date: Utils.parseDate((row.DateUploaded ?? "").trim()),
+          url: (row.ContentURL ?? "").trim(),
+          type: Utils.getContentType((row.ContentURL ?? "").trim())
+        };
+      },
+
+      /**
+       * Load lessons from Google Sheets
+       */
+      async loadLessons() {
+        const now = Date.now();
+        if (appState.cache && (now - appState.cacheTimestamp) < CONFIG.CACHE_DURATION) {
+          return appState.cache;
+        }
+
+        Utils.setStatus("جاري تحميل البيانات...");
+        appState.isLoading = true;
+
+        try {
+          const response = await Utils.fetchWithTimeout(CONFIG.SHEET_CSV_URL);
+
+          if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
+          }
+
+          const csvText = await response.text();
+          const parsed = Utils.parseCSV(csvText);
+
+          if (parsed.length < 2) {
+            throw new Error("جدول البيانات فارغ أو غير صالح");
+          }
+
+          const headers = parsed[0].map(h => String(h).trim());
+          const data = parsed.slice(1).map(cols => {
+            const obj = {};
+            headers.forEach((h, i) => {
+              obj[h] = cols[i] ?? "";
+            });
+            return obj;
+          });
+
+          const lessons = data
+            .map(row => this.normalizeLesson(row))
+            .filter(lesson => lesson.title && lesson.url);
+
+          lessons.sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0));
+
+          appState.cache = lessons;
+          appState.cacheTimestamp = now;
+          appState.lessons = lessons;
+
+          Utils.setStatus(`✓ تم تحميل ${lessons.length} درس`);
+          return lessons;
+        } catch (error) {
+          console.error("Data loading error:", error);
+          Utils.setStatus("❌ تعذّر تحميل البيانات", true);
+          appState.lessons = [];
+          return [];
+        } finally {
+          appState.isLoading = false;
+        }
+      },
+
+      /**
+       * Get unique categories
+       */
+      getCategories(lessons) {
+        const cats = new Set(lessons.map(l => l.category));
+        return CATEGORY_ORDER.filter(c => cats.has(c)).concat(
+          [...cats].filter(c => !CATEGORY_ORDER.includes(c))
+        );
+      },
+
+      /**
+       * Apply filters
+       */
+      filterLessons(lessons, searchTerm = "", category = "all", timeRange = "all") {
+        const search = searchTerm.trim().toLowerCase();
+        const now = new Date();
+
+        return lessons.filter(lesson => {
+          // Search filter
+          if (search && !lesson.title.toLowerCase().includes(search)) {
+            return false;
+          }
+
+          // Category filter
+          if (category !== "all" && lesson.category !== category) {
+            return false;
+          }
+
+          // Time filter
+          if (timeRange !== "all" && lesson.date) {
+            const daysDiff = Utils.daysBetween(now, lesson.date);
+            const filters = {
+              "today": (diff) => diff === 0,
+              "yesterday": (diff) => diff === 1,
+              "week": (diff) => diff >= 0 && diff <= 7,
+              "month": (diff) => diff >= 0 && diff <= 30,
+              "year": (diff) => diff >= 0 && diff <= 365
+            };
+
+            if (filters[timeRange] && !filters[timeRange](daysDiff)) {
+              return false;
+            }
+          }
+
+          return true;
+        });
+      }
     };
 
-    // Filters
-    const filter = () => {
-      const q = document.getElementById('q').value.toLowerCase();
-      const c = document.getElementById('category').value;
-      render(allRows.filter(r => 
-        (r.Title.toLowerCase().includes(q)) && 
-        (c === 'all' || r.Category === c)
-      ));
-    };
-    ['q','category'].forEach(i => document.getElementById(i).oninput = filter);
+    /* ============================================
+       UI Rendering
+       ============================================ */
+    const UIRenderer = {
+      /**
+       * Build category select options
+       */
+      populateCategories(categories) {
+        DOM.categorySelect.innerHTML = "";
 
+        const optAll = document.createElement("option");
+        optAll.value = "all";
+        optAll.textContent = "كل المواد";
+        DOM.categorySelect.appendChild(optAll);
+
+        categories.forEach(cat => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = CATEGORIES[cat] || cat;
+          DOM.categorySelect.appendChild(opt);
+        });
+      },
+
+      /**
+       * Render lessons grid
+       */
+      renderLessons(lessons) {
+        DOM.lessonsGrid.innerHTML = "";
+
+        if (lessons.length === 0) {
+          DOM.lessonsGrid.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <div class="empty-state-title">لا توجد نتائج</div>
+              <div class="empty-state-text">جرب تغيير معايير البحث</div>
+            </div>
+          `;
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        lessons.forEach(lesson => {
+          fragment.appendChild(this.createLessonCard(lesson));
+        });
+        DOM.lessonsGrid.appendChild(fragment);
+      },
+
+      /**
+       * Create lesson card element
+       */
+      createLessonCard(lesson) {
+        const card = document.createElement("article");
+        card.className = "lesson-card";
+
+        // Get thumbnail
+        let thumbnail = "";
+        const ytId = Utils.extractYouTubeId(lesson.url);
+        const driveLinks = Utils.getDriveLinks(lesson.url);
+
+        if (ytId) {
+          thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+        } else if (driveLinks) {
+          thumbnail = driveLinks.thumb;
+        } else {
+          // Placeholder SVG
+          thumbnail = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23121b2f' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239fb0d0' font-size='48' font-family='sans-serif'%3E▶%3C/text%3E%3C/svg%3E";
+        }
+
+        const categoryLabel = CATEGORIES[lesson.category] || lesson.category;
+        const dateLabel = Utils.formatDateArabic(lesson.date);
+
+        card.innerHTML = `
+          <div class="lesson-header">
+            <div class="lesson-title">${Utils.escapeHtml(lesson.title)}</div>
+            <div class="lesson-meta">
+              <span class="badge badge-category">📚 ${Utils.escapeHtml(categoryLabel)}</span>
+              <span class="badge badge-date">📅 ${Utils.escapeHtml(dateLabel)}</span>
+              <span class="badge">#${Utils.escapeHtml(lesson.id || "—")}</span>
+            </div>
+          </div>
+
+          <div class="lesson-thumbnail">
+            <img
+              src="${thumbnail}"
+              alt="${Utils.escapeHtml(lesson.title)}"
+              class="thumbnail-image"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+            />
+            <div class="thumbnail-overlay">
+              <div class="play-button">
+                <div class="play-icon"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-actions">
+            <button class="action-btn btn-watch" data-action="watch">
+              <span>▶</span>
+              <span>مشاهدة</span>
+            </button>
+            <a
+              class="action-link btn-download"
+              href="${lesson.url}"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+            >
+              <span>⬇</span>
+              <span>تحميل</span>
+            </a>
+          </div>
+        `;
+
+        card.addEventListener("click", (e) => {
+          if (e.target.closest(".action-link")) return; // Allow download link
+          PlayerManager.openPlayer(lesson);
+        });
+
+        card.querySelector(".btn-watch").addEventListener("click", (e) => {
+          e.stopPropagation();
+          PlayerManager.openPlayer(lesson);
+        });
+
+        return card;
+      }
+    };
+
+    /* ============================================
+       Player Management
+       ============================================ */
+    const PlayerManager = {
+      currentPlayer: null,
+
+      /**
+       * Open player modal
+       */
+      openPlayer(lesson) {
+        DOM.playerTitle.textContent = lesson.title;
+        DOM.playerModal.classList.add("open");
+        DOM.playerModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        this.loadContent(lesson);
+      },
+
+      /**
+       * Load appropriate content type
+       */
+      loadContent(lesson) {
+        const ytId = Utils.extractYouTubeId(lesson.url);
+        const driveLinks = Utils.getDriveLinks(lesson.url);
+
+        // Set external link
+        DOM.externalLink.style.display = "block";
+        DOM.externalLink.href = lesson.url;
+
+        DOM.playerContent.innerHTML = "";
+
+        if (ytId) {
+          // YouTube embed
+          const iframe = document.createElement("iframe");
+          iframe.className = "player-media";
+          iframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0`;
+          iframe.title = lesson.title;
+          iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+          iframe.setAttribute("allowfullscreen", "");
+          DOM.playerContent.appendChild(iframe);
+          return;
+        }
+
+        if (driveLinks) {
+          // Google Drive preview (iframe)
+          const iframe = document.createElement("iframe");
+          iframe.className = "player-media";
+          iframe.src = driveLinks.preview;
+          iframe.title = lesson.title;
+          iframe.allow = "autoplay; encrypted-media; fullscreen";
+          iframe.setAttribute("allowfullscreen", "");
+          DOM.playerContent.appendChild(iframe);
+          return;
+        }
+
+        if (lesson.type === "video") {
+          // Direct video file
+          const video = document.createElement("video");
+          video.className = "player-media";
+          video.controls = true;
+          video.preload = "metadata";
+          video.src = lesson.url;
+          video.title = lesson.title;
+          DOM.playerContent.appendChild(video);
+          return;
+        }
+
+        if (lesson.type === "image") {
+          // Image display
+          const img = document.createElement("img");
+          img.className = "player-media";
+          img.src = lesson.url;
+          img.alt = lesson.title;
+          DOM.playerContent.appendChild(img);
+          return;
+        }
+
+        // Fallback: iframe
+        const iframe = document.createElement("iframe");
+        iframe.className = "player-media";
+        iframe.src = lesson.url;
+        iframe.title = lesson.title;
+        iframe.allow = "autoplay; encrypted-media; fullscreen";
+        iframe.setAttribute("allowfullscreen", "");
+        DOM.playerContent.appendChild(iframe);
+      },
+
+      /**
+       * Close player modal
+       */
+      closePlayer() {
+        DOM.playerModal.classList.remove("open");
+        DOM.playerModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        DOM.playerContent.innerHTML = `
+          <div class="player-loading">
+            <div class="loader"></div>
+            <span>جاري التحميل...</span>
+          </div>
+        `;
+      }
+    };
+
+    /* ============================================
+       Event Listeners
+       ============================================ */
+    function initializeEventListeners() {
+      // Search
+      DOM.searchInput.addEventListener("input", () => {
+        applyFilters();
+      });
+
+      // Category filter
+      DOM.categorySelect.addEventListener("change", () => {
+        applyFilters();
+      });
+
+      // Time filter
+      DOM.timeSelect.addEventListener("change", () => {
+        applyFilters();
+      });
+
+      // Refresh button
+      DOM.refreshBtn.addEventListener("click", async () => {
+        appState.cacheTimestamp = 0; // Clear cache
+        const lessons = await DataManager.loadLessons();
+        UIRenderer.populateCategories(DataManager.getCategories(lessons));
+        applyFilters();
+      });
+
+      // Player controls
+      DOM.closePlayerBtn.addEventListener("click", () => {
+        PlayerManager.closePlayer();
+      });
+
+      DOM.playerModal.addEventListener("click", (e) => {
+        if (e.target === DOM.playerModal) {
+          PlayerManager.closePlayer();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && DOM.playerModal.classList.contains("open")) {
+          PlayerManager.closePlayer();
+        }
+      });
+    }
+
+    /**
+     * Apply all active filters
+     */
+    function applyFilters() {
+      const searchTerm = DOM.searchInput.value;
+      const category = DOM.categorySelect.value;
+      const timeRange = DOM.timeSelect.value;
+
+      appState.filteredLessons = DataManager.filterLessons(
+        appState.lessons,
+        searchTerm,
+        category,
+        timeRange
+      );
+
+      UIRenderer.renderLessons(appState.filteredLessons);
+    }
+
+    /* ============================================
+       Initialization
+       ============================================ */
+    async function initialize() {
+      initializeEventListeners();
+
+      // Load data
+      const lessons = await DataManager.loadLessons();
+
+      // Populate categories
+      const categories = DataManager.getCategories(lessons);
+      UIRenderer.populateCategories(categories);
+
+      // Render initial lessons
+      applyFilters();
+    }
+
+    // Start the app when DOM is ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initialize);
+    } else {
+      initialize();
+    }
   </script>
 </body>
 </html>
