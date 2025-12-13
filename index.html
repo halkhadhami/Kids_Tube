@@ -1,419 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0b1220">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>مكتبة الدروس</title>
+
+  <!-- Use RAW github asset (blob URL is an HTML page, not the image itself) -->
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
+
+  <!-- Font Awesome for footer icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer">
+
   <style>
-    :root {
-      --bg: #0b1220;
-      --card: #121b2f;
-      --muted: #9fb0d0;
-      --text: #eef3ff;
-      --line: rgba(255, 255, 255, 0.10);
-      --accent: #4ea1ff;
-      --danger: #ff5b6e;
+    :root{
+      --bg:#0b1220;
+      --card:#121b2f;
+      --muted:#9fb0d0;
+      --text:#eef3ff;
+      --line: rgba(255,255,255,.10);
+      --accent:#4ea1ff;
+      --danger:#ff5b6e;
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+      color-scheme: dark;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; margin:0; }
+    body{
       font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 70% 10%, rgba(78, 161, 255, 0.22), transparent),
-                  radial-gradient(900px 500px at 10% 30%, rgba(180, 110, 255, 0.16), transparent),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 600px at 70% 10%, rgba(78,161,255,.22), transparent),
+        radial-gradient(900px 500px at 10% 30%, rgba(180,110,255,.16), transparent),
+        var(--bg);
       color: var(--text);
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      -webkit-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
+      overflow-x: hidden;
     }
 
-    .topbar {
-      position: fixed;
+    /* Topbar */
+    .topbar{
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      z-index: 20;
       border-bottom: 1px solid var(--line);
-      background: rgba(11, 18, 32, 0.98);
-      backdrop-filter: blur(12px);
-      padding-top: max(0px, env(safe-area-inset-top));
+      background: rgba(11,18,32,.92);
+      backdrop-filter: blur(10px);
     }
-
-    .brand {
-      padding: 14px 16px;
+    .brand{
+      padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
     }
+    .title{ font-size: 18px; font-weight: 800; }
+    .subtitle{ font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.6; }
 
-    .title {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .container {
+    .container{
       max-width: 1100px;
-      margin: 0 auto;
+      margin: 14px auto 28px;
       padding: 0 12px;
-      padding-top: 90px;
-      padding-bottom: 120px;
-      height: calc(100vh - 210px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
-    .card {
-      background: rgba(18, 27, 47, 0.92);
+    .card{
+      background: rgba(18,27,47,.92);
       border: 1px solid var(--line);
       border-radius: 14px;
+      box-shadow: var(--shadow);
     }
 
-    .filters {
+    /* Filters */
+    .filters{
       display: grid;
-      grid-template-columns: 1fr 180px 180px auto;
+      grid-template-columns: 1fr 190px 190px auto;
       gap: 12px;
       padding: 12px;
       align-items: end;
     }
-
-    .field label {
-      display: block;
+    .field label{
+      display:block;
       font-size: 12px;
       color: var(--muted);
       margin-bottom: 6px;
+      font-weight: 650;
     }
-
-    .field input,
-    .field select {
+    .field input, .field select{
       width: 100%;
-      padding: 10px;
+      padding: 11px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,.10);
       color: var(--text);
       outline: none;
       font-size: 14px;
     }
-
-    .field input:focus,
-    .field select:focus {
-      border-color: rgba(78, 161, 255, 0.6);
+    .field input:focus, .field select:focus{
+      border-color: rgba(78,161,255,.60);
+      box-shadow: 0 0 0 3px rgba(78,161,255,.16);
+    }
+    .field select option{
+      background: #121b2f;
+      color: #eef3ff;
     }
 
-    .meta {
-      display: flex;
+    .meta{
+      display:flex;
       gap: 10px;
-      align-items: center;
+      align-items:center;
       justify-content: flex-end;
       white-space: nowrap;
     }
-
-    #status {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    #reload {
-      padding: 10px 12px;
+    #status{ color: var(--muted); font-size: 12px; }
+    #reload{
+      padding: 11px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(78, 161, 255, 0.18);
+      background: rgba(78,161,255,.18);
       color: var(--text);
       cursor: pointer;
-      transition: all 0.2s;
+      font-size: 13px;
+      font-weight: 650;
     }
+    #reload:active{ transform: translateY(1px); }
 
-    #reload:active {
-      transform: translateY(1px);
-    }
-
-    .grid {
+    /* Grid */
+    .grid{
       margin-top: 14px;
-      display: grid;
+      display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 12px;
     }
-
-    .item {
+    .item{
       grid-column: span 12;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    @media (min-width: 720px){
+      .item{ grid-column: span 6; }
+    }
+    @media (min-width: 1020px){
+      .item{ grid-column: span 4; }
     }
 
-    @media (min-width: 720px) {
-      .item {
-        grid-column: span 6;
-      }
-    }
-
-    @media (min-width: 1020px) {
-      .item {
-        grid-column: span 4;
-      }
-    }
-
-    .item .head {
+    .item .head{
       padding: 12px 12px 10px;
       border-bottom: 1px solid var(--line);
     }
-
-    .item .item-title {
+    .item .item-title{
       font-size: 15px;
-      font-weight: 700;
-      margin: 0 0 6px;
+      font-weight: 800;
+      margin:0 0 7px;
+      line-height: 1.35;
     }
-
-    .item .sub {
+    .item .sub{
       font-size: 12px;
       color: var(--muted);
-      display: flex;
+      display:flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
     }
-
-    .badge {
-      display: inline-flex;
+    .badge{
+      display:inline-flex;
       padding: 3px 8px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,.06);
     }
 
-    .viewer {
+    /* Thumbnail viewer */
+    .viewer{
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: rgba(0,0,0,.35);
       overflow: hidden;
       cursor: pointer;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    .viewer iframe,
-    .viewer video,
-    .viewer img {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-      object-fit: cover;
-    }
-
-    .playOverlay {
+    .viewer img{
       position: absolute;
       inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.05));
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+      border: 0;
+      transform: translateZ(0);
     }
-
-    .playBtn {
-      width: 80px;
-      height: 80px;
+    .playOverlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.12));
+      pointer-events: none; /* لا نسرق اللمس */
+    }
+    .playBtn{
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.9);
-      background: rgba(78, 161, 255, 0.8);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-      transition: all 0.2s;
-      -webkit-user-select: none;
-      user-select: none;
+      border: 2px solid rgba(255,255,255,.9);
+      background: rgba(0,0,0,.35);
+      display:grid;
+      place-items:center;
     }
-
-    .playBtn::before {
-      content: "";
-      display: block;
-      width: 0;
-      height: 0;
+    .playBtn:before{
+      content:"";
+      width:0;height:0;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;
-      border-right: 0;
-      border-left: 18px solid rgba(255, 255, 255, 0.92);
+      border-left: 18px solid rgba(255,255,255,.95);
       margin-left: 4px;
     }
 
-    .actions {
+    /* Actions */
+    .actions{
       padding: 10px 12px 12px;
-      display: flex;
+      display:flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
+      margin-top: auto;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.12);
     }
-
-    .actions a {
-      text-decoration: none;
+    .actions button, .actions a{
+      text-decoration:none;
       color: var(--text);
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 8px 10px;
+      background: rgba(255,255,255,.06);
+      padding: 10px 12px;
       border-radius: 12px;
       font-size: 13px;
-      transition: all 0.2s;
-      display: inline-block;
+      cursor: pointer;
+      font-family: inherit;
+      flex: 1 1 120px;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .actions a.primary, .actions button.primary{
+      background: rgba(78,161,255,.22);
+      border-color: rgba(78,161,255,.45);
+      font-weight: 750;
     }
 
-    .actions a:active {
-      transform: translateY(1px);
-    }
-
-    .actions a.primary {
-      background: rgba(78, 161, 255, 0.18);
-      border-color: rgba(78, 161, 255, 0.35);
-    }
-
-    .footer {
+    /* Modal Player (tuned for mobile) */
+    #playerModal{
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-top: 1px solid var(--line);
-      background: rgba(11, 18, 32, 0.95);
-      backdrop-filter: blur(12px);
-      padding: 16px;
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      z-index: 50;
-      overflow-y: auto;
-      max-height: 120px;
-      -webkit-overflow-scrolling: touch;
+      inset: 0;
+      display: none;
+      background: rgba(0,0,0,.92);
+      z-index: 9999;
+    }
+    #playerModal.open{ display: block; }
+
+    /* Use dynamic viewport height on mobile */
+    #playerBox{
+      position: fixed;
+      inset: 0;
+      height: 100dvh;
+      width: 100vw;
+      display:flex;
+      flex-direction: column;
+      background: #000;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .footer-content {
-      display: flex;
-      gap: 20px;
+    #playerBar{
+      flex: 0 0 auto;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      padding: 10px 12px;
+      background: rgba(11,18,32,.92);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    #playerTitle{
+      font-weight: 750;
+      font-size: 13px;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 55vw;
+    }
+    #playerBar .spacer{ flex: 1; }
+
+    #playerBar button, #playerBar a{
+      background: rgba(255,255,255,.10);
+      color: #eef3ff;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+      padding: 9px 11px;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    #playerStage{
+      flex: 1;
+      min-height: 0;
+      background: #000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    /* IMPORTANT: native video controls for best WebView/mobile behavior */
+    #playerStage video{
+      width: 100%;
+      height: 100%;
+      background:#000;
+      object-fit: contain;
+      outline: none;
+    }
+    #playerStage iframe, #playerStage object{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display:block;
+      background: #000;
+    }
+
+    #playerHint{
+      flex: 0 0 auto;
+      padding: 10px 12px;
+      background: rgba(11,18,32,.92);
+      border-top: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* Hide our top bar when the stage itself goes fullscreen */
+    #playerStage:fullscreen ~ #playerHint,
+    #playerStage:fullscreen { background:#000; }
+    #playerStage:fullscreen + #playerHint { display:none; }
+
+    @media (max-width: 820px){
+      .filters{ grid-template-columns: 1fr; }
+      .meta{ justify-content: space-between; }
+      #playerTitle{ max-width: 40vw; }
+    }
+
+    .empty{
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Footer (your requested structure) */
+    .footer{
+      margin-top: 22px;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      padding: 28px 0 calc(28px + env(safe-area-inset-bottom));
+    }
+    .footer .container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .footer-content{
+      display:flex;
+      gap: 16px;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
-
-    .footer-logo h3 {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 700;
+    .footer-logo h3{
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 800;
       color: var(--text);
     }
-
-    .footer-logo p {
-      margin: 4px 0 0;
-      font-size: 11px;
+    .footer-logo p{
+      margin: 0;
+      font-size: 12px;
       color: var(--muted);
     }
-
-    .footer-social {
-      display: flex;
-      gap: 12px;
+    .footer-social{
+      display:flex;
+      gap: 10px;
+      align-items:center;
     }
-
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .footer-social a{
       width: 40px;
       height: 40px;
-      border-radius: 50%;
-      background: rgba(78, 161, 255, 0.15);
-      border: 1px solid rgba(78, 161, 255, 0.3);
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 14px;
-      transition: all 0.2s;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
     }
-
-    .footer-social a:active {
-      background: rgba(78, 161, 255, 0.25);
-      transform: scale(0.95);
+    .footer-social a:hover{
+      border-color: rgba(78,161,255,.5);
+      background: rgba(78,161,255,.15);
     }
-
-    .footer-bottom {
-      font-size: 11px;
+    .footer-bottom{
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
       color: var(--muted);
-      text-align: center;
-      border-top: 1px solid var(--line);
-      padding-top: 8px;
-    }
-
-    .footer-bottom p {
-      margin: 0;
-    }
-
-    @media (max-width: 820px) {
-      .filters {
-        grid-template-columns: 1fr;
-      }
-
-      .meta {
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-        font-size: 11px;
-      }
-
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      .item {
-        grid-column: span 12 !important;
-      }
-
-      .actions a {
-        padding: 10px 12px;
-        font-size: 12px;
-      }
-    }
-
-    @supports (padding: max(0px)) {
-      body {
-        padding-left: max(0px, env(safe-area-inset-left));
-        padding-right: max(0px, env(safe-area-inset-right));
-      }
-    }
-
-    .error-msg {
-      padding: 12px;
-      border-radius: 14px;
-      color: var(--muted);
-    }
-
-    .error-msg .error-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .error-msg .error-text {
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 12px;
+      text-align:center;
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
       <div class="title">مكتبة الدروس</div>
-      <div class="subtitle">مواد: عربي، فن، صيني، إنجليزي، ترفيه، إسلاميات، قرآن، رياضيات، أخرى</div>
+      <div class="subtitle">تعلم ومشاهدة من Google Sheets مع تشغيل مناسب للموبايل.</div>
     </div>
   </header>
 
@@ -421,7 +432,7 @@
     <section class="filters card">
       <div class="field">
         <label for="q">بحث</label>
-        <input id="q" type="search" placeholder="ابحث بالعنوان..." autocomplete="off">
+        <input id="q" type="search" placeholder="ابحث بالعنوان..." autocomplete="off" />
       </div>
 
       <div class="field">
@@ -450,40 +461,57 @@
     <section id="list" class="grid"></section>
   </main>
 
+  <!-- Your requested footer -->
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <h3>Hayl Al-Khadhami</h3>
-        <p>Automation Engineer | Educator</p>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h3>Hayl Al-Khadhami</h3>
+          <p>Automation Engineer | Researcher | Educator</p>
+        </div>
+
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.facebook.com/haylkhadhami" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://github.com/halkhadhami" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
       </div>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <span>in</span>
-        </a>
-        <a href="https://www.facebook.com/haylkhadhami" target="_blank" rel="noopener" aria-label="Facebook">
-          <span>f</span>
-        </a>
-        <a href="https://github.com/halkhadhami" target="_blank" rel="noopener" aria-label="GitHub">
-          <span>@</span>
-        </a>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved.</p>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved.</p>
     </div>
   </footer>
 
+  <!-- Mobile-tuned Modal Player -->
+  <div id="playerModal" aria-hidden="true">
+    <div id="playerBox" role="dialog" aria-modal="true">
+      <div id="playerBar">
+        <button id="closePlayer" type="button">إغلاق</button>
+        <div id="playerTitle"></div>
+        <div class="spacer"></div>
+        <button id="fsBtn" type="button">ملء الشاشة</button>
+        <a id="openExternal" target="_blank" rel="noopener">فتح خارجي</a>
+      </div>
+      <div id="playerStage"></div>
+      <div id="playerHint"></div>
+    </div>
+  </div>
+
   <script>
-    /* =========================
-       إعدادات
-    ========================= */
+    /***********************
+     * Settings
+     ***********************/
     const SHEET_CSV_URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv";
 
-    const CATEGORY_ORDER = [
-      "Arabic", "Art", "Chinese", "English", "Fun", "Islamic", "Kuran", "Math", "Other"
-    ];
-
+    const CATEGORY_ORDER = ["Arabic","Art","Chinese","English","Fun","Islamic","Kuran","Math","Other"];
     const CATEGORY_AR = {
       Arabic: "عربي",
       Art: "فن",
@@ -505,16 +533,33 @@
       reload: document.getElementById("reload")
     };
 
-    let allRows = [];
-    let currentIframe = null;
-    let isFullscreen = false;
+    const modal = document.getElementById("playerModal");
+    const closeBtn = document.getElementById("closePlayer");
+    const fsBtn = document.getElementById("fsBtn");
+    const openExternal = document.getElementById("openExternal");
+    const playerTitle = document.getElementById("playerTitle");
+    const playerStage = document.getElementById("playerStage");
+    const playerHint = document.getElementById("playerHint");
 
-    /* =========================
-       أدوات مساعدة
-    ========================= */
+    let allRows = [];
+    let currentVideoEl = null; // if using <video>
+
+    /***********************
+     * Helpers
+     ***********************/
     function setStatus(msg, isError = false) {
       UI.status.textContent = msg;
       UI.status.style.color = isError ? "var(--danger)" : "var(--muted)";
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[c]));
     }
 
     function parseDDMMYYYY(s) {
@@ -527,7 +572,7 @@
     }
 
     function daysBetween(a, b) {
-      const MS = 24 * 60 * 60 * 1000;
+      const MS = 86400000;
       const d1 = new Date(a.getFullYear(), a.getMonth(), a.getDate());
       const d2 = new Date(b.getFullYear(), b.getMonth(), b.getDate());
       return Math.round((d1 - d2) / MS);
@@ -536,11 +581,7 @@
     function formatDateAr(d) {
       if (!d) return "—";
       try {
-        return new Intl.DateTimeFormat("ar", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit"
-        }).format(d);
+        return new Intl.DateTimeFormat("ar", { year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
       } catch {
         return d.toLocaleDateString();
       }
@@ -556,24 +597,13 @@
         const ch = text[i];
         const next = text[i + 1];
 
-        if (ch === '"' && inQuotes && next === '"') {
-          cur += '"';
-          i++;
-          continue;
-        }
-        if (ch === '"') {
-          inQuotes = !inQuotes;
-          continue;
-        }
-        if (!inQuotes && ch === ",") {
-          row.push(cur);
-          cur = "";
-          continue;
-        }
+        if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; continue; }
+        if (ch === '"') { inQuotes = !inQuotes; continue; }
+
+        if (!inQuotes && ch === ",") { row.push(cur); cur = ""; continue; }
         if (!inQuotes && (ch === "\n" || ch === "\r")) {
           if (ch === "\r" && next === "\n") i++;
-          row.push(cur);
-          cur = "";
+          row.push(cur); cur = "";
           if (row.some(c => String(c).trim() !== "")) rows.push(row);
           row = [];
           continue;
@@ -582,63 +612,59 @@
       }
       row.push(cur);
       if (row.some(c => String(c).trim() !== "")) rows.push(row);
-
       return rows;
     }
 
-    function guessType(url) {
-      const u = String(url || "").toLowerCase();
-      const clean = u.split("?")[0];
-
-      if (/\.(mp4|webm|ogg|mov|m4v|mkv|avi)$/.test(clean)) return "video";
-      if (/\.(pdf)$/.test(clean)) return "pdf";
-      if (/\.(png|jpg|jpeg|gif|webp|bmp)$/.test(clean)) return "image";
-
-      if (u.includes("drive.google.com")) return "drive";
-      return "file";
+    function normalizeRow(r) {
+      return {
+        LessonID: (r.LessonID ?? "").trim(),
+        Title: ((r.Title ?? "").trim() || "بدون عنوان"),
+        Category: ((r.Category ?? "").trim() || "Other"),
+        DateUploaded: parseDDMMYYYY((r.DateUploaded ?? "").trim()),
+        ContentURL: (r.ContentURL ?? "").trim()
+      };
     }
 
     function extractDriveId(url) {
       const s = String(url || "");
-      const m1 = s.match(/\/file\/d\/([^/]+)/);
-      if (m1) return m1[1];
-
-      const m2 = s.match(/[?&]id=([^&]+)/);
-      if (m2) return m2[1];
-
-      const m3 = s.match(/\/d\/([^/]+)/);
-      if (m3) return m3[1];
-
+      const m1 = s.match(/\/file\/d\/([^/]+)/); if (m1) return m1[1];
+      const m2 = s.match(/[?&]id=([^&]+)/); if (m2) return m2[1];
+      const m3 = s.match(/\/d\/([^/]+)/); if (m3) return m3[1];
       return null;
     }
 
     function driveLinks(url) {
       const id = extractDriveId(url);
       if (!id) return null;
-
       return {
         id,
         preview: `https://drive.google.com/file/d/${id}/preview`,
         download: `https://drive.google.com/uc?export=download&id=${id}`,
-        view: `https://drive.google.com/uc?export=view&id=${id}`,
-        thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
+        thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`,
+        view: `https://drive.google.com/file/d/${id}/view`
       };
     }
 
-    function normalizeRow(r) {
-      const lessonId = (r.LessonID ?? "").trim();
-      const title = (r.Title ?? "").trim();
-      const category = (r.Category ?? "").trim();
-      const dateUploaded = parseDDMMYYYY((r.DateUploaded ?? "").trim());
-      const contentUrl = (r.ContentURL ?? "").trim();
+    function extractYoutubeId(url) {
+      const s = String(url || "");
+      const m = s.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+      return m ? m[1] : null;
+    }
 
-      return {
-        LessonID: lessonId,
-        Title: title || "بدون عنوان",
-        Category: category || "Other",
-        DateUploaded: dateUploaded,
-        ContentURL: contentUrl
-      };
+    function youtubeEmbedUrl(videoId) {
+      // Privacy-enhanced mode + playsinline hint
+      return `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1`;
+    }
+
+    function guessType(url) {
+      const u = String(url || "").toLowerCase();
+      const clean = u.split("?")[0];
+      if (/\.(mp4|webm|ogg|mov|m4v)$/.test(clean)) return "video";
+      if (/\.(pdf)$/.test(clean)) return "pdf";
+      if (/\.(png|jpg|jpeg|gif|webp|bmp)$/.test(clean)) return "image";
+      if (u.includes("drive.google.com")) return "drive";
+      if (u.includes("youtube.com") || u.includes("youtu.be")) return "youtube";
+      return "file";
     }
 
     function getTimePredicate(timeKey) {
@@ -646,7 +672,6 @@
       return (row) => {
         if (!row.DateUploaded) return false;
         const diff = daysBetween(now, row.DateUploaded);
-
         if (timeKey === "today") return diff === 0;
         if (timeKey === "yesterday") return diff === 1;
         if (timeKey === "week") return diff >= 0 && diff <= 7;
@@ -656,59 +681,152 @@
       };
     }
 
-    /* =========================
-       تحميل البيانات
-    ========================= */
-    async function loadData() {
-      setStatus("جاري تحميل البيانات...");
-      UI.list.innerHTML = "";
-
-      try {
-        const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const csv = await res.text();
-
-        const parsed = parseCSV(csv);
-        if (parsed.length < 2) throw new Error("CSV فارغ أو غير صالح");
-
-        const headers = parsed[0].map(h => String(h).trim());
-        const data = parsed.slice(1).map(cols => {
-          const obj = {};
-          headers.forEach((h, i) => (obj[h] = cols[i] ?? ""));
-          return obj;
-        });
-
-        allRows = data
-          .map(normalizeRow)
-          .filter(r => r.Title && r.ContentURL);
-
-        allRows.sort((a, b) => (b.DateUploaded?.getTime() || 0) - (a.DateUploaded?.getTime() || 0));
-
-        buildCategoryOptions(allRows);
-        applyFilters();
-
-        setStatus(`تم التحميل: ${allRows.length} عنصر`);
-      } catch (e) {
-        setStatus("تعذّر تحميل البيانات", true);
-        UI.list.innerHTML = `
-          <div class="card error-msg">
-            <div class="error-title">خطأ في التحميل</div>
-            <div class="error-text">
-              إذا كنت تستخدم GitHub Pages وظهر خطأ CORS، جرب التأكد من أن رابط الـ CSV منشور بشكل عام.
-              <br><br>
-              رسالة الخطأ: ${e.message}
-            </div>
-          </div>
-        `;
-        console.error(e);
-      }
+    /***********************
+     * Player (mobile-first)
+     ***********************/
+    function setHint(msg) {
+      playerHint.textContent = msg || "";
     }
 
+    function closePlayer() {
+      try {
+        if (document.fullscreenElement) document.exitFullscreen();
+      } catch {}
+
+      currentVideoEl = null;
+      playerStage.innerHTML = "";
+      setHint("");
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function openPlayer(title, externalUrl) {
+      playerTitle.textContent = title || "";
+      openExternal.href = externalUrl || "#";
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    // Fullscreen button: prefers native iOS video fullscreen when possible
+    async function requestBestFullscreen() {
+      // If we have a <video>, try iOS native fullscreen first
+      if (currentVideoEl && typeof currentVideoEl.webkitEnterFullscreen === "function") {
+        try { currentVideoEl.webkitEnterFullscreen(); return; } catch {}
+      }
+
+      // Otherwise try Fullscreen API on the stage (works in many browsers)
+      try {
+        if (playerStage.requestFullscreen) {
+          await playerStage.requestFullscreen();
+        }
+      } catch {}
+    }
+
+    closeBtn.addEventListener("click", closePlayer);
+    fsBtn.addEventListener("click", requestBestFullscreen);
+
+    modal.addEventListener("click", (e) => {
+      // close only if clicking on dark backdrop (outside box)
+      if (e.target === modal) closePlayer();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closePlayer();
+    });
+
+    function openLesson(r) {
+      const url = r.ContentURL;
+      const t = guessType(url);
+
+      // Reset stage
+      currentVideoEl = null;
+      playerStage.innerHTML = "";
+      setHint("");
+
+      const d = driveLinks(url);
+      const yid = extractYoutubeId(url);
+
+      if (t === "youtube" && yid) {
+        const embed = youtubeEmbedUrl(yid);
+        openPlayer(r.Title, `https://www.youtube.com/watch?v=${yid}`);
+
+        // Note: iframe fullscreen inside some WebView/APK may still depend on the wrapper.
+        playerStage.innerHTML = `
+          <iframe
+            src="${embed}"
+            title="${escapeHtml(r.Title)}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            referrerpolicy="no-referrer">
+          </iframe>
+        `;
+        setHint("إذا واجهت مشكلة في ملء الشاشة داخل APK، استخدم زر (فتح خارجي).");
+        return;
+      }
+
+      if (t === "drive" && d) {
+        openPlayer(r.Title, d.view || d.preview);
+        playerStage.innerHTML = `
+          <iframe
+            src="${d.preview}"
+            title="${escapeHtml(r.Title)}"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            referrerpolicy="no-referrer">
+          </iframe>
+        `;
+        setHint("ملء الشاشة في Drive داخل WebView قد يعتمد على إعدادات الـ APK. جرّب (فتح خارجي) إن لزم.");
+        return;
+      }
+
+      if (t === "video") {
+        openPlayer(r.Title, url);
+
+        // Native video for best mobile/WebView behavior
+        const v = document.createElement("video");
+        v.controls = true;
+        v.playsInline = true;     // iOS hint (still may fullscreen depending)
+        v.setAttribute("webkit-playsinline", ""); // older iOS
+        v.setAttribute("playsinline", "");
+        v.preload = "metadata";
+        v.src = url;
+
+        // Keep reference for iOS webkitEnterFullscreen
+        currentVideoEl = v;
+
+        playerStage.appendChild(v);
+        setHint("استخدم زر (ملء الشاشة) أو زر ملء الشاشة داخل المشغل حسب جهازك.");
+        return;
+      }
+
+      // PDF / image / fallback
+      openPlayer(r.Title, url);
+
+      if (t === "image") {
+        playerStage.innerHTML = `<img alt="${escapeHtml(r.Title)}" src="${url}" style="max-width:100%;max-height:100%;object-fit:contain;">`;
+        setHint("صورة.");
+        return;
+      }
+
+      if (t === "pdf") {
+        playerStage.innerHTML = `<object data="${url}" type="application/pdf"></object>`;
+        setHint("PDF (قد يختلف العرض حسب الجهاز).");
+        return;
+      }
+
+      playerStage.innerHTML = `<iframe src="${url}" title="${escapeHtml(r.Title)}" allowfullscreen></iframe>`;
+      setHint("إن واجهت مشكلة، استخدم (فتح خارجي).");
+    }
+
+    /***********************
+     * Render
+     ***********************/
     function buildCategoryOptions(rows) {
       const set = new Set(rows.map(r => r.Category || "Other"));
-      const cats = CATEGORY_ORDER.filter(c => set.has(c)).concat(
-        [...set].filter(c => !CATEGORY_ORDER.includes(c))
-      );
+      const cats = CATEGORY_ORDER.filter(c => set.has(c)).concat([...set].filter(c => !CATEGORY_ORDER.includes(c)));
 
       UI.category.innerHTML = "";
       const optAll = document.createElement("option");
@@ -724,14 +842,10 @@
       });
     }
 
-    /* =========================
-       عرض + فلترة
-    ========================= */
     function applyFilters() {
       const q = UI.q.value.trim().toLowerCase();
       const cat = UI.category.value;
       const timeKey = UI.time.value;
-
       const timePred = getTimePredicate(timeKey);
 
       const filtered = allRows.filter(r => {
@@ -744,14 +858,32 @@
       renderList(filtered);
     }
 
-    function renderList(rows) {
-      UI.list.innerHTML = "";
-      if (!rows.length) {
-        UI.list.innerHTML = `<div class="card error-msg"><div class="error-text">لا توجد نتائج.</div></div>`;
-        return;
+    function getThumbAndDownload(r) {
+      const d = driveLinks(r.ContentURL);
+      const yid = extractYoutubeId(r.ContentURL);
+
+      if (yid) {
+        return {
+          thumb: `https://img.youtube.com/vi/${yid}/hqdefault.jpg`,
+          downloadUrl: `https://www.youtube.com/watch?v=${yid}`, // not a direct download; open source page
+          downloadLabel: "فتح المصدر"
+        };
       }
 
-      rows.forEach(r => UI.list.appendChild(renderItem(r)));
+      if (d) {
+        return {
+          thumb: d.thumb,
+          downloadUrl: d.download,
+          downloadLabel: "تحميل"
+        };
+      }
+
+      // direct video/image may download normally
+      return {
+        thumb: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23121b2f' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239fb0d0' font-size='22' font-family='sans-serif'%3EPREVIEW%3C/text%3E%3C/svg%3E",
+        downloadUrl: r.ContentURL,
+        downloadLabel: "تحميل"
+      };
     }
 
     function renderItem(r) {
@@ -761,140 +893,89 @@
       const catLabel = CATEGORY_AR[r.Category] || r.Category;
       const dateLabel = formatDateAr(r.DateUploaded);
 
-      const head = document.createElement("div");
-      head.className = "head";
-      head.innerHTML = `
-        <div class="item-title">${escapeHtml(r.Title)}</div>
-        <div class="sub">
-          <span class="badge">المادة: ${escapeHtml(catLabel)}</span>
-          <span class="badge">تاريخ الرفع: ${escapeHtml(dateLabel)}</span>
-          <span class="badge">رقم الدرس: ${escapeHtml(r.LessonID || "—")}</span>
+      const { thumb, downloadUrl, downloadLabel } = getThumbAndDownload(r);
+
+      card.innerHTML = `
+        <div class="head">
+          <div class="item-title">${escapeHtml(r.Title)}</div>
+          <div class="sub">
+            <span class="badge">${escapeHtml(catLabel)}</span>
+            <span class="badge">${escapeHtml(dateLabel)}</span>
+          </div>
+        </div>
+
+        <div class="viewer" role="button" aria-label="فتح">
+          <img src="${thumb}" alt="${escapeHtml(r.Title)}" loading="lazy" referrerpolicy="no-referrer">
+          <div class="playOverlay"><div class="playBtn"></div></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="button">فتح</button>
+          <a class="primary" href="${downloadUrl}" target="_blank" rel="noopener" download>${downloadLabel}</a>
         </div>
       `;
 
-      const viewer = document.createElement("div");
-      viewer.className = "viewer";
+      const viewer = card.querySelector(".viewer");
+      const openBtn = card.querySelector("button.primary");
 
-      const actions = document.createElement("div");
-      actions.className = "actions";
+      viewer.addEventListener("click", () => openLesson(r));
+      openBtn.addEventListener("click", () => openLesson(r));
 
-      const d = driveLinks(r.ContentURL);
-      const downloadUrl = d ? d.download : r.ContentURL;
-
-      const type = guessType(r.ContentURL);
-
-      if (type === "video" || type === "drive") {
-        // يشغّل الفيديو عبر iframe مباشرة من Google Drive
-        const img = document.createElement("img");
-        img.alt = r.Title;
-        img.loading = "lazy";
-        img.referrerPolicy = "no-referrer";
-        img.src = (d && d.thumb) ? d.thumb : "";
-
-        const overlay = document.createElement("div");
-        overlay.className = "playOverlay";
-        overlay.innerHTML = `<div class="playBtn" aria-label="تشغيل"></div>`;
-
-        overlay.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          viewer.innerHTML = "";
-          const iframe = document.createElement("iframe");
-          iframe.allow = "autoplay; encrypted-media; fullscreen";
-          iframe.referrerPolicy = "no-referrer";
-          iframe.src = d ? d.preview : r.ContentURL;
-          iframe.title = r.Title;
-          iframe.style.width = "100%";
-          iframe.style.height = "100%";
-          iframe.style.border = "0";
-          iframe.style.display = "block";
-          iframe.setAttribute("webkitallowfullscreen", "true");
-          iframe.setAttribute("mozallowfullscreen", "true");
-          iframe.setAttribute("allowFullScreen", "true");
-          viewer.appendChild(iframe);
-          
-          currentIframe = iframe;
-          
-          // محاولة ملء الشاشة على الموبايل
-          setTimeout(() => {
-            if (iframe.requestFullscreen) iframe.requestFullscreen().catch(() => {});
-            else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-            else if (iframe.mozRequestFullScreen) iframe.mozRequestFullScreen();
-            else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
-          }, 300);
-        });
-
-        viewer.appendChild(img);
-        viewer.appendChild(overlay);
-      } else if (type === "pdf") {
-        const iframe = document.createElement("iframe");
-        iframe.src = r.ContentURL;
-        iframe.title = r.Title;
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "0";
-        viewer.appendChild(iframe);
-      } else if (type === "image") {
-        const img = document.createElement("img");
-        img.alt = r.Title;
-        img.loading = "lazy";
-        img.referrerPolicy = "no-referrer";
-        img.src = d ? d.view : r.ContentURL;
-        viewer.appendChild(img);
-      } else {
-        const iframe = document.createElement("iframe");
-        iframe.src = r.ContentURL;
-        iframe.title = r.Title;
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "0";
-        viewer.appendChild(iframe);
-      }
-
-      const open = document.createElement("a");
-      open.href = r.ContentURL;
-      open.target = "_blank";
-      open.rel = "noopener";
-      open.className = "primary";
-      open.textContent = "فتح";
-
-      const down = document.createElement("a");
-      down.href = downloadUrl;
-      down.target = "_blank";
-      down.rel = "noopener";
-      down.download = "";
-      down.textContent = "تنزيل (للعمل دون إنترنت)";
-
-      actions.appendChild(open);
-      actions.appendChild(down);
-
-      card.appendChild(head);
-      card.appendChild(viewer);
-      card.appendChild(actions);
       return card;
     }
 
-    function escapeHtml(s) {
-      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[c]));
+    function renderList(rows) {
+      UI.list.innerHTML = "";
+      if (!rows.length) {
+        UI.list.innerHTML = `<div class="card empty">لا توجد نتائج.</div>`;
+        return;
+      }
+      rows.forEach(r => UI.list.appendChild(renderItem(r)));
     }
 
-    /* =========================
-       أحداث
-    ========================= */
+    /***********************
+     * Load data
+     ***********************/
+    async function loadData() {
+      setStatus("جاري تحميل البيانات...");
+      UI.list.innerHTML = "";
+
+      try {
+        const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const csv = await res.text();
+
+        const parsed = parseCSV(csv);
+        if (parsed.length < 2) throw new Error("CSV غير صالح");
+
+        const headers = parsed[0].map(h => String(h).trim());
+        const data = parsed.slice(1).map(cols => {
+          const obj = {};
+          headers.forEach((h, i) => (obj[h] = cols[i] ?? ""));
+          return obj;
+        });
+
+        allRows = data.map(normalizeRow).filter(r => r.Title && r.ContentURL);
+        allRows.sort((a, b) => (b.DateUploaded?.getTime() || 0) - (a.DateUploaded?.getTime() || 0));
+
+        buildCategoryOptions(allRows);
+        applyFilters();
+        setStatus(`تم التحميل: ${allRows.length} عنصر`);
+      } catch (e) {
+        console.error(e);
+        setStatus("تعذّر تحميل Google Sheet", true);
+        UI.list.innerHTML = `<div class="card empty">تعذّر تحميل البيانات. تأكد من نشر Google Sheet كـ CSV.</div>`;
+      }
+    }
+
+    /***********************
+     * Events
+     ***********************/
     UI.q.addEventListener("input", applyFilters);
     UI.category.addEventListener("change", applyFilters);
     UI.time.addEventListener("change", applyFilters);
     UI.reload.addEventListener("click", loadData);
 
-    /* تشغيل */
-    buildCategoryOptions([]);
     loadData();
   </script>
 </body>
