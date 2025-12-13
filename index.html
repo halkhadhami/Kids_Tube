@@ -742,20 +742,29 @@
       ));
     }
 
-    static parseDDMMYYYY(s){
-      if (!s) return null;
-      const parts = String(s).trim().split("/");
-      if (parts.length !== 3) return null;
-      const [dd, mm, yyyy] = parts.map(Number);
-      if (!dd || !mm || !yyyy) return null;
-      return new Date(yyyy, mm-1, dd, 12, 0, 0);
-    }
+	// CHANGE 1: Parse MM/DD/YYYY instead of DD/MM/YYYY
+	static parseDDMMYYYY(s){
+	  if (!s) return null;
+	  const parts = String(s).trim().split("/");
+	  if (parts.length !== 3) return null;
+	  const [mm, dd, yyyy] = parts.map(Number);  // Changed order: mm, dd instead of dd, mm
+	  if (!dd || !mm || !yyyy) return null;
+	  return new Date(yyyy, mm-1, dd, 12, 0, 0);
+	}
 
-    static formatDateAr(d){
-      if (!d) return "—";
-      try { return new Intl.DateTimeFormat("ar", {year:"numeric",month:"2-digit",day:"2-digit"}).format(d); }
-      catch { return d.toLocaleDateString(); }
-    }
+	// CHANGE 2: Display as MM/DD/YYYY (US format)
+	static formatDateAr(d){
+	  if (!d) return "—";
+	  try { 
+		return new Intl.DateTimeFormat("en-US", {
+		  year:"numeric",
+		  month:"2-digit",
+		  day:"2-digit"
+		}).format(d); 
+	  }
+	  catch { return d.toLocaleDateString(); }
+	}
+
 
     static daysBetween(a, b){
       const MS = 86400000;
