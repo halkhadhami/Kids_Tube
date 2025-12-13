@@ -1,849 +1,806 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0b1220">
-  <meta name="description" content="منصة تعليمية تفاعلية - مواد تعليمية شاملة مع تشغيل فيديوهات وتحميل ملفات">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="مكتبة الدروس">
-  <title>مكتبة الدروس التفاعلية - منصة Hayl التعليمية</title>
-  <!-- Favicon - Base64 encoded for zero requests -->
-  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURQAAAP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wAABm1c2AAAAA==">
-  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURQAAAP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wAABm1c2AAAAA==">
-  <!-- Preconnect to critical origins -->
-  <link rel="preconnect" href="https://drive.google.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Font optimization -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  <!-- Performance hints -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" as="style">
-  <link rel="prefetch" href="https://drive.google.com/thumbnail" as="image">
+  <meta name="description" content="مكتبة تعليمية تفاعلية للأطفال - Educational Library by Hayl Al-Khadhami">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.plyr.io https://cdn.jsdelivr.net https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://cdn.plyr.io https://cdnjs.cloudflare.com; img-src 'self' data: https:; media-src 'self' https:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com https://drive.google.com;">
+  
+  <title>مكتبة الدروس التفاعلية | Hayl Al-Khadhami</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
+  
+  <!-- Preconnect to external domains for performance -->
+  <link rel="preconnect" href="https://cdn.plyr.io">
+  <link rel="preconnect" href="https://docs.google.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Progressive Web App Manifest -->
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItin2YTZhdin2YPYqtio2Kkg2KfZhNiq2LnZhNmK2YXZitipIiwKICAic2hvcnRfbmFtZSI6ICLZhdin2YPYqtio2Kkg2KfZhNiv2LHZiNizIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYjEyMjAiLAogICJ0aGVtZV9jb2xvciI6ICIjMGIxMjIwIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hhbGtoYWRoYW1pL2hhbGtoYWRoYW1pLmdpdGh1Yi5pby9tYXN0ZXIvaW1hZ2VzL2Zhdmljb24ucG5nIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
+  
+  <!-- External Libraries -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
   <style>
     /* ============================================
-       Design System - Professional Token Architecture
+       🎨 CSS CUSTOM PROPERTIES (Design System)
        ============================================ */
     :root {
-      /* Core Colors - System Design Tokens */
+      /* Color Palette */
+      --color-primary: #4ea1ff;
+      --color-primary-dark: #3d8ae6;
+      --color-primary-light: #6fb4ff;
+      --color-secondary: #b46eff;
+      --color-success: #3ddc97;
+      --color-danger: #ff5b6e;
+      --color-warning: #ffb946;
+      --color-info: #4ea1ff;
+      
+      /* Neutral Colors */
       --color-bg-primary: #0b1220;
       --color-bg-secondary: #121b2f;
-      --color-bg-tertiary: #1a243d;
-      --color-bg-overlay: rgba(11, 18, 32, 0.95);
+      --color-bg-tertiary: #1a2538;
+      --color-surface: rgba(18, 27, 47, 0.92);
+      --color-text-primary: #eef3ff;
+      --color-text-secondary: #9fb0d0;
+      --color-text-muted: #6b7a99;
+      --color-border: rgba(255, 255, 255, 0.1);
+      --color-border-focus: rgba(78, 161, 255, 0.5);
       
-      /* Text Colors */
-      --color-text-primary: #f0f5ff;
-      --color-text-secondary: #a8b8d9;
-      --color-text-tertiary: #7a8cbb;
-      --color-text-disabled: #5a6c8a;
+      /* Spacing Scale */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
       
-      /* Accent Colors - Semantic System */
-      --color-accent-primary: #5a9fff;
-      --color-accent-primary-dark: #3d7fd4;
-      --color-accent-primary-light: #7eb5ff;
-      --color-accent-secondary: #6de2b3;
-      --color-accent-secondary-dark: #45c99a;
-      --color-accent-tertiary: #ffb84d;
+      /* Typography */
+      --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-size-xs: 11px;
+      --font-size-sm: 13px;
+      --font-size-base: 15px;
+      --font-size-lg: 17px;
+      --font-size-xl: 20px;
+      --font-size-2xl: 24px;
+      --font-size-3xl: 32px;
+      --font-weight-normal: 400;
+      --font-weight-medium: 600;
+      --font-weight-bold: 700;
+      --font-weight-black: 900;
+      --line-height-tight: 1.25;
+      --line-height-normal: 1.5;
+      --line-height-loose: 1.75;
       
-      /* Status Colors */
-      --color-status-success: #3ddc97;
-      --color-status-warning: #ffb84d;
-      --color-status-error: #ff6b72;
-      --color-status-info: #6de2ff;
-      
-      /* Border System */
-      --color-border-primary: rgba(255, 255, 255, 0.08);
-      --color-border-secondary: rgba(255, 255, 255, 0.12);
-      --color-border-accent: rgba(90, 159, 255, 0.3);
-      
-      /* Shadow System - Elevation Levels */
-      --shadow-level-1: 0 2px 8px rgba(0, 0, 0, 0.15);
-      --shadow-level-2: 0 4px 16px rgba(0, 0, 0, 0.25);
-      --shadow-level-3: 0 8px 32px rgba(0, 0, 0, 0.35);
-      --shadow-level-4: 0 12px 48px rgba(0, 0, 0, 0.45);
-      
-      /* Radius System */
-      --radius-xs: 4px;
+      /* Border Radius */
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
-      --radius-xl: 24px;
+      --radius-xl: 20px;
       --radius-full: 9999px;
       
-      /* Spacing System */
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 20px;
-      --space-6: 24px;
-      --space-8: 32px;
-      --space-10: 40px;
+      /* Shadows */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
       
-      /* Animation System */
-      --transition-speed-fast: 150ms;
-      --transition-speed-normal: 250ms;
-      --transition-speed-slow: 350ms;
-      --transition-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-easing-in: cubic-bezier(0.4, 0, 1, 1);
-      --transition-easing-out: cubic-bezier(0, 0, 0.2, 1);
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
       
-      /* Typography System */
-      --font-family-primary: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-      --font-family-monospace: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+      /* Z-index Scale */
+      --z-dropdown: 1000;
+      --z-sticky: 1020;
+      --z-fixed: 1030;
+      --z-modal-backdrop: 1040;
+      --z-modal: 1050;
+      --z-popover: 1060;
+      --z-tooltip: 1070;
       
-      --font-size-xs: 0.75rem;  /* 12px */
-      --font-size-sm: 0.875rem; /* 14px */
-      --font-size-md: 1rem;     /* 16px */
-      --font-size-lg: 1.125rem; /* 18px */
-      --font-size-xl: 1.25rem;  /* 20px */
-      --font-size-2xl: 1.5rem;  /* 24px */
-      
-      --font-weight-regular: 400;
-      --font-weight-medium: 500;
-      --font-weight-semibold: 600;
-      --font-weight-bold: 700;
-      --font-weight-extrabold: 800;
-      
-      /* Z-Index System */
-      --z-index-base: 1;
-      --z-index-content: 10;
-      --z-index-navigation: 50;
-      --z-index-overlay: 100;
-      --z-index-modal: 200;
-      --z-index-toast: 300;
-      --z-index-tooltip: 400;
-      
-      /* Breakpoint System */
-      --breakpoint-xs: 0;
-      --breakpoint-sm: 640px;
-      --breakpoint-md: 768px;
-      --breakpoint-lg: 1024px;
-      --breakpoint-xl: 1280px;
-      --breakpoint-2xl: 1536px;
-      
-      /* Performance Optimizations */
-      --skeleton-gradient: linear-gradient(90deg, var(--color-bg-secondary), var(--color-bg-tertiary), var(--color-bg-secondary));
-      
-      /* Animation Durations */
-      --animation-duration-fast: 0.2s;
-      --animation-duration-normal: 0.3s;
-      --animation-duration-slow: 0.5s;
-      
-      /* Custom Properties for Performance */
-      --touch-target-size: 48px;
-      --header-height: 72px;
-      --footer-height: 100px;
-      
-      /* Environment-aware properties */
-      color-scheme: dark;
+      /* Layout */
+      --container-max-width: 1280px;
+      --header-height: 64px;
+      --safe-area-inset-top: env(safe-area-inset-top, 0px);
+      --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-area-inset-left: env(safe-area-inset-left, 0px);
+      --safe-area-inset-right: env(safe-area-inset-right, 0px);
     }
 
     /* ============================================
-       Motion & Animation System
+       🔧 BASE & RESET
        ============================================ */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-
-    /* ============================================
-       Base & Reset with Performance Focus
-       ============================================ */
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     html {
-      scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-size-adjust: 100%;
-      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: var(--font-family-primary);
-      background: 
-        radial-gradient(1200px 600px at 70% 10%, rgba(90, 159, 255, 0.18), transparent),
-        radial-gradient(900px 500px at 10% 30%, rgba(180, 110, 255, 0.15), transparent),
-        var(--color-bg-primary);
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
       color: var(--color-text-primary);
-      line-height: 1.6;
+      background: 
+        radial-gradient(1200px 600px at 70% 10%, rgba(78, 161, 255, 0.15), transparent),
+        radial-gradient(900px 500px at 10% 30%, rgba(180, 110, 255, 0.12), transparent),
+        var(--color-bg-primary);
       min-height: 100vh;
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
-      position: relative;
-      text-rendering: optimizeLegibility;
-      font-feature-settings: "liga", "clig", "dlig" 1;
     }
 
     /* ============================================
-       Accessibility & Touch Optimization
+       🎯 UTILITY CLASSES
        ============================================ */
-    [aria-hidden="true"] {
-      display: none;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
     }
 
-    :focus-visible {
-      outline: 2px solid var(--color-accent-primary);
-      outline-offset: 2px;
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
     }
 
-    [aria-disabled="true"] {
-      opacity: 0.7;
-      cursor: not-allowed;
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ============================================
+       🎪 TOAST NOTIFICATION SYSTEM
+       ============================================ */
+    .toast-container {
+      position: fixed;
+      top: calc(var(--header-height) + var(--space-md) + var(--safe-area-inset-top));
+      left: var(--space-md);
+      right: var(--space-md);
+      z-index: var(--z-tooltip);
       pointer-events: none;
-    }
-
-    /* Touch target sizing */
-    .touch-target {
-      min-height: var(--touch-target-size);
-      min-width: var(--touch-target-size);
-    }
-
-    /* ============================================
-       Layout System - Production Grade
-       ============================================ */
-    .app-container {
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-      position: relative;
-      isolation: isolate;
+      gap: var(--space-sm);
+      max-width: 420px;
+      margin: 0 auto;
     }
 
+    .toast {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      animation: slideInDown var(--transition-base);
+      backdrop-filter: blur(12px);
+    }
+
+    .toast--success { border-color: var(--color-success); }
+    .toast--error { border-color: var(--color-danger); }
+    .toast--warning { border-color: var(--color-warning); }
+    .toast--info { border-color: var(--color-info); }
+
+    .toast__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-full);
+    }
+
+    .toast--success .toast__icon { background: var(--color-success); color: #fff; }
+    .toast--error .toast__icon { background: var(--color-danger); color: #fff; }
+    .toast--warning .toast__icon { background: var(--color-warning); color: #000; }
+    .toast--info .toast__icon { background: var(--color-info); color: #fff; }
+
+    .toast__message {
+      flex: 1;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .toast__close {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding: var(--space-xs);
+      opacity: 0.7;
+      transition: opacity var(--transition-fast);
+    }
+
+    .toast__close:hover {
+      opacity: 1;
+    }
+
+    /* ============================================
+       📱 HEADER
+       ============================================ */
     .app-header {
       position: sticky;
       top: 0;
-      z-index: var(--z-index-navigation);
-      border-bottom: 1px solid var(--color-border-primary);
-      background: var(--color-bg-overlay);
+      z-index: var(--z-sticky);
+      background: rgba(11, 18, 32, 0.95);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-level-2);
-      height: var(--header-height);
+      border-bottom: 1px solid var(--color-border);
+      padding-top: var(--safe-area-inset-top);
     }
 
-    .app-main {
-      flex: 1;
-      padding: var(--space-6) 0;
-      position: relative;
-      z-index: var(--z-index-content);
-    }
-
-    .app-footer {
-      z-index: var(--z-index-navigation);
-      border-top: 1px solid var(--color-border-primary);
-      background: var(--color-bg-overlay);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: var(--space-6) 0 var(--space-8);
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1440px;
+    .app-header__inner {
+      max-width: var(--container-max-width);
       margin: 0 auto;
-      padding: 0 var(--space-4);
-    }
-
-    /* ============================================
-       Header Component - Professional Design
-       ============================================ */
-    .header-content {
+      padding: var(--space-md);
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      height: 100%;
+      gap: var(--space-md);
+      min-height: var(--header-height);
     }
 
-    .header-brand {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      text-decoration: none;
+    .app-header__brand {
+      flex: 1;
+      min-width: 0;
     }
 
-    .header-logo {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-primary-light));
-      border-radius: var(--radius-xl);
-      font-size: 1.5rem;
-      font-weight: var(--font-weight-bold);
-      color: white;
-      box-shadow: 0 4px 16px rgba(90, 159, 255, 0.4);
-      flex-shrink: 0;
-      transition: transform var(--transition-speed-fast) var(--transition-easing-out);
-    }
-
-    .header-brand:hover .header-logo {
-      transform: scale(1.05);
-    }
-
-    .header-text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
-    }
-
-    .header-title {
+    .app-header__title {
       font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-extrabold);
-      letter-spacing: -0.02em;
+      font-weight: var(--font-weight-black);
       color: var(--color-text-primary);
-      line-height: 1.2;
+      margin: 0;
+      letter-spacing: -0.025em;
     }
 
-    .header-subtitle {
+    .app-header__subtitle {
       font-size: var(--font-size-xs);
       color: var(--color-text-secondary);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      font-weight: var(--font-weight-medium);
-      opacity: 0.9;
+      margin-top: var(--space-xs);
+      display: none;
     }
 
-    /* ============================================
-       Filters Panel - Enterprise UX
-       ============================================ */
-    .filters-section {
-      background: rgba(18, 27, 47, 0.92);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: var(--radius-lg);
-      padding: var(--space-5);
-      margin-bottom: var(--space-6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: var(--shadow-level-2);
-      transition: all var(--transition-speed-normal) var(--transition-easing-standard);
+    @media (min-width: 640px) {
+      .app-header__subtitle {
+        display: block;
+      }
     }
 
-    .filters-section:hover {
-      border-color: var(--color-border-accent);
-      box-shadow: var(--shadow-level-3);
-    }
-
-    .filters-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr auto;
-      gap: var(--space-4);
-      align-items: flex-end;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .form-label {
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-secondary);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+    .app-header__actions {
       display: flex;
       align-items: center;
-      gap: var(--space-1);
-    }
-
-    .form-label::before {
-      content: "";
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      border-radius: var(--radius-full);
-      background: var(--color-accent-primary);
-    }
-
-    .form-input,
-    .form-select {
-      padding: var(--space-2) var(--space-3);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border-secondary);
-      background: rgba(11, 18, 32, 0.6);
-      color: var(--color-text-primary);
-      font-size: var(--font-size-md);
-      font-family: inherit;
-      outline: none;
-      transition: all var(--transition-speed-fast) var(--transition-easing-standard);
-      width: 100%;
-      height: 48px;
-      appearance: none;
-    }
-
-    .form-input::placeholder {
-      color: var(--color-text-tertiary);
-      opacity: 0.8;
-    }
-
-    .form-input:focus,
-    .form-select:focus {
-      border-color: var(--color-accent-primary);
-      background: rgba(11, 18, 32, 0.8);
-      box-shadow: 0 0 0 3px rgba(90, 159, 255, 0.2);
-      z-index: 1;
-    }
-
-    .form-select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23a8b8d9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: left var(--space-3) center;
-      padding-right: var(--space-6);
-      padding-left: calc(var(--space-6) + 20px);
-    }
-
-    .filter-meta {
-      display: flex;
-      gap: var(--space-3);
-      align-items: flex-end;
-      justify-content: flex-end;
-    }
-
-    .status-indicator {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      min-width: 140px;
-      text-align: right;
-      transition: color var(--transition-speed-fast);
-    }
-
-    .status-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: var(--radius-full);
-      background: var(--color-status-info);
-      flex-shrink: 0;
-    }
-
-    .status-dot.success {
-      background: var(--color-status-success);
-      box-shadow: 0 0 8px rgba(61, 220, 151, 0.5);
-    }
-
-    .status-dot.error {
-      background: var(--color-status-error);
-      box-shadow: 0 0 8px rgba(255, 107, 114, 0.5);
-    }
-
-    .status-dot.loading {
-      background: var(--color-status-warning);
-      animation: pulse 1.5s infinite;
+      gap: var(--space-sm);
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
       border-radius: var(--radius-md);
-      font-weight: var(--font-weight-bold);
       font-size: var(--font-size-sm);
-      cursor: pointer;
-      transition: all var(--transition-speed-fast) var(--transition-easing-standard);
+      font-weight: var(--font-weight-bold);
+      font-family: inherit;
+      line-height: 1;
       text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
       white-space: nowrap;
-      touch-action: manipulation;
+      user-select: none;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-primary-light));
-      border: none;
-      color: white;
-      box-shadow: 0 4px 16px rgba(90, 159, 255, 0.3);
+    .btn:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
     }
 
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(90, 159, 255, 0.45);
-      background: linear-gradient(135deg, var(--color-accent-primary-light), #8ec8ff);
-    }
-
-    .btn-primary:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(90, 159, 255, 0.3);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.7;
+    .btn:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.3), rgba(78, 161, 255, 0.2));
+      border-color: rgba(78, 161, 255, 0.5);
+      color: var(--color-text-primary);
+      box-shadow: 0 2px 8px rgba(78, 161, 255, 0.2);
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.4), rgba(78, 161, 255, 0.3));
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(78, 161, 255, 0.3);
+    }
+
+    .btn--primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn--ghost {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--color-border);
+      color: var(--color-text-primary);
+    }
+
+    .btn--ghost:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-border-focus);
+    }
+
+    .btn--success {
+      background: rgba(61, 220, 151, 0.15);
+      border-color: rgba(61, 220, 151, 0.4);
+      color: #c8ffe9;
+    }
+
+    .btn--success:hover:not(:disabled) {
+      background: rgba(61, 220, 151, 0.25);
+    }
+
+    .btn--icon {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: var(--radius-full);
     }
 
     /* ============================================
-       Grid System - Responsive & Performant
+       🎛️ FILTERS SECTION
        ============================================ */
-    .lessons-grid {
+    .filters-section {
+      max-width: var(--container-max-width);
+      margin: var(--space-lg) auto;
+      padding: 0 var(--space-md);
+    }
+
+    .filters-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      animation: fadeIn var(--transition-base);
+    }
+
+    .filters-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: var(--space-5);
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeInUp var(--animation-duration-normal) forwards;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
     }
 
-    .grid-item {
-      animation: fadeIn var(--animation-duration-normal) ease-out;
-      animation-fill-mode: both;
-    }
-
-    @media (max-width: 1024px) {
-      .lessons-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .lessons-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (min-width: 640px) {
       .filters-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr 1fr 1fr;
       }
     }
 
-    /* ============================================
-       Lesson Card - Professional Component
-       ============================================ */
-    .lesson-card {
+    @media (min-width: 1024px) {
+      .filters-grid {
+        grid-template-columns: 2fr 1fr 1fr auto;
+      }
+    }
+
+    .form-field {
       display: flex;
       flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .form-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: 12px var(--space-md);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--color-text-primary);
+      font-size: var(--font-size-base);
+      font-family: inherit;
+      transition: all var(--transition-fast);
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      border-color: var(--color-border-focus);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 3px rgba(78, 161, 255, 0.15);
+    }
+
+    .form-input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .form-select option {
       background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-secondary);
+      color: var(--color-text-primary);
+    }
+
+    .filters-meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-md);
+      grid-column: 1 / -1;
+    }
+
+    @media (min-width: 1024px) {
+      .filters-meta {
+        grid-column: auto;
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .status-badge {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
+
+    .status-badge--loading {
+      background: rgba(78, 161, 255, 0.15);
+      color: var(--color-primary-light);
+    }
+
+    .status-badge--error {
+      background: rgba(255, 91, 110, 0.15);
+      color: var(--color-danger);
+    }
+
+    .status-badge--success {
+      background: rgba(61, 220, 151, 0.15);
+      color: var(--color-success);
+    }
+
+    /* ============================================
+       🎬 CONTENT GRID
+       ============================================ */
+    .content-section {
+      max-width: var(--container-max-width);
+      margin: 0 auto var(--space-2xl);
+      padding: 0 var(--space-md);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      animation: fadeIn var(--transition-slow);
+    }
+
+    @media (min-width: 640px) {
+      .content-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      }
+    }
+
+    /* Loading Skeletons */
+    .skeleton-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: all var(--transition-speed-normal) var(--transition-easing-standard);
-      box-shadow: var(--shadow-level-2);
-      height: 100%;
+    }
+
+    .skeleton-card__header {
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .skeleton-card__title {
+      height: 20px;
+      width: 80%;
+      border-radius: var(--radius-sm);
+    }
+
+    .skeleton-card__meta {
+      height: 14px;
+      width: 60%;
+      border-radius: var(--radius-sm);
+    }
+
+    .skeleton-card__thumbnail {
+      width: 100%;
+      padding-bottom: 56.25%;
       position: relative;
-      isolation: isolate;
     }
 
-    .lesson-card:hover {
-      border-color: var(--color-accent-primary);
-      box-shadow: var(--shadow-level-3);
+    .skeleton-card__actions {
+      padding: var(--space-md);
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .skeleton-card__button {
+      flex: 1;
+      height: 40px;
+      border-radius: var(--radius-md);
+    }
+
+    /* Video Card */
+    .video-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-base);
+      animation: scaleIn var(--transition-base);
+      position: relative;
+    }
+
+    .video-card:hover {
       transform: translateY(-4px);
-      background: var(--color-bg-tertiary);
-      z-index: 1;
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(78, 161, 255, 0.3);
     }
 
-    .lesson-card:active {
-      transform: translateY(0);
+    .video-card__header {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
     }
 
-    .card-hover-area {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-
-    .lesson-header {
-      padding: var(--space-4);
-      border-bottom: 1px solid var(--color-border-secondary);
-      background: linear-gradient(135deg, rgba(90, 159, 255, 0.08), rgba(109, 226, 179, 0.08));
-    }
-
-    .lesson-title {
+    .video-card__title {
       font-size: var(--font-size-lg);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-primary);
-      margin-bottom: var(--space-2);
-      line-height: 1.4;
-      word-break: break-word;
+      margin: 0 0 var(--space-sm);
+      line-height: var(--line-height-tight);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .lesson-meta {
+    .video-card__meta {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-2);
-      font-size: var(--font-size-sm);
+      gap: var(--space-xs);
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      padding: var(--space-1) var(--space-2);
+      gap: var(--space-xs);
+      padding: 4px var(--space-sm);
       border-radius: var(--radius-full);
-      font-weight: var(--font-weight-medium);
       font-size: var(--font-size-xs);
-      white-space: nowrap;
-      transition: all var(--transition-speed-fast);
+      font-weight: var(--font-weight-bold);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
     }
 
-    .badge-category {
-      background: rgba(109, 226, 179, 0.15);
-      border: 1px solid rgba(109, 226, 179, 0.3);
-      color: var(--color-accent-secondary);
+    .badge--category {
+      background: rgba(78, 161, 255, 0.15);
+      border-color: rgba(78, 161, 255, 0.3);
+      color: var(--color-primary-light);
     }
 
-    .badge-date {
-      background: rgba(255, 184, 77, 0.15);
-      border: 1px solid rgba(255, 184, 77, 0.3);
-      color: var(--color-accent-tertiary);
-    }
-
-    .badge-id {
-      background: rgba(90, 159, 255, 0.15);
-      border: 1px solid rgba(90, 159, 255, 0.3);
-      color: var(--color-accent-primary-light);
-    }
-
-    /* ============================================
-       Media Thumbnail - Professional Implementation
-       ============================================ */
-    .lesson-thumbnail {
+    .video-card__thumbnail {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      padding-bottom: 56.25%;
       background: #000;
       overflow: hidden;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .thumbnail-image {
+    .video-card__thumbnail-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      transition: transform var(--transition-speed-normal) var(--transition-easing-standard);
-      will-change: transform;
+      transition: transform var(--transition-slow);
     }
 
-    .lesson-card:hover .thumbnail-image {
-      transform: scale(1.08);
+    .video-card:hover .video-card__thumbnail-img {
+      transform: scale(1.05);
     }
 
-    .thumbnail-overlay {
+    .video-card__thumbnail-overlay {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6));
-      transition: background var(--transition-speed-normal) var(--transition-easing-standard);
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity var(--transition-speed-fast) var(--transition-easing-standard);
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.6)
+      );
+      transition: background var(--transition-base);
     }
 
-    .lesson-card:hover .thumbnail-overlay {
-      opacity: 1;
-      background: rgba(0, 0, 0, 0.4);
+    .video-card:hover .video-card__thumbnail-overlay {
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .play-button {
-      width: 72px;
-      height: 72px;
+      width: 68px;
+      height: 68px;
       border-radius: var(--radius-full);
-      background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-primary-light));
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 28px rgba(90, 159, 255, 0.5);
-      transition: all var(--transition-speed-fast) var(--transition-easing-standard);
-      position: relative;
-      z-index: 2;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
-    .lesson-card:hover .play-button {
-      transform: scale(1.1);
-      box-shadow: 0 12px 36px rgba(90, 159, 255, 0.65);
+    .video-card:hover .play-button {
+      transform: scale(1.15);
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     }
 
-    .play-icon {
+    .play-button::before {
+      content: '';
       width: 0;
       height: 0;
-      border-left: 20px solid white;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;
-      margin-left: 2px;
+      border-left: 18px solid var(--color-primary);
+      margin-left: 4px;
     }
 
-    .thumbnail-placeholder {
-      width: 100%;
-      height: 100%;
+    .video-card__actions {
+      padding: var(--space-md);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--color-bg-tertiary), var(--color-bg-secondary));
-      color: var(--color-text-tertiary);
-      font-size: 2rem;
+      gap: var(--space-sm);
+      border-top: 1px solid var(--color-border);
+      background: rgba(0, 0, 0, 0.2);
     }
 
-    /* ============================================
-       Actions Bar - Enhanced UX
-       ============================================ */
-    .lesson-actions {
-      padding: var(--space-3);
-      display: flex;
-      gap: var(--space-2);
-      flex-wrap: wrap;
-      margin-top: auto;
-      border-top: 1px solid var(--color-border-secondary);
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    .action-btn,
-    .action-link {
+    .video-card__actions .btn {
       flex: 1;
-      min-width: 110px;
-      padding: var(--space-2) 0;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border-secondary);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--color-text-primary);
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-bold);
-      text-decoration: none;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: all var(--transition-speed-fast) var(--transition-easing-standard);
+    }
+
+    /* Empty State */
+    .empty-state {
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-1);
+      padding: var(--space-2xl) var(--space-lg);
+      animation: fadeIn var(--transition-slow);
     }
 
-    .action-btn:active,
-    .action-link:active {
-      transform: scale(0.97);
-      background: rgba(255, 255, 255, 0.12);
+    .empty-state__icon {
+      font-size: 64px;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
     }
 
-    .btn-watch {
-      background: linear-gradient(135deg, rgba(90, 159, 255, 0.3), rgba(90, 159, 255, 0.15));
-      border-color: rgba(90, 159, 255, 0.4);
-      color: var(--color-accent-primary-light);
+    .empty-state__title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-sm);
     }
 
-    .btn-watch:hover {
-      background: linear-gradient(135deg, rgba(90, 159, 255, 0.4), rgba(90, 159, 255, 0.25));
-    }
-
-    .btn-download {
-      background: rgba(109, 226, 179, 0.15);
-      border-color: rgba(109, 226, 179, 0.4);
-      color: var(--color-accent-secondary-dark);
-    }
-
-    .btn-download:hover {
-      background: rgba(109, 226, 179, 0.25);
+    .empty-state__description {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      max-width: 400px;
+      margin: 0 auto;
     }
 
     /* ============================================
-       Modal System - Production Quality
+       🎥 VIDEO PLAYER MODAL
        ============================================ */
-    .modal-overlay {
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: var(--z-index-modal);
+      background: rgba(0, 0, 0, 0.9);
+      z-index: var(--z-modal-backdrop);
       opacity: 0;
-      transform: scale(0.95);
-      transition: all var(--transition-speed-normal) var(--transition-easing-standard);
+      transition: opacity var(--transition-base);
       pointer-events: none;
     }
 
-    .modal-overlay.open {
+    .modal-backdrop.is-active {
       opacity: 1;
-      transform: scale(1);
-      pointer-events: all;
+      pointer-events: auto;
     }
 
-    .modal-content {
-      background: var(--color-bg-secondary);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--color-border-secondary);
-      box-shadow: var(--shadow-level-4);
-      width: 95%;
-      max-width: 1000px;
-      height: 85vh;
+    .player-modal {
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-modal);
       display: flex;
       flex-direction: column;
       opacity: 0;
-      transform: translateY(20px);
-      transition: all var(--transition-speed-normal) var(--transition-easing-standard);
-      overflow: hidden;
+      transform: scale(0.95);
+      transition: all var(--transition-base);
+      pointer-events: none;
     }
 
-    .modal-overlay.open .modal-content {
+    .player-modal.is-active {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1);
+      pointer-events: auto;
     }
 
-    .modal-header {
-      padding: var(--space-4) var(--space-5);
-      border-bottom: 1px solid var(--color-border-secondary);
+    .player-modal__header {
+      flex-shrink: 0;
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      background: rgba(11, 18, 32, 0.95);
+      gap: var(--space-md);
+      padding: var(--space-md);
+      padding-top: calc(var(--space-md) + var(--safe-area-inset-top));
+      background: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
     }
 
-    .modal-title {
+    .player-modal__title {
       flex: 1;
-      font-size: var(--font-size-xl);
+      min-width: 0;
+      font-size: var(--font-size-base);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-primary);
       overflow: hidden;
@@ -851,2145 +808,1334 @@
       white-space: nowrap;
     }
 
-    .modal-close {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-full);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--color-border-secondary);
-      color: var(--color-text-primary);
-      font-size: 1.25rem;
+    .player-modal__stage {
+      flex: 1;
+      min-height: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all var(--transition-speed-fast);
-    }
-
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: rotate(90deg);
-    }
-
-    .modal-body {
-      flex: 1;
-      position: relative;
       background: #000;
+      position: relative;
     }
 
-    .media-container {
+    .player-modal__stage video,
+    .player-modal__stage iframe {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-      position: relative;
-    }
-
-    .media-element {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+      border: 0;
       display: block;
     }
 
-    .loading-indicator {
+    .player-modal__stage video {
+      object-fit: contain;
+    }
+
+    .player-modal__loading {
       position: absolute;
+      inset: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2);
+      gap: var(--space-md);
       color: var(--color-text-secondary);
-      font-size: var(--font-size-md);
-      background: rgba(0, 0, 0, 0.7);
-      padding: var(--space-3) var(--space-4);
-      border-radius: var(--radius-lg);
-      backdrop-filter: blur(4px);
     }
 
     .spinner {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(90, 159, 255, 0.3);
-      border-top-color: var(--color-accent-primary);
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--color-primary);
       border-radius: var(--radius-full);
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     /* ============================================
-       Empty & Loading States - Professional UX
+       👣 FOOTER
        ============================================ */
-    .empty-state {
-      grid-column: 1 / -1;
-      padding: var(--space-8) var(--space-4);
-      text-align: center;
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: var(--radius-lg);
-      animation: fadeIn var(--animation-duration-normal);
+    .app-footer {
+      margin-top: var(--space-2xl);
+      border-top: 1px solid var(--color-border);
+      background: rgba(0, 0, 0, 0.3);
+      padding: var(--space-xl) var(--space-md);
+      padding-bottom: calc(var(--space-xl) + var(--safe-area-inset-bottom));
     }
 
-    .empty-icon {
-      font-size: 4rem;
-      margin-bottom: var(--space-4);
-      opacity: 0.6;
-      color: var(--color-text-tertiary);
-    }
-
-    .empty-title {
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .empty-text {
-      font-size: var(--font-size-lg);
-      color: var(--color-text-secondary);
-      max-width: 600px;
+    .app-footer__inner {
+      max-width: var(--container-max-width);
       margin: 0 auto;
-      line-height: 1.6;
     }
 
-    .skeleton-card {
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      height: 480px;
-      position: relative;
-      isolation: isolate;
-    }
-
-    .skeleton-header {
-      padding: var(--space-4);
-      border-bottom: 1px solid var(--color-border-secondary);
-      height: 80px;
-    }
-
-    .skeleton-title {
-      height: 24px;
-      width: 60%;
-      margin-bottom: var(--space-2);
-      border-radius: var(--radius-xs);
-    }
-
-    .skeleton-meta {
+    .app-footer__content {
       display: flex;
-      gap: var(--space-2);
-    }
-
-    .skeleton-badge {
-      height: 20px;
-      width: 80px;
-      border-radius: var(--radius-full);
-    }
-
-    .skeleton-thumbnail {
-      height: 200px;
-      background: var(--color-bg-tertiary);
-    }
-
-    .skeleton-actions {
-      padding: var(--space-3);
-      display: flex;
-      gap: var(--space-2);
-      height: 56px;
-    }
-
-    .skeleton-action {
-      flex: 1;
-      height: 40px;
-      border-radius: var(--radius-md);
-    }
-
-    .skeleton {
-      background: linear-gradient(90deg, var(--color-bg-tertiary), var(--color-bg-secondary), var(--color-bg-tertiary));
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-
-    /* ============================================
-       Toast System - Enterprise Notifications
-       ============================================ */
-    .toast-container {
-      position: fixed;
-      bottom: var(--space-6);
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: var(--z-index-toast);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      pointer-events: none;
-    }
-
-    .toast {
-      background: var(--color-bg-overlay);
-      border: 1px solid var(--color-border-secondary);
-      border-radius: var(--radius-lg);
-      padding: var(--space-3) var(--space-4);
-      box-shadow: var(--shadow-level-3);
-      color: var(--color-text-primary);
-      font-size: var(--font-size-md);
-      font-weight: var(--font-weight-medium);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      pointer-events: all;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all var(--transition-speed-normal) var(--transition-easing-standard);
-    }
-
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .toast.hide {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .toast-success {
-      border-color: rgba(61, 220, 151, 0.3);
-      background: linear-gradient(90deg, rgba(11, 18, 32, 0.95), rgba(61, 220, 151, 0.1));
-    }
-
-    .toast-error {
-      border-color: rgba(255, 107, 114, 0.3);
-      background: linear-gradient(90deg, rgba(11, 18, 32, 0.95), rgba(255, 107, 114, 0.1));
-    }
-
-    .toast-icon {
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    /* ============================================
-       Footer - Professional Design
-       ============================================ */
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       flex-wrap: wrap;
-      gap: var(--space-4);
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
     }
 
-    .footer-author {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
-    }
-
-    .footer-name {
+    .app-footer__brand h3 {
       font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-black);
       color: var(--color-text-primary);
-      letter-spacing: -0.5px;
+      margin: 0 0 var(--space-xs);
     }
 
-    .footer-role {
+    .app-footer__brand p {
       font-size: var(--font-size-sm);
       color: var(--color-text-secondary);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      font-weight: var(--font-weight-medium);
+      margin: 0;
     }
 
-    .footer-social {
+    .app-footer__social {
       display: flex;
-      gap: var(--space-2);
+      gap: var(--space-sm);
     }
 
     .social-link {
       width: 44px;
       height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      place-items: center;
       border-radius: var(--radius-md);
-      border: 1px solid var(--color-border-secondary);
-      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--color-text-primary);
       text-decoration: none;
-      transition: all var(--transition-speed-fast) var(--transition-easing-standard);
-      font-size: 1.25rem;
+      transition: all var(--transition-fast);
+      font-size: 18px;
     }
 
     .social-link:hover {
-      background: rgba(90, 159, 255, 0.25);
-      border-color: var(--color-accent-primary);
-      color: var(--color-accent-primary-light);
+      background: rgba(78, 161, 255, 0.2);
+      border-color: var(--color-primary);
       transform: translateY(-2px);
     }
 
-    .social-link:active {
-      transform: translateY(0);
-    }
-
-    .footer-divider {
-      height: 1px;
-      background: var(--color-border-primary);
-      margin: var(--space-4) 0;
-    }
-
-    .footer-copyright {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
+    .app-footer__bottom {
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       text-align: center;
-      padding-top: var(--space-3);
-      font-weight: var(--font-weight-medium);
+    }
+
+    .app-footer__bottom p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin: 0;
     }
 
     /* ============================================
-       Responsive Design - Mobile First
+       📱 RESPONSIVE ADJUSTMENTS
        ============================================ */
-    @media (max-width: 1024px) {
-      .filters-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .header-title {
-        font-size: var(--font-size-lg);
-      }
-      
-      .filters-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-3);
-      }
-      
-      .filter-meta {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .status-indicator {
-        text-align: left;
-        min-width: auto;
-      }
-    }
-
     @media (max-width: 640px) {
-      .header-logo {
-        width: 40px;
-        height: 40px;
-        font-size: 1.25rem;
+      :root {
+        --space-md: 12px;
+        --space-lg: 20px;
       }
-      
-      .header-title {
-        font-size: var(--font-size-lg);
-      }
-      
-      .header-subtitle {
-        font-size: var(--font-size-xs);
-      }
-      
-      .form-input,
-      .form-select {
-        height: 44px;
-        font-size: var(--font-size-md);
-      }
-      
-      .lesson-title {
-        font-size: var(--font-size-md);
-      }
-      
-      .play-button {
-        width: 56px;
-        height: 56px;
-      }
-      
-      .play-icon {
-        border-left-width: 16px;
-        border-top-width: 10px;
-        border-bottom-width: 10px;
-      }
-      
-      .modal-title {
-        font-size: var(--font-size-lg);
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 var(--space-3);
+      .app-header__title {
+        font-size: var(--font-size-lg);
       }
-      
-      .filters-section {
-        padding: var(--space-4);
-        margin-bottom: var(--space-4);
+
+      .content-grid {
+        grid-template-columns: 1fr;
       }
-      
-      .action-btn,
-      .action-link {
-        min-width: 90px;
-        padding: var(--space-2) 0;
-        font-size: var(--font-size-sm);
+
+      .video-card__actions {
+        flex-direction: column;
       }
-      
-      .empty-title {
-        font-size: var(--font-size-xl);
-      }
-      
-      .empty-text {
-        font-size: var(--font-size-md);
+
+      .video-card__actions .btn {
+        width: 100%;
       }
     }
 
     /* ============================================
-       Performance Optimizations
+       ♿ ACCESSIBILITY
        ============================================ */
-    /* Lazy loading optimization */
-    .lazy-load {
-      opacity: 0;
-      transition: opacity var(--transition-speed-normal);
-    }
-
-    .lazy-load.loaded {
-      opacity: 1;
-    }
-
-    /* Reduce motion for users who prefer it */
     @media (prefers-reduced-motion: reduce) {
-      * {
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      
-      .lesson-card:hover .thumbnail-image {
-        transform: none;
-      }
-      
-      .lesson-card:hover .play-button {
-        transform: none;
       }
     }
 
-    /* Print styles */
-    @media print {
-      .app-header, .filters-section, .lesson-actions, .app-footer {
-        display: none;
-      }
-      
-      .app-main {
-        padding: 0;
-      }
-      
-      .lesson-card {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-      
-      .lesson-thumbnail {
-        height: 200px;
-      }
-    }
-
-    /* ============================================
-       Accessibility Improvements
-       ============================================ */
-    [aria-current="page"] {
-      position: relative;
-    }
-
-    [aria-current="page"]::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--color-accent-primary);
-      border-radius: var(--radius-xs);
-    }
-
-    /* Focus ring improvements */
-    *:focus-visible {
-      outline: 2px solid var(--color-accent-primary);
+    /* Focus visible for keyboard navigation */
+    :focus-visible {
+      outline: 2px solid var(--color-primary);
       outline-offset: 2px;
-      box-shadow: 0 0 0 2px rgba(90, 159, 255, 0.3);
     }
 
-    /* Reduced data usage mode */
-    @media (prefers-reduced-data: reduce) {
-      .thumbnail-image {
-        content-visibility: auto;
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      :root {
+        --color-border: rgba(255, 255, 255, 0.3);
       }
-    }
-
-    /* ============================================
-       Loading Optimizations
-       ============================================ */
-    .page-loader {
-      position: fixed;
-      inset: 0;
-      background: var(--color-bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity var(--transition-speed-normal) var(--transition-easing-standard);
-    }
-
-    .loader-content {
-      text-align: center;
-      animation: fadeInScale var(--animation-duration-normal);
-    }
-
-    .loader-logo {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-      color: var(--color-accent-primary);
-      animation: bounce 1.5s infinite;
-    }
-
-    .loader-text {
-      font-size: var(--font-size-lg);
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-2);
-    }
-
-    .loader-progress {
-      width: 200px;
-      height: 4px;
-      background: var(--color-border-secondary);
-      border-radius: var(--radius-full);
-      overflow: hidden;
-      margin: 0 auto;
-    }
-
-    .loader-progress-bar {
-      height: 100%;
-      background: var(--color-accent-primary);
-      width: 0%;
-      transition: width var(--transition-speed-slow) ease-in-out;
-    }
-
-    .hidden {
-      display: none !important;
     }
   </style>
 </head>
+
 <body>
-  <!-- Page Loader - Professional UX -->
-  <div class="page-loader" id="pageLoader">
-    <div class="loader-content">
-      <div class="loader-logo">📚</div>
-      <div class="loader-text">تحميل المحتوى التعليمي...</div>
-      <div class="loader-progress">
-        <div class="loader-progress-bar" id="progressBar"></div>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- App Header -->
+  <header class="app-header" role="banner">
+    <div class="app-header__inner">
+      <div class="app-header__brand">
+        <h1 class="app-header__title">🎬 مكتبة الدروس</h1>
+        <p class="app-header__subtitle">منصة تعليمية تفاعلية للأطفال</p>
+      </div>
+      <div class="app-header__actions">
+        <button 
+          id="refresh-btn" 
+          class="btn btn--primary" 
+          type="button"
+          aria-label="إعادة تحميل البيانات">
+          <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          <span>تحديث</span>
+        </button>
       </div>
     </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="app-main" role="main">
+    <!-- Filters Section -->
+    <section class="filters-section" aria-label="خيارات البحث والتصفية">
+      <div class="filters-card">
+        <form id="filters-form" class="filters-grid" role="search">
+          <div class="form-field">
+            <label for="search-input" class="form-label">
+              <i class="fas fa-search" aria-hidden="true"></i>
+              بحث
+            </label>
+            <input 
+              type="search" 
+              id="search-input" 
+              class="form-input" 
+              placeholder="ابحث بالعنوان..."
+              autocomplete="off"
+              aria-label="البحث في الدروس">
+          </div>
+
+          <div class="form-field">
+            <label for="category-select" class="form-label">
+              <i class="fas fa-folder" aria-hidden="true"></i>
+              المادة
+            </label>
+            <select 
+              id="category-select" 
+              class="form-select"
+              aria-label="اختر المادة">
+              <option value="all">كل المواد</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="time-select" class="form-label">
+              <i class="fas fa-calendar" aria-hidden="true"></i>
+              الفترة
+            </label>
+            <select 
+              id="time-select" 
+              class="form-select"
+              aria-label="اختر الفترة الزمنية">
+              <option value="all">الكل</option>
+              <option value="today">اليوم</option>
+              <option value="yesterday">أمس</option>
+              <option value="week">آخر أسبوع</option>
+              <option value="month">آخر شهر</option>
+              <option value="year">آخر سنة</option>
+            </select>
+          </div>
+
+          <div class="filters-meta">
+            <div id="status-badge" class="status-badge" role="status" aria-live="polite">
+              جاهز
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Content Grid -->
+    <section class="content-section">
+      <div id="content-grid" class="content-grid" role="list" aria-label="قائمة الدروس"></div>
+    </section>
+  </main>
+
+  <!-- Video Player Modal -->
+  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true"></div>
+  <div id="player-modal" class="player-modal" role="dialog" aria-modal="true" aria-labelledby="player-modal-title" aria-hidden="true">
+    <div class="player-modal__header">
+      <button 
+        id="close-modal-btn" 
+        class="btn btn--ghost" 
+        type="button"
+        aria-label="إغلاق المشغل">
+        <i class="fas fa-times" aria-hidden="true"></i>
+        إغلاق
+      </button>
+      <h2 id="player-modal-title" class="player-modal__title"></h2>
+      <a 
+        id="external-link-btn" 
+        href="#" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="btn btn--ghost"
+        style="display: none;"
+        aria-label="فتح في نافذة جديدة">
+        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+        <span class="sr-only">فتح خارجي</span>
+      </a>
+    </div>
+    <div id="player-stage" class="player-modal__stage"></div>
   </div>
 
-  <div class="app-container">
-    <!-- Header - Professional Navigation -->
-    <header class="app-header">
-      <div class="container header-content">
-        <a href="#" class="header-brand" aria-label="العودة إلى الصفحة الرئيسية">
-          <div class="header-logo">📚</div>
-          <div class="header-text">
-            <div class="header-title">مكتبة الدروس التفاعلية</div>
-            <div class="header-subtitle">منصة تعليمية شاملة</div>
-          </div>
-        </a>
-      </div>
-    </header>
-
-    <!-- Main Content - Enterprise Layout -->
-    <main class="app-main">
-      <div class="container">
-        <!-- Filters Panel - Advanced UX -->
-        <section class="filters-section">
-          <div class="filters-grid">
-            <div class="form-group">
-              <label for="searchInput" class="form-label">بحث متقدم</label>
-              <input
-                id="searchInput"
-                type="search"
-                class="form-input"
-                placeholder="ابحث عن درس، موضوع، أو تاريخ..."
-                autocomplete="off"
-                aria-label="بحث في المكتبة"
-              >
-            </div>
-            
-            <div class="form-group">
-              <label for="categorySelect" class="form-label">التصنيفات</label>
-              <select id="categorySelect" class="form-select" aria-label="اختيار التصنيف">
-                <option value="loading">جاري التحميل...</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="timeSelect" class="form-label">التواريخ</label>
-              <select id="timeSelect" class="form-select" aria-label="اختيار الفترة الزمنية">
-                <option value="all">جميع الفترات</option>
-                <option value="today">اليوم</option>
-                <option value="yesterday">أمس</option>
-                <option value="week">آخر أسبوع</option>
-                <option value="month">آخر شهر</option>
-                <option value="year">آخر سنة</option>
-              </select>
-            </div>
-            
-            <div class="filter-meta">
-              <div class="status-indicator">
-                <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">جاري التحضير...</span>
-              </div>
-              <button id="refreshBtn" class="btn btn-primary touch-target" aria-label="تحديث البيانات">
-                <span>⟳</span>
-                <span>تحديث</span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Lessons Grid - Professional Layout -->
-        <section aria-label="قائمة الدروس" id="lessonsSection">
-          <div class="lessons-grid" id="lessonsGrid">
-            <!-- Skeleton loading states for better UX -->
-            <div class="grid-item skeleton-card">
-              <div class="skeleton-header">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-meta">
-                  <div class="skeleton skeleton-badge"></div>
-                  <div class="skeleton skeleton-badge"></div>
-                </div>
-              </div>
-              <div class="skeleton-thumbnail skeleton"></div>
-              <div class="skeleton-actions">
-                <div class="skeleton skeleton-action"></div>
-                <div class="skeleton skeleton-action"></div>
-              </div>
-            </div>
-            <div class="grid-item skeleton-card">
-              <div class="skeleton-header">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-meta">
-                  <div class="skeleton skeleton-badge"></div>
-                  <div class="skeleton skeleton-badge"></div>
-                </div>
-              </div>
-              <div class="skeleton-thumbnail skeleton"></div>
-              <div class="skeleton-actions">
-                <div class="skeleton skeleton-action"></div>
-                <div class="skeleton skeleton-action"></div>
-              </div>
-            </div>
-            <div class="grid-item skeleton-card">
-              <div class="skeleton-header">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton-meta">
-                  <div class="skeleton skeleton-badge"></div>
-                  <div class="skeleton skeleton-badge"></div>
-                </div>
-              </div>
-              <div class="skeleton-thumbnail skeleton"></div>
-              <div class="skeleton-actions">
-                <div class="skeleton skeleton-action"></div>
-                <div class="skeleton skeleton-action"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <!-- Player Modal - Enterprise Media Player -->
-    <div class="modal-overlay" id="playerModal" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="modal-content">
-        <header class="modal-header">
-          <h2 class="modal-title" id="playerTitle">جاري التحميل...</h2>
-          <button class="modal-close" id="closePlayerBtn" aria-label="إغلاق المشغل">
-            <span>×</span>
-          </button>
-        </header>
-        <div class="modal-body">
-          <div class="media-container">
-            <div class="loading-indicator">
-              <div class="spinner"></div>
-              <span>جاري تحميل المحتوى...</span>
-            </div>
-            <div id="mediaContent"></div>
-          </div>
+  <!-- Footer -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="app-footer__inner">
+      <div class="app-footer__content">
+        <div class="app-footer__brand">
+          <h3>Hayl Al-Khadhami</h3>
+          <p>Automation Engineer | Researcher | Educator</p>
         </div>
+        <div class="app-footer__social">
+          <a href="https://www.linkedin.com/in/halkhadhami/" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="social-link" 
+             aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.facebook.com/haylkhadhami" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="social-link" 
+             aria-label="Facebook">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="https://github.com/halkhadhami" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="social-link" 
+             aria-label="GitHub">
+            <i class="fab fa-github" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="app-footer__bottom">
+        <p>&copy; 2026 Hayl Al-Khadhami. All rights reserved. Built with ❤️</p>
       </div>
     </div>
+  </footer>
 
-    <!-- Toast Notifications - Professional Feedback System -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Footer - Professional Attribution -->
-    <footer class="app-footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-author">
-            <div class="footer-name">Hayl Al-Khadhami</div>
-            <div class="footer-role">Engineer | Researcher | Educator</div>
-          </div>
-          <div class="footer-social">
-            <a href="https://www.linkedin.com/in/halkhadhami/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-              <span>in</span>
-            </a>
-            <a href="https://github.com/halkhadhami" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-              <span>@</span>
-            </a>
-          </div>
-        </div>
-        <div class="footer-divider"></div>
-        <div class="footer-copyright">
-          <p>&copy; 2026 Hayl Al-Khadhami | جميع الحقوق محفوظة</p>
-        </div>
-      </div>
-    </footer>
-  </div>
-
+  <!-- External Libraries -->
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  
+  <!-- Application Script -->
   <script>
+    'use strict';
+
     /**
-     * ================================================
-     * ENTERPRISE-GRADE APPLICATION ARCHITECTURE
-     * Production-ready educational platform
-     * ================================================
+     * ============================================
+     * 🏗️ APPLICATION ARCHITECTURE
+     * ============================================
+     * 
+     * This is a production-grade, enterprise-level application following
+     * modern software engineering principles:
+     * 
+     * 1. Separation of Concerns
+     * 2. Single Responsibility Principle
+     * 3. Dependency Injection
+     * 4. Observer Pattern for state management
+     * 5. Factory Pattern for component creation
+     * 6. Strategy Pattern for filtering
+     * 7. Error boundaries and graceful degradation
+     * 8. Performance optimization (debouncing, lazy loading, virtual scrolling ready)
+     * 9. Accessibility (ARIA, keyboard navigation, screen reader support)
+     * 10. Comprehensive error handling and logging
      */
-    
-    // ========================
-    // APPLICATION CORE - Enterprise Architecture
-    // ========================
-    
-    /**
-     * Application State Management
-     * @type {Object}
-     */
-    const AppState = {
-      lessons: [],
-      filteredLessons: [],
-      isLoading: true,
-      cache: null,
-      cacheTimestamp: 0,
-      error: null,
-      initialized: false,
-      offlineMode: false
+
+    // ============================================
+    // 📊 CONFIGURATION & CONSTANTS
+    // ============================================
+    const CONFIG = {
+      SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv',
+      DEBOUNCE_DELAY: 300,
+      TOAST_DURATION: 4000,
+      CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
+      MAX_RETRIES: 3,
+      RETRY_DELAY: 1000,
     };
-    
-    /**
-     * Configuration System
-     * @type {Object}
-     */
-    const AppConfig = {
-      SHEET_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
-      CACHE_DURATION: 3600000, // 1 hour in milliseconds
-      FETCH_TIMEOUT: 10000, // 10 seconds
-      MAX_CONCURRENT_REQUESTS: 3,
-      LAZY_LOAD_THRESHOLD: "0px 0px 200px 0px",
-      CATEGORIES: {
-        "Arabic": "عربي",
-        "Art": "فن",
-        "Chinese": "صيني", 
-        "English": "إنجليزي",
-        "Fun": "ترفيه",
-        "Islamic": "إسلاميات", 
-        "Kuran": "قرآن",
-        "Math": "رياضيات",
-        "Other": "أخرى"
+
+    const CATEGORY_CONFIG = {
+      ORDER: ['Arabic', 'Art', 'Chinese', 'English', 'Fun', 'Islamic', 'Kuran', 'Math', 'Other'],
+      TRANSLATIONS: {
+        Arabic: 'عربي',
+        Art: 'فن',
+        Chinese: 'صيني',
+        English: 'إنجليزي',
+        Fun: 'ترفيه',
+        Islamic: 'إسلاميات',
+        Kuran: 'قرآن',
+        Math: 'رياضيات',
+        Other: 'أخرى',
       },
-      CATEGORY_ORDER: ["Arabic", "Art", "Chinese", "English", "Fun", "Islamic", "Kuran", "Math", "Other"],
-      PRIORITY_CATEGORIES: ["Arabic", "Math", "English"],
-      MAX_LESSONS_DISPLAY: 100,
-      TOAST_DURATION: 3000,
-      PROGRESS_STEPS: [20, 40, 60, 80, 100]
     };
-    
-    /**
-     * DOM References - Performance Optimized
-     * @type {Object}
-     */
-    const DOMElements = {
-      pageLoader: document.getElementById('pageLoader'),
-      progressBar: document.getElementById('progressBar'),
-      lessonsGrid: document.getElementById('lessonsGrid'),
-      searchInput: document.getElementById('searchInput'),
-      categorySelect: document.getElementById('categorySelect'),
-      timeSelect: document.getElementById('timeSelect'),
-      refreshBtn: document.getElementById('refreshBtn'),
-      statusText: document.getElementById('statusText'),
-      statusDot: document.getElementById('statusDot'),
-      playerModal: document.getElementById('playerModal'),
-      playerTitle: document.getElementById('playerTitle'),
-      mediaContent: document.getElementById('mediaContent'),
-      closePlayerBtn: document.getElementById('closePlayerBtn'),
-      toastContainer: document.getElementById('toastContainer'),
-      lessonsSection: document.getElementById('lessonsSection')
-    };
-    
-    // ========================
-    // UTILITY SYSTEMS - Production Grade
-    // ========================
-    
-    /**
-     * Utility Functions Collection
-     */
+
+    // ============================================
+    // 🛠️ UTILITY FUNCTIONS
+    // ============================================
     const Utils = {
       /**
-       * Parse CSV data with robust error handling
-       * @param {string} text - CSV text content
-       * @returns {Array<Array<string>>} Parsed CSV data
-       */
-      parseCSV: function(text) {
-        try {
-          const rows = [];
-          let currentRow = [];
-          let currentCell = '';
-          let inQuotes = false;
-          let escapeNext = false;
-          
-          for (let i = 0; i < text.length; i++) {
-            const char = text[i];
-            const nextChar = text[i + 1] || '';
-            
-            // Handle escaped quotes
-            if (escapeNext) {
-              currentCell += char;
-              escapeNext = false;
-              continue;
-            }
-            
-            // Handle quotes
-            if (char === '"' && !escapeNext) {
-              if (inQuotes && nextChar === '"') {
-                // Escaped quote within quotes
-                currentCell += '"';
-                i++; // Skip next quote
-                continue;
-              }
-              inQuotes = !inQuotes;
-              continue;
-            }
-            
-            // Handle cell separators
-            if (!inQuotes && char === ',') {
-              currentRow.push(currentCell.trim());
-              currentCell = '';
-              continue;
-            }
-            
-            // Handle row separators
-            if (!inQuotes && (char === '\n' || char === '\r')) {
-              currentRow.push(currentCell.trim());
-              if (currentRow.some(cell => cell !== '')) {
-                rows.push(currentRow);
-              }
-              currentRow = [];
-              currentCell = '';
-              if (char === '\r' && nextChar === '\n') {
-                i++; // Skip next character if CRLF
-              }
-              continue;
-            }
-            
-            currentCell += char;
-          }
-          
-          // Handle last cell/row
-          if (currentCell || currentRow.length > 0) {
-            currentRow.push(currentCell.trim());
-            if (currentRow.some(cell => cell !== '')) {
-              rows.push(currentRow);
-            }
-          }
-          
-          return rows;
-        } catch (error) {
-          console.error('CSV parsing error:', error);
-          throw new Error('فشل في تحليل بيانات الجدول');
-        }
-      },
-      
-      /**
-       * Parse date from DD/MM/YYYY format with validation
-       * @param {string} dateStr - Date string in DD/MM/YYYY format
-       * @returns {Date|null} Parsed date or null if invalid
-       */
-      parseDate: function(dateStr) {
-        if (!dateStr || typeof dateStr !== 'string') return null;
-        
-        const parts = dateStr.trim().split('/');
-        if (parts.length !== 3) return null;
-        
-        const [day, month, year] = parts.map(part => parseInt(part, 10));
-        
-        // Validate date components
-        if (
-          isNaN(day) || isNaN(month) || isNaN(year) ||
-          day < 1 || day > 31 ||
-          month < 1 || month > 12 ||
-          year < 1900 || year > 2100
-        ) {
-          return null;
-        }
-        
-        // Create date with midday time to avoid timezone issues
-        return new Date(year, month - 1, day, 12, 0, 0);
-      },
-      
-      /**
-       * Format date for Arabic display
-       * @param {Date} date - Date object to format
-       * @returns {string} Formatted date string
-       */
-      formatDateArabic: function(date) {
-        if (!date || !(date instanceof Date) || isNaN(date)) {
-          return '—';
-        }
-        
-        try {
-          return new Intl.DateTimeFormat('ar-EG', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            timeZone: 'UTC'
-          }).format(date);
-        } catch (error) {
-          console.warn('Date formatting fallback:', error);
-          return date.toLocaleDateString('ar-EG');
-        }
-      },
-      
-      /**
-       * Calculate days between two dates
-       * @param {Date} date1 - First date
-       * @param {Date} date2 - Second date
-       * @returns {number} Number of days between dates
-       */
-      daysBetween: function(date1, date2) {
-        if (!date1 || !date2) return Infinity;
-        
-        // Normalize to UTC dates to avoid timezone issues
-        const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
-        const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-        
-        return Math.floor((utc1 - utc2) / 86400000);
-      },
-      
-      /**
-       * Escape HTML special characters for security
-       * @param {string} str - String to escape
-       * @returns {string} Escaped string
-       */
-      escapeHtml: function(str) {
-        if (!str || typeof str !== 'string') return '';
-        
-        const escapeMap = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;'
-        };
-        
-        return str.replace(/[&<>"']/g, char => escapeMap[char] || char);
-      },
-      
-      /**
-       * Extract YouTube video ID from URL
-       * @param {string} url - YouTube URL
-       * @returns {string|null} Video ID or null
-       */
-      extractYouTubeId: function(url) {
-        if (!url || typeof url !== 'string') return null;
-        
-        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-        const match = url.match(regex);
-        return match ? match[1] : null;
-      },
-      
-      /**
-       * Extract Google Drive file ID from URL
-       * @param {string} url - Google Drive URL
-       * @returns {string|null} File ID or null
-       */
-      extractDriveId: function(url) {
-        if (!url || typeof url !== 'string') return null;
-        
-        const patterns = [
-          /\/file\/d\/([^\/\?#]+)/,
-          /[?&]id=([^&]+)/,
-          /\/d\/([^\/\?#]+)/,
-          /\/open\?id=([^&]+)/
-        ];
-        
-        for (const pattern of patterns) {
-          const match = url.trim().match(pattern);
-          if (match && match[1]) {
-            return match[1].trim();
-          }
-        }
-        
-        return null;
-      },
-      
-      /**
-       * Determine content type from URL
-       * @param {string} url - Content URL
-       * @returns {string} Content type identifier
-       */
-      getContentType: function(url) {
-        if (!url || typeof url !== 'string') return 'unknown';
-        
-        const urlLower = url.toLowerCase();
-        const path = urlLower.split('?')[0];
-        
-        // Check for YouTube
-        if (this.extractYouTubeId(url)) {
-          return 'youtube';
-        }
-        
-        // Check for Google Drive
-        if (urlLower.includes('drive.google.com')) {
-          return 'drive';
-        }
-        
-        // Check file extensions
-        if (/\.(mp4|webm|ogg|mov|m4v|mkv|avi|flv|wmv)$/i.test(path)) {
-          return 'video';
-        }
-        
-        if (/\.(pdf)$/i.test(path)) {
-          return 'pdf';
-        }
-        
-        if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(path)) {
-          return 'image';
-        }
-        
-        return 'link';
-      },
-      
-      /**
-       * Generate Google Drive links
-       * @param {string} url - Original Google Drive URL
-       * @returns {Object|null} Object with various Drive links
-       */
-      getDriveLinks: function(url) {
-        const id = this.extractDriveId(url);
-        if (!id) return null;
-        
-        return {
-          id: id,
-          preview: `https://drive.google.com/file/d/${id}/preview`,
-          download: `https://drive.google.com/uc?export=download&id=${id}`,
-          view: `https://drive.google.com/uc?export=view&id=${id}`,
-          thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
-        };
-      },
-      
-      /**
-       * Debounce function for performance optimization
+       * Debounce function calls
        * @param {Function} func - Function to debounce
-       * @param {number} wait - Wait time in milliseconds
+       * @param {number} wait - Delay in milliseconds
        * @returns {Function} Debounced function
        */
-      debounce: function(func, wait) {
+      debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
           const later = () => {
             clearTimeout(timeout);
-            func.apply(this, args);
+            func(...args);
           };
           clearTimeout(timeout);
           timeout = setTimeout(later, wait);
         };
       },
-      
+
       /**
-       * Throttle function for rate limiting
-       * @param {Function} func - Function to throttle
-       * @param {number} limit - Time limit in milliseconds
-       * @returns {Function} Throttled function
+       * Escape HTML to prevent XSS
+       * @param {string} unsafe - Unsafe string
+       * @returns {string} Safe HTML string
        */
-      throttle: function(func, limit) {
-        let inThrottle;
-        return function executedFunction(...args) {
-          const context = this;
-          if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-          }
+      escapeHtml(unsafe) {
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;',
         };
+        return String(unsafe || '').replace(/[&<>"']/g, (m) => map[m]);
       },
-      
+
       /**
-       * Format bytes to human readable format
-       * @param {number} bytes - Number of bytes
-       * @returns {string} Formatted size string
+       * Parse DD/MM/YYYY date format
+       * @param {string} dateStr - Date string
+       * @returns {Date|null} Parsed date or null
        */
-      formatBytes: function(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      parseDate(dateStr) {
+        if (!dateStr) return null;
+        const parts = String(dateStr).trim().split('/');
+        if (parts.length !== 3) return null;
+        const [dd, mm, yyyy] = parts.map(Number);
+        if (!dd || !mm || !yyyy) return null;
+        return new Date(yyyy, mm - 1, dd, 12, 0, 0);
       },
-      
+
       /**
-       * Check if device is mobile
-       * @returns {boolean} True if mobile device
+       * Calculate days between two dates
+       * @param {Date} date1 - First date
+       * @param {Date} date2 - Second date
+       * @returns {number} Days difference
        */
-      isMobile: function() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      daysBetween(date1, date2) {
+        const MS_PER_DAY = 86400000;
+        const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+        return Math.round((d1 - d2) / MS_PER_DAY);
       },
-      
+
       /**
-       * Check if device is touch capable
-       * @returns {boolean} True if touch device
+       * Format date in Arabic locale
+       * @param {Date} date - Date to format
+       * @returns {string} Formatted date string
        */
-      isTouchDevice: function() {
-        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      }
-    };
-    
-    // ========================
-    // DATA MANAGEMENT SYSTEM - Enterprise Grade
-    // ========================
-    
-    /**
-     * Data Management Service
-     */
-    const DataManager = {
-      /**
-       * Load lessons data from Google Sheets
-       * @param {boolean} forceReload - Force reload ignoring cache
-       * @returns {Promise<Array<Object>>} Array of lesson objects
-       */
-      async loadLessons(forceReload = false) {
+      formatDate(date) {
+        if (!date) return '—';
         try {
-          // Check cache first
-          if (!forceReload && AppState.cache && Date.now() - AppState.cacheTimestamp < AppConfig.CACHE_DURATION) {
-            AppState.lessons = [...AppState.cache];
-            this.updateStatus('✓ البيانات محملة من الذاكرة المؤقتة', 'success');
-            return AppState.lessons;
-          }
-          
-          this.updateStatus('جاري تحميل البيانات من السحابة...', 'loading');
-          AppState.isLoading = true;
-          
-          // Show loading progress
-          this.simulateProgress();
-          
-          // Fetch data with timeout
-          const response = await this.fetchWithTimeout(AppConfig.SHEET_CSV_URL, AppConfig.FETCH_TIMEOUT);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          
-          const csvText = await response.text();
-          
-          // Parse CSV data
-          const parsedData = Utils.parseCSV(csvText);
-          if (parsedData.length < 2) {
-            throw new Error('بيانات الجدول فارغة أو غير صالحة');
-          }
-          
-          // Process data
-          const headers = parsedData[0].map(header => header.trim());
-          const rawData = parsedData.slice(1);
-          
-          // Map to lesson objects
-          const lessons = rawData
-            .map(row => {
-              const lessonObj = {};
-              headers.forEach((header, index) => {
-                lessonObj[header] = row[index] || '';
-              });
-              return this.normalizeLesson(lessonObj);
-            })
-            .filter(lesson => 
-              lesson.title && 
-              lesson.url && 
-              lesson.title !== 'بدون عنوان' &&
-              !lesson.title.includes('error')
-            );
-          
-          // Sort by date (newest first)
-          lessons.sort((a, b) => {
-            const dateA = a.date ? a.date.getTime() : 0;
-            const dateB = b.date ? b.date.getTime() : 0;
-            return dateB - dateA;
-          });
-          
-          // Cache results
-          AppState.cache = [...lessons];
-          AppState.cacheTimestamp = Date.now();
-          AppState.lessons = [...lessons];
-          
-          this.updateStatus(`✓ تم تحميل ${lessons.length} درس بنجاح`, 'success');
-          return lessons;
-        } catch (error) {
-          console.error('Data loading error:', error);
-          
-          // Try to use cached data if available
-          if (AppState.cache && AppState.cache.length > 0) {
-            this.updateStatus('⚠ استخدام البيانات المخزنة مؤقتاً بسبب خطأ في الاتصال', 'warning');
-            AppState.lessons = [...AppState.cache];
-            return AppState.lessons;
-          }
-          
-          this.updateStatus('❌ تعذّر تحميل البيانات', 'error');
-          AppState.error = error.message || 'خطأ غير معروف';
-          return [];
-        } finally {
-          AppState.isLoading = false;
-          DOMElements.progressBar.style.width = '100%';
-          setTimeout(() => {
-            DOMElements.pageLoader.classList.add('hidden');
-          }, 300);
+          return new Intl.DateTimeFormat('ar', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }).format(date);
+        } catch {
+          return date.toLocaleDateString();
         }
       },
-      
+
       /**
-       * Normalize lesson data structure
-       * @param {Object} row - Raw row data from CSV
-       * @returns {Object} Normalized lesson object
+       * Extract YouTube video ID from URL
+       * @param {string} url - YouTube URL
+       * @returns {string|null} Video ID or null
        */
-      normalizeLesson: function(row) {
-        const url = (row.ContentURL || '').trim();
-        const contentType = Utils.getContentType(url);
-        const driveLinks = contentType === 'drive' ? Utils.getDriveLinks(url) : null;
-        const youtubeId = contentType === 'youtube' ? Utils.extractYouTubeId(url) : null;
+      extractYoutubeId(url) {
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = String(url || '').match(regex);
+        return match ? match[1] : null;
+      },
+
+      /**
+       * Extract Google Drive file ID from URL
+       * @param {string} url - Drive URL
+       * @returns {string|null} File ID or null
+       */
+      extractDriveId(url) {
+        const str = String(url || '');
+        const patterns = [
+          /\/file\/d\/([^/]+)/,
+          /[?&]id=([^&]+)/,
+          /\/d\/([^/]+)/,
+        ];
         
+        for (const pattern of patterns) {
+          const match = str.match(pattern);
+          if (match) return match[1];
+        }
+        return null;
+      },
+
+      /**
+       * Get Drive file URLs
+       * @param {string} url - Drive URL
+       * @returns {Object|null} URLs object or null
+       */
+      getDriveUrls(url) {
+        const id = this.extractDriveId(url);
+        if (!id) return null;
         return {
-          id: (row.LessonID || '').trim() || `lesson_${Math.random().toString(36).substr(2, 9)}`,
-          title: (row.Title || '').trim() || 'بدون عنوان',
-          category: AppConfig.CATEGORY_ORDER.includes(row.Category) ? row.Category : 'Other',
-          date: Utils.parseDate((row.DateUploaded || '').trim()),
-          url: url,
-          type: contentType,
-          driveLinks: driveLinks,
-          youtubeId: youtubeId,
-          thumbnail: this.getThumbnailUrl(url, contentType, driveLinks, youtubeId),
-          formattedDate: Utils.formatDateArabic(Utils.parseDate((row.DateUploaded || '').trim()))
+          id,
+          preview: `https://drive.google.com/file/d/${id}/preview`,
+          download: `https://drive.google.com/uc?export=download&id=${id}`,
+          view: `https://drive.google.com/file/d/${id}/view`,
+          thumbnail: `https://drive.google.com/thumbnail?id=${id}&sz=w640`,
         };
       },
-      
+
       /**
-       * Get appropriate thumbnail URL
+       * Determine content type from URL
        * @param {string} url - Content URL
-       * @param {string} type - Content type
-       * @param {Object} driveLinks - Google Drive links object
-       * @param {string} youtubeId - YouTube video ID
-       * @returns {string} Thumbnail URL
+       * @returns {string} Content type
        */
-      getThumbnailUrl: function(url, type, driveLinks, youtubeId) {
-        switch(type) {
-          case 'youtube':
-            return youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : '';
-          case 'drive':
-            return driveLinks && driveLinks.thumb ? driveLinks.thumb : '';
-          case 'image':
-            return url;
-          case 'video':
-            return ''; // Will use placeholder
-          case 'pdf':
-            return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%231e293b"/%3E%3Cpath d="M150 100L250 100L250 200L150 200Z" fill="%234a90e2"/%3E%3Ccircle cx="300" cy="150" r="30" fill="%23ff9900"/%3E%3Ctext x="50%25" y="50%25" fill="%23ffffff" font-size="24" text-anchor="middle" dominant-baseline="middle"%3EPDF%3C/text%3E%3C/svg%3E';
-          default:
-            return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%231e293b"/%3E%3Cpath d="M320 100L420 200L320 300L220 200Z" fill="%234a90e2"/%3E%3Ctext x="50%25" y="50%25" fill="%23ffffff" font-size="24" text-anchor="middle" dominant-baseline="middle"%3Eملف%3C/text%3E%3C/svg%3E';
+      getContentType(url) {
+        const urlLower = String(url || '').toLowerCase();
+        const cleanUrl = urlLower.split('?')[0];
+
+        if (this.extractYoutubeId(url)) return 'youtube';
+        if (urlLower.includes('drive.google.com')) return 'drive';
+        if (/\.(mp4|webm|ogg|mov|m4v)$/i.test(cleanUrl)) return 'video';
+        if (/\.(pdf)$/i.test(cleanUrl)) return 'pdf';
+        if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(cleanUrl)) return 'image';
+        return 'link';
+      },
+
+      /**
+       * Parse CSV string to array
+       * @param {string} csv - CSV string
+       * @returns {Array<Array<string>>} Parsed rows
+       */
+      parseCSV(csv) {
+        const rows = [];
+        let row = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < csv.length; i++) {
+          const char = csv[i];
+          const next = csv[i + 1];
+
+          if (char === '"' && inQuotes && next === '"') {
+            current += '"';
+            i++;
+            continue;
+          }
+
+          if (char === '"') {
+            inQuotes = !inQuotes;
+            continue;
+          }
+
+          if (!inQuotes && char === ',') {
+            row.push(current);
+            current = '';
+            continue;
+          }
+
+          if (!inQuotes && (char === '\n' || char === '\r')) {
+            if (char === '\r' && next === '\n') i++;
+            row.push(current);
+            current = '';
+            if (row.some((c) => String(c).trim() !== '')) {
+              rows.push(row);
+            }
+            row = [];
+            continue;
+          }
+
+          current += char;
+        }
+
+        row.push(current);
+        if (row.some((c) => String(c).trim() !== '')) {
+          rows.push(row);
+        }
+
+        return rows;
+      },
+
+      /**
+       * Simple in-memory cache implementation
+       * @returns {Object} Cache object with get/set/clear methods
+       */
+      createCache() {
+        const cache = new Map();
+        return {
+          get(key) {
+            const item = cache.get(key);
+            if (!item) return null;
+            if (Date.now() > item.expiry) {
+              cache.delete(key);
+              return null;
+            }
+            return item.value;
+          },
+          set(key, value, ttl = CONFIG.CACHE_DURATION) {
+            cache.set(key, {
+              value,
+              expiry: Date.now() + ttl,
+            });
+          },
+          clear() {
+            cache.clear();
+          },
+        };
+      },
+    };
+
+    // ============================================
+    // 🎨 UI COMPONENTS
+    // ============================================
+    const UI = {
+      /**
+       * Toast notification system
+       */
+      Toast: {
+        container: document.getElementById('toast-container'),
+
+        /**
+         * Show toast notification
+         * @param {string} message - Message to display
+         * @param {string} type - Toast type (success, error, warning, info)
+         * @param {number} duration - Display duration in ms
+         */
+        show(message, type = 'info', duration = CONFIG.TOAST_DURATION) {
+          const toast = document.createElement('div');
+          toast.className = `toast toast--${type}`;
+          toast.setAttribute('role', 'alert');
+
+          const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            warning: 'fa-exclamation-triangle',
+            info: 'fa-info-circle',
+          };
+
+          toast.innerHTML = `
+            <div class="toast__icon">
+              <i class="fas ${icons[type] || icons.info}" aria-hidden="true"></i>
+            </div>
+            <div class="toast__message">${Utils.escapeHtml(message)}</div>
+            <button class="toast__close" type="button" aria-label="إغلاق">
+              <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+          `;
+
+          const closeBtn = toast.querySelector('.toast__close');
+          const remove = () => {
+            toast.style.animation = 'slideInDown var(--transition-base) reverse';
+            setTimeout(() => toast.remove(), 250);
+          };
+
+          closeBtn.addEventListener('click', remove);
+          this.container.appendChild(toast);
+
+          if (duration > 0) {
+            setTimeout(remove, duration);
+          }
+        },
+
+        success(message) {
+          this.show(message, 'success');
+        },
+
+        error(message) {
+          this.show(message, 'error');
+        },
+
+        warning(message) {
+          this.show(message, 'warning');
+        },
+
+        info(message) {
+          this.show(message, 'info');
+        },
+      },
+
+      /**
+       * Status badge component
+       */
+      StatusBadge: {
+        element: document.getElementById('status-badge'),
+
+        update(text, state = 'default') {
+          this.element.textContent = text;
+          this.element.className = 'status-badge';
+          if (state !== 'default') {
+            this.element.classList.add(`status-badge--${state}`);
+          }
+        },
+
+        loading(text = 'جاري التحميل...') {
+          this.update(text, 'loading');
+        },
+
+        success(text) {
+          this.update(text, 'success');
+        },
+
+        error(text) {
+          this.update(text, 'error');
+        },
+
+        default(text = 'جاهز') {
+          this.update(text, 'default');
+        },
+      },
+
+      /**
+       * Loading skeleton generator
+       */
+      Skeleton: {
+        create(count = 6) {
+          const skeletons = [];
+          for (let i = 0; i < count; i++) {
+            const skeleton = document.createElement('div');
+            skeleton.className = 'skeleton-card';
+            skeleton.setAttribute('aria-busy', 'true');
+            skeleton.setAttribute('aria-label', 'جاري التحميل');
+            skeleton.innerHTML = `
+              <div class="skeleton-card__header">
+                <div class="skeleton-card__title skeleton"></div>
+                <div class="skeleton-card__meta skeleton"></div>
+              </div>
+              <div class="skeleton-card__thumbnail skeleton"></div>
+              <div class="skeleton-card__actions">
+                <div class="skeleton-card__button skeleton"></div>
+                <div class="skeleton-card__button skeleton"></div>
+              </div>
+            `;
+            skeletons.push(skeleton);
+          }
+          return skeletons;
+        },
+      },
+
+      /**
+       * Empty state component
+       */
+      EmptyState: {
+        create(title, description, icon = 'fa-inbox') {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.innerHTML = `
+            <div class="empty-state__icon">
+              <i class="fas ${icon}" aria-hidden="true"></i>
+            </div>
+            <h3 class="empty-state__title">${Utils.escapeHtml(title)}</h3>
+            <p class="empty-state__description">${Utils.escapeHtml(description)}</p>
+          `;
+          return empty;
+        },
+      },
+
+      /**
+       * Video card component factory
+       */
+      VideoCard: {
+        create(lesson, onPlay) {
+          const card = document.createElement('article');
+          card.className = 'video-card';
+          card.setAttribute('role', 'listitem');
+          card.dataset.lessonId = lesson.id;
+
+          const categoryLabel = CATEGORY_CONFIG.TRANSLATIONS[lesson.category] || lesson.category;
+          const contentType = Utils.getContentType(lesson.url);
+          const driveUrls = Utils.getDriveUrls(lesson.url);
+          const youtubeId = Utils.extractYoutubeId(lesson.url);
+
+          // Determine thumbnail
+          let thumbnail = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360"%3E%3Crect fill="%230b1220" width="640" height="360"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%239fb0d0" font-size="20" font-family="sans-serif"%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E';
+          
+          if (youtubeId) {
+            thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+          } else if (driveUrls) {
+            thumbnail = driveUrls.thumbnail;
+          }
+
+          // Determine download URL
+          let downloadUrl = lesson.url;
+          if (driveUrls) {
+            downloadUrl = driveUrls.download;
+          }
+
+          card.innerHTML = `
+            <div class="video-card__header">
+              <h3 class="video-card__title">${Utils.escapeHtml(lesson.title)}</h3>
+              <div class="video-card__meta">
+                <span class="badge badge--category">
+                  <i class="fas fa-folder" aria-hidden="true"></i>
+                  ${Utils.escapeHtml(categoryLabel)}
+                </span>
+                <span class="badge">
+                  <i class="fas fa-calendar" aria-hidden="true"></i>
+                  ${Utils.escapeHtml(Utils.formatDate(lesson.date))}
+                </span>
+                ${lesson.id ? `<span class="badge">#${Utils.escapeHtml(lesson.id)}</span>` : ''}
+              </div>
+            </div>
+            <div class="video-card__thumbnail" role="button" tabindex="0" aria-label="تشغيل ${Utils.escapeHtml(lesson.title)}">
+              <img 
+                src="${thumbnail}" 
+                alt="${Utils.escapeHtml(lesson.title)}"
+                class="video-card__thumbnail-img"
+                loading="lazy"
+                referrerpolicy="no-referrer">
+              <div class="video-card__thumbnail-overlay">
+                <button class="play-button" type="button" aria-label="تشغيل"></button>
+              </div>
+            </div>
+            <div class="video-card__actions">
+              <button class="btn btn--primary btn-play" type="button">
+                <i class="fas fa-play" aria-hidden="true"></i>
+                مشاهدة
+              </button>
+              ${youtubeId 
+                ? `<a href="https://www.youtube.com/watch?v=${youtubeId}" target="_blank" rel="noopener" class="btn btn--success">
+                     <i class="fab fa-youtube" aria-hidden="true"></i>
+                     يوتيوب
+                   </a>`
+                : `<a href="${downloadUrl}" target="_blank" rel="noopener" download class="btn btn--success">
+                     <i class="fas fa-download" aria-hidden="true"></i>
+                     تحميل
+                   </a>`
+              }
+            </div>
+          `;
+
+          // Event listeners
+          const handlePlay = (e) => {
+            e.preventDefault();
+            onPlay(lesson);
+          };
+
+          card.querySelector('.video-card__thumbnail').addEventListener('click', handlePlay);
+          card.querySelector('.btn-play').addEventListener('click', handlePlay);
+          
+          // Keyboard navigation for thumbnail
+          card.querySelector('.video-card__thumbnail').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handlePlay(e);
+            }
+          });
+
+          return card;
+        },
+      },
+    };
+
+    // ============================================
+    // 📡 DATA SERVICE LAYER
+    // ============================================
+    const DataService = {
+      cache: Utils.createCache(),
+
+      /**
+       * Fetch data with retry logic
+       * @param {string} url - URL to fetch
+       * @param {number} retries - Number of retries
+       * @returns {Promise<string>} Response text
+       */
+      async fetchWithRetry(url, retries = CONFIG.MAX_RETRIES) {
+        for (let i = 0; i < retries; i++) {
+          try {
+            const response = await fetch(url, {
+              cache: 'no-store',
+              headers: {
+                'Accept': 'text/csv',
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return await response.text();
+          } catch (error) {
+            if (i === retries - 1) throw error;
+            await new Promise((resolve) => setTimeout(resolve, CONFIG.RETRY_DELAY * (i + 1)));
+          }
         }
       },
-      
+
       /**
-       * Filter lessons based on current criteria
+       * Load lessons from Google Sheets
+       * @param {boolean} forceRefresh - Force refresh cache
+       * @returns {Promise<Array>} Lessons array
        */
-      filterLessons: function() {
-        const searchTerm = DOMElements.searchInput.value.trim().toLowerCase();
-        const category = DOMElements.categorySelect.value;
-        const timeRange = DOMElements.timeSelect.value;
-        const now = new Date();
-        
-        AppState.filteredLessons = AppState.lessons.filter(lesson => {
-          // Search filter
-          if (searchTerm && !lesson.title.toLowerCase().includes(searchTerm)) {
-            return false;
-          }
-          
-          // Category filter
-          if (category !== 'all' && lesson.category !== category) {
-            return false;
-          }
-          
-          // Time filter
-          if (timeRange !== 'all' && lesson.date) {
-            const daysDiff = Utils.daysBetween(now, lesson.date);
-            const filters = {
-              'today': diff => diff === 0,
-              'yesterday': diff => diff === 1,
-              'week': diff => diff >= 0 && diff <= 7,
-              'month': diff => diff >= 0 && diff <= 30,
-              'year': diff => diff >= 0 && diff <= 365
-            };
-            
-            if (!filters[timeRange] || !filters[timeRange](daysDiff)) {
-              return false;
-            }
-          }
-          
-          return true;
+      async loadLessons(forceRefresh = false) {
+        const cacheKey = 'lessons_data';
+
+        if (!forceRefresh) {
+          const cached = this.cache.get(cacheKey);
+          if (cached) return cached;
+        }
+
+        const csv = await this.fetchWithRetry(CONFIG.SHEET_CSV_URL);
+        const rows = Utils.parseCSV(csv);
+
+        if (rows.length < 2) {
+          throw new Error('CSV file is empty or invalid');
+        }
+
+        const headers = rows[0].map((h) => String(h).trim());
+        const data = rows.slice(1).map((cols) => {
+          const obj = {};
+          headers.forEach((header, index) => {
+            obj[header] = cols[index] || '';
+          });
+          return obj;
         });
-        
-        this.renderLessons();
+
+        const lessons = data
+          .map((row) => ({
+            id: (row.LessonID || '').trim(),
+            title: (row.Title || 'بدون عنوان').trim(),
+            category: (row.Category || 'Other').trim(),
+            date: Utils.parseDate((row.DateUploaded || '').trim()),
+            url: (row.ContentURL || '').trim(),
+          }))
+          .filter((lesson) => lesson.title && lesson.url);
+
+        // Sort by date (newest first)
+        lessons.sort((a, b) => {
+          const dateA = a.date ? a.date.getTime() : 0;
+          const dateB = b.date ? b.date.getTime() : 0;
+          return dateB - dateA;
+        });
+
+        this.cache.set(cacheKey, lessons);
+        return lessons;
       },
-      
+
       /**
        * Get unique categories from lessons
-       * @returns {Array<string>} Array of unique categories
+       * @param {Array} lessons - Lessons array
+       * @returns {Array<string>} Categories array
        */
-      getUniqueCategories: function() {
-        const categories = new Set();
-        
-        // Add priority categories first
-        AppConfig.PRIORITY_CATEGORIES.forEach(cat => {
-          if (AppState.lessons.some(lesson => lesson.category === cat)) {
-            categories.add(cat);
-          }
-        });
-        
-        // Add remaining categories
-        AppState.lessons.forEach(lesson => {
-          if (!AppConfig.PRIORITY_CATEGORIES.includes(lesson.category)) {
-            categories.add(lesson.category);
-          }
-        });
-        
-        return Array.from(categories);
+      getCategories(lessons) {
+        const uniqueCategories = new Set(lessons.map((l) => l.category || 'Other'));
+        const sortedCategories = CATEGORY_CONFIG.ORDER.filter((c) => uniqueCategories.has(c));
+        const otherCategories = [...uniqueCategories].filter((c) => !CATEGORY_CONFIG.ORDER.includes(c));
+        return [...sortedCategories, ...otherCategories];
       },
-      
-      /**
-       * Simulate loading progress for better UX
-       */
-      simulateProgress: function() {
-        let progress = 0;
-        const interval = setInterval(() => {
-          if (progress >= 100) {
-            clearInterval(interval);
-            return;
-          }
-          
-          // Accelerate progress at the end
-          const step = progress > 80 ? 5 : AppConfig.PROGRESS_STEPS[Math.floor(Math.random() * AppConfig.PROGRESS_STEPS.length)];
-          progress = Math.min(100, progress + step);
-          DOMElements.progressBar.style.width = `${progress}%`;
-        }, 200);
-      },
-      
-      /**
-       * Update status indicator
-       * @param {string} message - Status message
-       * @param {string} type - Status type (success, error, warning, loading, idle)
-       */
-      updateStatus: function(message, type = 'idle') {
-        DOMElements.statusText.textContent = message;
-        
-        // Update status dot
-        DOMElements.statusDot.className = 'status-dot';
-        switch(type) {
-          case 'success':
-            DOMElements.statusDot.classList.add('success');
-            break;
-          case 'error':
-            DOMElements.statusDot.classList.add('error');
-            break;
-          case 'warning':
-            DOMElements.statusDot.classList.add('warning');
-            break;
-          case 'loading':
-            DOMElements.statusDot.classList.add('loading');
-            break;
-        }
-      },
-      
-      /**
-       * Fetch with timeout capability
-       * @param {string} url - URL to fetch
-       * @param {number} timeout - Timeout in milliseconds
-       * @returns {Promise<Response>} Fetch response
-       */
-      fetchWithTimeout: function(url, timeout) {
-        return new Promise((resolve, reject) => {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            controller.abort();
-            reject(new Error('انتهت مدة الطلب'));
-          }, timeout);
-          
-          fetch(url, {
-            signal: controller.signal,
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-              'Pragma': 'no-cache'
-            }
-          })
-          .then(response => {
-            clearTimeout(timeoutId);
-            resolve(response);
-          })
-          .catch(error => {
-            clearTimeout(timeoutId);
-            reject(error);
-          });
-        });
-      }
     };
-    
-    // ========================
-    // UI RENDERING SYSTEM - Professional UX
-    // ========================
-    
-    /**
-     * UI Rendering Service
-     */
-    const UIRenderer = {
+
+    // ============================================
+    // 🎯 FILTER STRATEGIES
+    // ============================================
+    const FilterStrategies = {
       /**
-       * Render category dropdown options
-       * @param {Array<string>} categories - Array of category names
+       * Text search filter
+       * @param {Array} lessons - Lessons to filter
+       * @param {string} query - Search query
+       * @returns {Array} Filtered lessons
        */
-      renderCategories: function(categories) {
-        DOMElements.categorySelect.innerHTML = '';
-        
-        // Add "All" option
-        const allOption = document.createElement('option');
-        allOption.value = 'all';
-        allOption.textContent = 'جميع المواد';
-        DOMElements.categorySelect.appendChild(allOption);
-        
-        // Add category options
-        categories.forEach(category => {
-          const option = document.createElement('option');
-          option.value = category;
-          option.textContent = AppConfig.CATEGORIES[category] || category;
-          DOMElements.categorySelect.appendChild(option);
-        });
-        
-        // Set default selection
-        DOMElements.categorySelect.value = 'all';
+      search(lessons, query) {
+        if (!query) return lessons;
+        const lowerQuery = query.toLowerCase();
+        return lessons.filter((lesson) => lesson.title.toLowerCase().includes(lowerQuery));
       },
-      
+
       /**
-       * Render lessons grid
+       * Category filter
+       * @param {Array} lessons - Lessons to filter
+       * @param {string} category - Category to filter by
+       * @returns {Array} Filtered lessons
        */
-      renderLessons: function() {
-        if (!AppState.initialized) return;
-        
-        const container = DOMElements.lessonsGrid;
-        
-        // Clear previous content but keep skeleton if loading
-        if (AppState.isLoading) {
-          return;
-        }
-        
-        container.innerHTML = '';
-        
-        // Handle empty state
-        if (AppState.filteredLessons.length === 0) {
-          container.innerHTML = `
-            <div class="grid-item empty-state" role="status" aria-live="polite">
-              <div class="empty-icon">📭</div>
-              <h3 class="empty-title">لا توجد نتائج</h3>
-              <p class="empty-text">لم يتم العثور على دروس تطابق معايير البحث الحالية. جرب تغيير التصنيف أو الفترة الزمنية أو إجراء بحث مختلف.</p>
-            </div>
-          `;
-          return;
-        }
-        
-        // Create document fragment for better performance
-        const fragment = document.createDocumentFragment();
-        
-        // Limit number of displayed lessons for performance
-        const lessonsToDisplay = AppState.filteredLessons.slice(0, AppConfig.MAX_LESSONS_DISPLAY);
-        
-        lessonsToDisplay.forEach((lesson, index) => {
-          const card = this.createLessonCard(lesson, index);
-          fragment.appendChild(card);
-        });
-        
-        container.appendChild(fragment);
-        
-        // Setup lazy loading
-        this.setupLazyLoading();
+      category(lessons, category) {
+        if (!category || category === 'all') return lessons;
+        return lessons.filter((lesson) => lesson.category === category);
       },
-      
+
       /**
-       * Create lesson card element
-       * @param {Object} lesson - Lesson object
-       * @param {number} index - Index for animation delay
-       * @returns {HTMLElement} Lesson card element
+       * Time range filter
+       * @param {Array} lessons - Lessons to filter
+       * @param {string} timeRange - Time range ('today', 'yesterday', 'week', 'month', 'year')
+       * @returns {Array} Filtered lessons
        */
-      createLessonCard: function(lesson, index) {
-        const card = document.createElement('article');
-        card.className = 'lesson-card grid-item';
-        card.setAttribute('aria-label', `درس: ${lesson.title}`);
-        card.setAttribute('data-category', lesson.category);
-        card.setAttribute('data-date', lesson.formattedDate);
-        card.style.animationDelay = `${index * 0.1}s`;
-        
-        // Create card content
-        card.innerHTML = `
-          <div class="lesson-header">
-            <h3 class="lesson-title">${Utils.escapeHtml(lesson.title)}</h3>
-            <div class="lesson-meta">
-              <span class="badge badge-category">📚 ${Utils.escapeHtml(AppConfig.CATEGORIES[lesson.category] || lesson.category)}</span>
-              <span class="badge badge-date">📅 ${Utils.escapeHtml(lesson.formattedDate)}</span>
-              <span class="badge badge-id">#${Utils.escapeHtml(lesson.id)}</span>
-            </div>
-          </div>
-          <div class="lesson-thumbnail">
-            ${lesson.thumbnail ? `
-              <img src="${lesson.thumbnail}" 
-                   alt="صورة مصغرة لدرس: ${Utils.escapeHtml(lesson.title)}" 
-                   class="thumbnail-image lazy-load"
-                   loading="lazy"
-                   referrerpolicy="no-referrer">
-              <div class="thumbnail-overlay">
-                <div class="play-button" aria-label="تشغيل الفيديو">
-                  <div class="play-icon"></div>
-                </div>
-              </div>
-            ` : `
-              <div class="thumbnail-placeholder">
-                <span>📚</span>
-              </div>
-              <div class="thumbnail-overlay">
-                <div class="play-button" aria-label="تشغيل المحتوى">
-                  <div class="play-icon"></div>
-                </div>
-              </div>
-            `}
-          </div>
-          <div class="lesson-actions">
-            <button class="action-btn btn-watch" data-action="watch" aria-label="مشاهدة الدرس">
-              <span>▶</span>
-              <span>مشاهدة</span>
-            </button>
-            <a href="${lesson.url}" 
-               class="action-link btn-download" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               download 
-               aria-label="تنزيل الدرس">
-              <span>⬇️</span>
-              <span>تنزيل</span>
-            </a>
-          </div>
-          <div class="card-hover-area" aria-hidden="true"></div>
-        `;
-        
-        // Add event listeners
-        this.setupCardEvents(card, lesson);
-        
-        return card;
-      },
-      
-      /**
-       * Setup event listeners for lesson card
-       * @param {HTMLElement} card - Lesson card element
-       * @param {Object} lesson - Lesson object
-       */
-      setupCardEvents: function(card, lesson) {
-        // Main card click - open player
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('.action-link') || e.target.closest('[data-action="watch"]')) {
-            return; // Allow other actions to handle their own clicks
-          }
-          
-          PlayerManager.openPlayer(lesson);
-          e.stopPropagation();
-        });
-        
-        // Watch button click
-        const watchBtn = card.querySelector('[data-action="watch"]');
-        if (watchBtn) {
-          watchBtn.addEventListener('click', (e) => {
-            PlayerManager.openPlayer(lesson);
-            e.stopPropagation();
-          });
-        }
-        
-        // Download link setup
-        const downloadLink = card.querySelector('.btn-download');
-        if (downloadLink && lesson.driveLinks) {
-          downloadLink.href = lesson.driveLinks.download;
-        }
-      },
-      
-      /**
-       * Setup lazy loading for images
-       */
-      setupLazyLoading: function() {
-        if ('IntersectionObserver' in window) {
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                  img.src = img.dataset.src;
-                }
-                img.classList.add('loaded');
-                observer.unobserve(img);
-              }
-            });
-          }, {
-            rootMargin: AppConfig.LAZY_LOAD_THRESHOLD
-          });
-          
-          document.querySelectorAll('.lazy-load').forEach(img => {
-            observer.observe(img);
-          });
-        } else {
-          // Fallback for browsers without IntersectionObserver
-          document.querySelectorAll('.lazy-load').forEach(img => {
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-            }
-            img.classList.add('loaded');
-          });
-        }
-      },
-      
-      /**
-       * Show toast notification
-       * @param {string} message - Notification message
-       * @param {string} type - Notification type (success, error, info, warning)
-       */
-      showToast: function(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type} show`;
-        toast.setAttribute('role', 'alert');
-        toast.setAttribute('aria-live', 'polite');
-        
-        const iconMap = {
-          'success': '✓',
-          'error': '✗',
-          'warning': '!',
-          'info': 'ⓘ'
+      timeRange(lessons, timeRange) {
+        if (!timeRange || timeRange === 'all') return lessons;
+
+        const now = new Date();
+        const predicates = {
+          today: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 0,
+          yesterday: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) === 1,
+          week: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 7,
+          month: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 30,
+          year: (lesson) => lesson.date && Utils.daysBetween(now, lesson.date) >= 0 && Utils.daysBetween(now, lesson.date) <= 365,
         };
-        
-        toast.innerHTML = `
-          <span class="toast-icon">${iconMap[type] || 'ⓘ'}</span>
-          <span>${Utils.escapeHtml(message)}</span>
-        `;
-        
-        DOMElements.toastContainer.appendChild(toast);
-        
-        // Auto hide after duration
-        setTimeout(() => {
-          toast.classList.remove('show');
-          toast.classList.add('hide');
-          
-          setTimeout(() => {
-            if (toast.parentNode === DOMElements.toastContainer) {
-              DOMElements.toastContainer.removeChild(toast);
-            }
-          }, 300);
-        }, AppConfig.TOAST_DURATION);
+
+        const predicate = predicates[timeRange];
+        return predicate ? lessons.filter(predicate) : lessons;
       },
-      
-      /**
-       * Initialize the UI
-       */
-      initializeUI: function() {
-        // Setup event listeners
-        this.setupEventListeners();
-        
-        // Initial render
-        this.renderCategories(AppConfig.CATEGORY_ORDER);
-        
-        AppState.initialized = true;
-      },
-      
-      /**
-       * Setup all event listeners
-       */
-      setupEventListeners: function() {
-        // Search input with debounce
-        DOMElements.searchInput.addEventListener('input', Utils.debounce(() => {
-          DataManager.filterLessons();
-        }, 300));
-        
-        // Category filter
-        DOMElements.categorySelect.addEventListener('change', () => {
-          DataManager.filterLessons();
-        });
-        
-        // Time filter
-        DOMElements.timeSelect.addEventListener('change', () => {
-          DataManager.filterLessons();
-        });
-        
-        // Refresh button
-        DOMElements.refreshBtn.addEventListener('click', async () => {
-          DOMElements.refreshBtn.disabled = true;
-          DOMElements.refreshBtn.innerHTML = '<span>↻</span><span>جاري التحديث...</span>';
-          
-          try {
-            await DataManager.loadLessons(true);
-            this.showToast('✓ تم تحديث البيانات بنجاح', 'success');
-          } catch (error) {
-            this.showToast('✗ فشل تحديث البيانات', 'error');
-          } finally {
-            DOMElements.refreshBtn.disabled = false;
-            DOMElements.refreshBtn.innerHTML = '<span>⟳</span><span>تحديث</span>';
-          }
-        });
-        
-        // Player modal close
-        DOMElements.closePlayerBtn.addEventListener('click', () => {
-          PlayerManager.closePlayer();
-        });
-        
-        // Close modal on overlay click
-        DOMElements.playerModal.addEventListener('click', (e) => {
-          if (e.target === DOMElements.playerModal) {
-            PlayerManager.closePlayer();
-          }
-        });
-        
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-            PlayerManager.closePlayer();
-          }
-        });
-        
-        // Touch interactions
-        if (Utils.isTouchDevice()) {
-          document.body.classList.add('touch-device');
-        }
-        
-        // Online/offline detection
-        window.addEventListener('online', () => {
-          AppState.offlineMode = false;
-          this.showToast('✓ عدت إلى الاتصال بالإنترنت', 'success');
-        });
-        
-        window.addEventListener('offline', () => {
-          AppState.offlineMode = true;
-          this.showToast('⚠ أنت في وضع عدم الاتصال', 'warning');
-        });
-      }
     };
-    
-    // ========================
-    // PLAYER MANAGEMENT SYSTEM - Enterprise Media
-    // ========================
-    
-    /**
-     * Player Management Service
-     */
+
+    // ============================================
+    // 🎬 VIDEO PLAYER MANAGER
+    // ============================================
     const PlayerManager = {
+      modal: document.getElementById('player-modal'),
+      backdrop: document.getElementById('modal-backdrop'),
+      stage: document.getElementById('player-stage'),
+      title: document.getElementById('player-modal-title'),
+      closeBtn: document.getElementById('close-modal-btn'),
+      externalBtn: document.getElementById('external-link-btn'),
       currentPlayer: null,
-      currentMedia: null,
-      
+
+      init() {
+        this.closeBtn.addEventListener('click', () => this.close());
+        this.backdrop.addEventListener('click', () => this.close());
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.modal.classList.contains('is-active')) {
+            this.close();
+          }
+        });
+      },
+
       /**
-       * Open player modal with lesson content
+       * Open player with lesson
        * @param {Object} lesson - Lesson object
        */
-      openPlayer: function(lesson) {
-        // Update modal title
-        DOMElements.playerTitle.textContent = lesson.title;
-        
-        // Show modal
-        DOMElements.playerModal.classList.add('open');
-        DOMElements.playerModal.setAttribute('aria-hidden', 'false');
+      async open(lesson) {
+        this.title.textContent = lesson.title;
+        this.modal.classList.add('is-active');
+        this.backdrop.classList.add('is-active');
+        this.modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        
-        // Load appropriate media
-        this.loadMedia(lesson);
-        
-        // Track analytics
-        this.trackPlay(lesson);
-      },
-      
-      /**
-       * Load appropriate media based on content type
-       * @param {Object} lesson - Lesson object
-       */
-      loadMedia: function(lesson) {
-        // Clear previous content
-        DOMElements.mediaContent.innerHTML = '';
-        DOMElements.mediaContent.innerHTML = `
-          <div class="loading-indicator">
+
+        this.stage.innerHTML = `
+          <div class="player-modal__loading">
             <div class="spinner"></div>
-            <span>جاري تحميل المحتوى...</span>
+            <p>جاري التحميل...</p>
           </div>
         `;
-        
-        // Determine media type and load accordingly
-        switch(lesson.type) {
-          case 'youtube':
-            this.loadYouTubePlayer(lesson);
-            break;
-          case 'drive':
-            this.loadDrivePlayer(lesson);
-            break;
-          case 'video':
-            this.loadVideoPlayer(lesson);
-            break;
-          case 'pdf':
-            this.loadPDFViewer(lesson);
-            break;
-          case 'image':
-            this.loadImageViewer(lesson);
-            break;
-          default:
-            this.loadGenericContent(lesson);
-        }
-      },
-      
-      /**
-       * Load YouTube player
-       * @param {Object} lesson - Lesson object
-       */
-      loadYouTubePlayer: function(lesson) {
-        if (!lesson.youtubeId) {
-          UIRenderer.showToast('✗ معرف فيديو YouTube غير صالح', 'error');
-          return;
-        }
-        
-        const iframe = document.createElement('iframe');
-        iframe.className = 'media-element';
-        iframe.src = `https://www.youtube-nocookie.com/embed/${lesson.youtubeId}?autoplay=1&modestbranding=1&rel=0&controls=1&showinfo=0&iv_load_policy=3`;
-        iframe.title = lesson.title;
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-        iframe.allowFullscreen = true;
-        iframe.frameBorder = '0';
-        
-        DOMElements.mediaContent.innerHTML = '';
-        DOMElements.mediaContent.appendChild(iframe);
-        this.currentMedia = iframe;
-      },
-      
-      /**
-       * Load Google Drive player
-       * @param {Object} lesson - Lesson object
-       */
-      loadDrivePlayer: function(lesson) {
-        if (!lesson.driveLinks || !lesson.driveLinks.preview) {
-          UIRenderer.showToast('✗ رابط Google Drive غير صالح', 'error');
-          return;
-        }
-        
-        const iframe = document.createElement('iframe');
-        iframe.className = 'media-element';
-        iframe.src = lesson.driveLinks.preview;
-        iframe.title = lesson.title;
-        iframe.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture';
-        iframe.allowFullscreen = true;
-        iframe.frameBorder = '0';
-        iframe.sandbox = 'allow-same-origin allow-scripts allow-popups allow-forms';
-        
-        DOMElements.mediaContent.innerHTML = '';
-        DOMElements.mediaContent.appendChild(iframe);
-        this.currentMedia = iframe;
-        
-        // Attempt to enter fullscreen on mobile
-        setTimeout(() => {
-          this.requestFullscreen(iframe);
-        }, 1000);
-      },
-      
-      /**
-       * Load native video player
-       * @param {Object} lesson - Lesson object
-       */
-      loadVideoPlayer: function(lesson) {
-        const video = document.createElement('video');
-        video.className = 'media-element';
-        video.controls = true;
-        video.autoplay = true;
-        video.playsInline = true;
-        video.preload = 'auto';
-        video.title = lesson.title;
-        
-        // Create source element
-        const source = document.createElement('source');
-        source.src = lesson.url;
-        source.type = this.getVideoMimeType(lesson.url);
-        
-        video.appendChild(source);
-        
-        // Add error handling
-        video.addEventListener('error', () => {
-          UIRenderer.showToast('✗ فشل تحميل الفيديو', 'error');
-          DOMElements.mediaContent.innerHTML = `
-            <div class="error-message">
-              <p>تعذر تشغيل الفيديو. حاول تنزيل الملف وتشغيله محلياً.</p>
-              <a href="${lesson.url}" class="btn btn-primary" download>تنزيل الفيديو</a>
-            </div>
-          `;
-        });
-        
-        DOMElements.mediaContent.innerHTML = '';
-        DOMElements.mediaContent.appendChild(video);
-        this.currentMedia = video;
-        
-        // Attempt to play (may require user gesture)
-        setTimeout(() => {
-          video.play().catch(e => {
-            console.warn('Autoplay prevented:', e);
-          });
-        }, 500);
-      },
-      
-      /**
-       * Get video MIME type from URL
-       * @param {string} url - Video URL
-       * @returns {string} MIME type
-       */
-      getVideoMimeType: function(url) {
-        const extension = url.split('.').pop().toLowerCase();
-        const mimeTypes = {
-          'mp4': 'video/mp4',
-          'webm': 'video/webm',
-          'ogg': 'video/ogg',
-          'mov': 'video/quicktime',
-          'm4v': 'video/mp4',
-          'mkv': 'video/x-matroska',
-          'avi': 'video/x-msvideo'
-        };
-        return mimeTypes[extension] || 'video/mp4';
-      },
-      
-      /**
-       * Load PDF viewer
-       * @param {Object} lesson - Lesson object
-       */
-      loadPDFViewer: function(lesson) {
-        // Use Google Drive viewer for PDFs if available
-        if (lesson.driveLinks && lesson.driveLinks.view) {
-          const iframe = document.createElement('iframe');
-          iframe.className = 'media-element';
-          iframe.src = `https://drive.google.com/file/d/${lesson.driveLinks.id}/preview`;
-          iframe.title = lesson.title;
-          iframe.allow = 'autoplay; encrypted-media; fullscreen';
-          iframe.allowFullscreen = true;
-          iframe.frameBorder = '0';
-          
-          DOMElements.mediaContent.innerHTML = '';
-          DOMElements.mediaContent.appendChild(iframe);
-          this.currentMedia = iframe;
-        } else {
-          // Fallback to direct link
-          DOMElements.mediaContent.innerHTML = `
-            <div class="error-message">
-              <p>لا يمكن عرض ملف PDF مباشرة. يرجى تنزيل الملف لعرضه.</p>
-              <a href="${lesson.url}" class="btn btn-primary" target="_blank" rel="noopener">فتح في نافذة جديدة</a>
-            </div>
-          `;
-        }
-      },
-      
-      /**
-       * Load image viewer
-       * @param {Object} lesson - Lesson object
-       */
-      loadImageViewer: function(lesson) {
-        const img = document.createElement('img');
-        img.className = 'media-element';
-        img.src = lesson.url;
-        img.alt = lesson.title;
-        img.loading = 'lazy';
-        
-        img.addEventListener('error', () => {
-          UIRenderer.showToast('✗ فشل تحميل الصورة', 'error');
-          DOMElements.mediaContent.innerHTML = `
-            <div class="error-message">
-              <p>تعذر تحميل الصورة. حاول تحديث الصفحة أو التنزيل.</p>
-              <a href="${lesson.url}" class="btn btn-primary" download>تنزيل الصورة</a>
-            </div>
-          `;
-        });
-        
-        DOMElements.mediaContent.innerHTML = '';
-        DOMElements.mediaContent.appendChild(img);
-        this.currentMedia = img;
-      },
-      
-      /**
-       * Load generic content
-       * @param {Object} lesson - Lesson object
-       */
-      loadGenericContent: function(lesson) {
-        DOMElements.mediaContent.innerHTML = `
-          <div class="error-message">
-            <p>لا يمكن عرض هذا النوع من المحتوى مباشرة. يرجى تنزيل الملف لعرضه.</p>
-            <a href="${lesson.url}" class="btn btn-primary" target="_blank" rel="noopener">فتح في نافذة جديدة</a>
-            <a href="${lesson.url}" class="btn btn-download" download>تنزيل الملف</a>
-          </div>
-        `;
-      },
-      
-      /**
-       * Request fullscreen for an element
-       * @param {HTMLElement} element - Element to make fullscreen
-       */
-      requestFullscreen: function(element) {
-        if (!element) return;
-        
+
         try {
-          if (element.requestFullscreen) {
-            element.requestFullscreen();
-          } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-          } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-          } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-          }
+          await this.loadContent(lesson);
         } catch (error) {
-          console.warn('Fullscreen request failed:', error);
+          console.error('Player error:', error);
+          this.stage.innerHTML = `
+            <div class="player-modal__loading">
+              <p style="color: var(--color-danger);">
+                <i class="fas fa-exclamation-triangle"></i>
+                حدث خطأ في تحميل المحتوى
+              </p>
+            </div>
+          `;
+          UI.Toast.error('فشل تحميل المحتوى');
         }
       },
-      
+
       /**
-       * Close player modal
+       * Load content based on type
+       * @param {Object} lesson - Lesson object
        */
-      closePlayer: function() {
-        DOMElements.playerModal.classList.remove('open');
-        DOMElements.playerModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        
-        // Clear media content
-        DOMElements.mediaContent.innerHTML = `
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span>جاري التحميل...</span>
-          </div>
-        `;
-        
-        // Clean up current player
+      async loadContent(lesson) {
+        const contentType = Utils.getContentType(lesson.url);
+        const youtubeId = Utils.extractYoutubeId(lesson.url);
+        const driveUrls = Utils.getDriveUrls(lesson.url);
+
+        // YouTube content
+        if (youtubeId) {
+          this.externalBtn.href = `https://www.youtube.com/watch?v=${youtubeId}`;
+          this.externalBtn.style.display = 'inline-flex';
+
+          const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
+          this.stage.innerHTML = `<div id="plyr-player" data-plyr-provider="youtube" data-plyr-embed-id="${youtubeId}"></div>`;
+          
+          this.currentPlayer = new Plyr('#plyr-player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            youtube: {
+              noCookie: true,
+              rel: 0,
+              showinfo: 0,
+              iv_load_policy: 3,
+              modestbranding: 1,
+            },
+          });
+          return;
+        }
+
+        // Google Drive content
+        if (driveUrls) {
+          this.externalBtn.href = driveUrls.view;
+          this.externalBtn.style.display = 'inline-flex';
+
+          this.stage.innerHTML = `<iframe src="${driveUrls.preview}" allowfullscreen allow="autoplay"></iframe>`;
+          return;
+        }
+
+        // Direct video file
+        if (contentType === 'video') {
+          this.externalBtn.href = lesson.url;
+          this.externalBtn.style.display = 'inline-flex';
+
+          this.stage.innerHTML = `<video id="plyr-player" playsinline controls><source src="${lesson.url}"></video>`;
+          
+          this.currentPlayer = new Plyr('#plyr-player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
+          });
+          return;
+        }
+
+        // Fallback: iframe
+        this.externalBtn.href = lesson.url;
+        this.externalBtn.style.display = 'inline-flex';
+        this.stage.innerHTML = `<iframe src="${lesson.url}" allowfullscreen></iframe>`;
+      },
+
+      /**
+       * Close player
+       */
+      close() {
         if (this.currentPlayer) {
-          if (typeof this.currentPlayer.dispose === 'function') {
-            this.currentPlayer.dispose();
-          }
+          this.currentPlayer.destroy();
           this.currentPlayer = null;
         }
+
+        this.stage.innerHTML = '';
+        this.modal.classList.remove('is-active');
+        this.backdrop.classList.remove('is-active');
+        this.modal.setAttribute('aria-hidden', 'true');
+        this.externalBtn.style.display = 'none';
+        document.body.style.overflow = '';
+      },
+    };
+
+    // ============================================
+    // 🎮 APPLICATION CONTROLLER
+    // ============================================
+    const App = {
+      state: {
+        lessons: [],
+        filteredLessons: [],
+        filters: {
+          search: '',
+          category: 'all',
+          timeRange: 'all',
+        },
+      },
+
+      elements: {
+        contentGrid: document.getElementById('content-grid'),
+        searchInput: document.getElementById('search-input'),
+        categorySelect: document.getElementById('category-select'),
+        timeSelect: document.getElementById('time-select'),
+        refreshBtn: document.getElementById('refresh-btn'),
+      },
+
+      /**
+       * Initialize application
+       */
+      async init() {
+        console.log('🚀 Initializing application...');
         
-        if (this.currentMedia) {
-          if (this.currentMedia.tagName === 'VIDEO') {
-            this.currentMedia.pause();
-            this.currentMedia.src = '';
+        // Initialize player
+        PlayerManager.init();
+
+        // Setup event listeners
+        this.setupEventListeners();
+
+        // Initial data load
+        await this.loadData();
+
+        console.log('✅ Application initialized successfully');
+      },
+
+      /**
+       * Setup event listeners
+       */
+      setupEventListeners() {
+        // Search input (debounced)
+        this.elements.searchInput.addEventListener(
+          'input',
+          Utils.debounce((e) => {
+            this.state.filters.search = e.target.value;
+            this.applyFilters();
+          }, CONFIG.DEBOUNCE_DELAY)
+        );
+
+        // Category select
+        this.elements.categorySelect.addEventListener('change', (e) => {
+          this.state.filters.category = e.target.value;
+          this.applyFilters();
+        });
+
+        // Time range select
+        this.elements.timeSelect.addEventListener('change', (e) => {
+          this.state.filters.timeRange = e.target.value;
+          this.applyFilters();
+        });
+
+        // Refresh button
+        this.elements.refreshBtn.addEventListener('click', () => {
+          this.loadData(true);
+        });
+      },
+
+      /**
+       * Load data from API
+       * @param {boolean} forceRefresh - Force refresh cache
+       */
+      async loadData(forceRefresh = false) {
+        try {
+          UI.StatusBadge.loading('جاري التحميل...');
+          
+          // Show skeletons
+          this.elements.contentGrid.innerHTML = '';
+          UI.Skeleton.create(6).forEach((skeleton) => {
+            this.elements.contentGrid.appendChild(skeleton);
+          });
+
+          // Fetch data
+          this.state.lessons = await DataService.loadLessons(forceRefresh);
+
+          // Update category select
+          this.updateCategorySelect();
+
+          // Apply filters and render
+          this.applyFilters();
+
+          UI.StatusBadge.success(`✓ ${this.state.lessons.length} درس`);
+          
+          if (forceRefresh) {
+            UI.Toast.success('تم تحديث البيانات بنجاح');
           }
-          this.currentMedia = null;
+        } catch (error) {
+          console.error('Load data error:', error);
+          UI.StatusBadge.error('خطأ في التحميل');
+          UI.Toast.error('فشل تحميل البيانات. يرجى المحاولة مرة أخرى.');
+
+          this.elements.contentGrid.innerHTML = '';
+          this.elements.contentGrid.appendChild(
+            UI.EmptyState.create(
+              'فشل تحميل البيانات',
+              'حدث خطأ أثناء تحميل البيانات. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.',
+              'fa-exclamation-triangle'
+            )
+          );
         }
       },
-      
+
       /**
-       * Track play analytics
-       * @param {Object} lesson - Lesson object
+       * Update category select options
        */
-      trackPlay: function(lesson) {
-        // In a real application, this would send analytics data
-        console.log('Lesson played:', {
-          id: lesson.id,
-          title: lesson.title,
-          category: lesson.category,
-          timestamp: new Date().toISOString()
+      updateCategorySelect() {
+        const categories = DataService.getCategories(this.state.lessons);
+        
+        this.elements.categorySelect.innerHTML = '<option value="all">كل المواد</option>';
+        
+        categories.forEach((category) => {
+          const option = document.createElement('option');
+          option.value = category;
+          option.textContent = CATEGORY_CONFIG.TRANSLATIONS[category] || category;
+          this.elements.categorySelect.appendChild(option);
         });
-        
-        // Show subtle toast for feedback
-        setTimeout(() => {
-          UIRenderer.showToast(`▶ تشغيل: ${lesson.title.substring(0, 30)}${lesson.title.length > 30 ? '...' : ''}`, 'info');
-        }, 500);
-      }
-    };
-    
-    // ========================
-    // APPLICATION INITIALIZATION - Production Ready
-    // ========================
-    
-    /**
-     * Initialize the application
-     */
-    async function initializeApplication() {
-      try {
-        // Initialize UI first
-        UIRenderer.initializeUI();
-        
-        // Load lessons data
-        await DataManager.loadLessons();
-        
-        // Get unique categories and render
-        const categories = DataManager.getUniqueCategories();
-        UIRenderer.renderCategories(categories);
-        
-        // Apply initial filters
-        DataManager.filterLessons();
-        
-        // Show success toast
-        UIRenderer.showToast('✓ تم تحميل التطبيق بنجاح', 'success');
-        
-      } catch (error) {
-        console.error('Application initialization error:', error);
-        UIRenderer.showToast('✗ خطأ في تهيئة التطبيق', 'error');
-        
-        // Still attempt to render something usable
-        DataManager.filterLessons();
-      }
-    }
-    
-    // ========================
-    // ENTRY POINT - Enterprise Boot Sequence
-    // ========================
-    
-    // Check if DOM is already loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeApplication);
-    } else {
-      initializeApplication();
-    }
-    
-    // Handle page visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        // Refresh data if it's been a while
-        const now = Date.now();
-        if (now - AppState.cacheTimestamp > AppConfig.CACHE_DURATION / 2) {
-          DataManager.loadLessons();
+      },
+
+      /**
+       * Apply all filters and render
+       */
+      applyFilters() {
+        let filtered = [...this.state.lessons];
+
+        // Apply filters sequentially
+        filtered = FilterStrategies.search(filtered, this.state.filters.search);
+        filtered = FilterStrategies.category(filtered, this.state.filters.category);
+        filtered = FilterStrategies.timeRange(filtered, this.state.filters.timeRange);
+
+        this.state.filteredLessons = filtered;
+        this.render();
+      },
+
+      /**
+       * Render lessons to DOM
+       */
+      render() {
+        this.elements.contentGrid.innerHTML = '';
+
+        if (this.state.filteredLessons.length === 0) {
+          const emptyState = UI.EmptyState.create(
+            'لا توجد نتائج',
+            'لم يتم العثور على دروس تطابق معايير البحث. حاول تغيير الفلاتر.',
+            'fa-search'
+          );
+          this.elements.contentGrid.appendChild(emptyState);
+          return;
         }
-      }
-    });
-    
-    // Handle beforeunload for cleanup
-    window.addEventListener('beforeunload', () => {
-      PlayerManager.closePlayer();
-    });
-    
-    // Progressive enhancement for older browsers
-    if (!window.Promise) {
-      console.warn('Promise not supported. Application may not work correctly.');
+
+        this.state.filteredLessons.forEach((lesson) => {
+          const card = UI.VideoCard.create(lesson, (lesson) => {
+            PlayerManager.open(lesson);
+          });
+          this.elements.contentGrid.appendChild(card);
+        });
+      },
+    };
+
+    // ============================================
+    // 🎬 APPLICATION START
+    // ============================================
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => App.init());
+    } else {
+      App.init();
     }
-    
-    if (!window.fetch) {
-      console.warn('Fetch API not supported. Application may not work correctly.');
-    }
+
+    // Global error handler
+    window.addEventListener('error', (event) => {
+      console.error('Global error:', event.error);
+      UI.Toast.error('حدث خطأ غير متوقع');
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Unhandled rejection:', event.reason);
+      UI.Toast.error('حدث خطأ في معالجة البيانات');
+    });
   </script>
 </body>
 </html>
