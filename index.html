@@ -1,41 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b1220" />
-  <meta name="color-scheme" content="dark light" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="description" content="Interactive lessons library - Hayl Al-Khadhami" />
-  <title>مكتبة الدروس | Hayl Al-Khadhami</title>
+  <meta name="description" content="مكتبة الدروس" />
+  <title>مكتبة الدروس</title>
 
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/halkhadhami/halkhadhami.github.io/master/images/favicon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://vjs.zencdn.net/8.16.1/video-js.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" />
 
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#121b2f;
-      --muted:#9fb0d0;
-      --text:#eef3ff;
-      --line: rgba(255,255,255,.10);
-      --accent:#4ea1ff;
-      --danger:#ff5b6e;
-      --warning:#ffc107;
-      --ok:#3ddc97;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
-      --transition: all .25s cubic-bezier(.4,0,.2,1);
-      --vjs-primary: var(--accent);
+      --bg:#0b1220; --card:#121b2f; --muted:#9fb0d0; --text:#eef3ff;
+      --line:rgba(255,255,255,0.10); --accent:#4ea1ff; --danger:#ff5b6e;
+      --warning:#ffc107; --ok:#3ddc97; --shadow:0 10px 30px rgba(0,0,0,0.35);
+      --radius:16px; --transition:all .25s cubic-bezier(.4,0,.2,1);
+      --plyr-color-main: var(--accent);
     }
-    html, body { height: 100%; margin: 0; }
+    [data-theme="light"]{
+      --bg:#f8fafc; --card:#ffffff; --muted:#64748b; --text:#0f172a;
+      --line:rgba(0,0,0,0.10); --accent:#3b82f6; --danger:#ef4444;
+      --warning:#f59e0b; --ok:#10b981; --shadow:0 10px 30px rgba(0,0,0,0.10);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0}
     body{
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background:
-        radial-gradient(1200px 600px at 70% 10%, rgba(78,161,255,.20), transparent),
-        radial-gradient(900px 500px at 10% 30%, rgba(180,110,255,.14), transparent),
+        radial-gradient(1200px 600px at 70% 10%, rgba(78,161,255,0.20), transparent),
+        radial-gradient(900px 500px at 10% 30%, rgba(180,110,255,0.14), transparent),
         var(--bg);
       color: var(--text);
       overflow-x: hidden;
@@ -43,166 +41,250 @@
       touch-action: manipulation;
     }
 
-    [data-theme="light"]{
-      --bg:#f8fafc;
-      --card:#ffffff;
-      --muted:#64748b;
-      --text:#0f172a;
-      --line: rgba(0,0,0,.10);
-      --accent:#3b82f6;
-      --danger:#ef4444;
-      --warning:#f59e0b;
-      --ok:#10b981;
-      --shadow: 0 10px 30px rgba(0,0,0,.10);
-    }
-
-    .safe-top{ padding-top: env(safe-area-inset-top); }
-    .safe-bottom{ padding-bottom: env(safe-area-inset-bottom); }
+    .safe-top{padding-top: env(safe-area-inset-top)}
+    .safe-bottom{padding-bottom: env(safe-area-inset-bottom)}
 
     .topbar{
       position: sticky; top:0; z-index: 50;
       border-bottom: 1px solid var(--line);
-      background: rgba(11,18,32,.92);
+      background: rgba(11,18,32,0.92);
       backdrop-filter: blur(10px);
       transition: var(--transition);
     }
-    [data-theme="light"] .topbar{
-      background: rgba(248,250,252,.92);
-    }
+    [data-theme="light"] .topbar{ background: rgba(248,250,252,0.92); }
 
     .brand{
-      display:flex; align-items:flex-start; justify-content: space-between;
-      gap: 12px; padding: 14px 14px;
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap: 12px; padding: 14px 16px;
     }
     .brand .title{
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: -0.2px;
+      font-size: 18px; font-weight: 900; letter-spacing:-0.2px;
       background: linear-gradient(90deg, var(--accent), #9c6dff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
     }
     .brand .subtitle{
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
+      margin-top: 6px; font-size: 12px; color: var(--muted); line-height: 1.4;
     }
-    .brand .right{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; justify-content:flex-end; }
+    .brand .right{
+      display:flex; align-items:center; gap: 10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+
     .pill{
       display:inline-flex; align-items:center; gap: 8px;
       padding: 8px 12px; border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.06);
       font-size: 12px; color: var(--muted);
-      white-space: nowrap;
-      transition: var(--transition);
-      user-select: none;
+      white-space: nowrap; transition: var(--transition); user-select:none;
+      cursor: pointer;
     }
-    [data-theme="light"] .pill{ background: rgba(0,0,0,.06); }
+    [data-theme="light"] .pill{ background: rgba(0,0,0,0.06); }
     .pill strong{ color: var(--text); font-weight: 900; }
-    .pill:hover{ transform: translateY(-1px); box-shadow: 0 4px 12px rgba(78,161,255,.18); }
+    .pill:hover{ transform: translateY(-1px); box-shadow: 0 4px 12px rgba(78,161,255,0.18); }
+
     .iconBtn{
-      width: 40px; height: 40px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      width: 40px; height: 40px; border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.06);
       display:grid; place-items:center;
-      cursor:pointer;
-      transition: var(--transition);
+      cursor:pointer; transition: var(--transition);
       color: var(--text);
     }
-    [data-theme="light"] .iconBtn{ background: rgba(0,0,0,.06); }
+    [data-theme="light"] .iconBtn{ background: rgba(0,0,0,0.06); }
     .iconBtn:hover{ transform: rotate(8deg); }
 
-    .container{
-      max-width: 1120px;
-      margin: 14px auto 24px;
-      padding: 0 12px;
-    }
+    .container{ max-width: 1400px; margin: 14px auto 24px; padding: 0 16px; }
+
     .card{
-      background: rgba(18,27,47,.92);
-      border: 1px solid var(--line);
+      background: rgba(18,27,47,0.92);
+      border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       transition: var(--transition);
       overflow: hidden;
     }
-    [data-theme="light"] .card{ background: rgba(255,255,255,.92); }
+    [data-theme="light"] .card{ background: rgba(255,255,255,0.92); }
 
     .filters{
       display:grid;
-      grid-template-columns: 1fr 190px 190px auto;
+      grid-template-columns: 1fr 160px 160px 160px 160px 140px auto;
       gap: 12px;
       padding: 14px;
-      align-items: end;
+      align-items:end;
     }
+    @media (max-width: 1024px){ .filters{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px){ .filters{ grid-template-columns: 1fr; } }
+
     .field label{
-      display:block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      font-weight: 800;
+      display:block; font-size: 12px; color: var(--muted);
+      margin-bottom: 6px; font-weight: 800;
     }
     .field input, .field select{
-      width: 100%;
-      padding: 12px 12px;
+      width:100%; padding: 12px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.10);
+      background: rgba(255,255,255,0.10);
       color: var(--text);
-      outline: none;
+      outline:none;
       font-size: 14px;
       transition: var(--transition);
+      font-family: inherit;
     }
-    [data-theme="light"] .field input,
-    [data-theme="light"] .field select{
-      background: rgba(0,0,0,.05);
-    }
+    [data-theme="light"] .field input, [data-theme="light"] .field select{ background: rgba(0,0,0,0.05); }
     .field input:focus, .field select:focus{
-      border-color: rgba(78,161,255,.6);
-      box-shadow: 0 0 0 3px rgba(78,161,255,.14);
+      border-color: rgba(78,161,255,0.6);
+      box-shadow: 0 0 0 3px rgba(78,161,255,0.14);
     }
-    .field select option{
-      background: var(--card);
-      color: var(--text);
-    }
+    .field select option{ background: var(--card); color: var(--text); }
 
     .meta{
-      display:flex; align-items:center; justify-content:flex-end;
-      gap: 10px; white-space: nowrap;
+      display:flex; align-items:center; justify-content:flex-end; gap: 10px;
+      white-space:nowrap;
     }
+    @media (max-width: 1024px){ .meta{ justify-content:space-between; grid-column: span 2; } }
+    @media (max-width: 640px){ .meta{ grid-column: span 1; } }
+
     .status{
-      color: var(--muted);
-      font-size: 12px;
-      max-width: 44vw;
-      overflow:hidden; text-overflow: ellipsis;
+      color: var(--muted); font-size: 12px;
+      max-width: 44vw; overflow:hidden; text-overflow:ellipsis;
       display:flex; align-items:center; gap: 8px;
     }
+    @media (max-width: 820px){ .status{ max-width: 55vw; } }
     .status.error{ color: var(--danger); }
     .status.warn{ color: var(--warning); }
     .status.ok{ color: var(--ok); }
+
     .btn{
       padding: 11px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(78,161,255,.35);
-      background: rgba(78,161,255,.18);
+      border: 1px solid rgba(78,161,255,0.35);
+      background: rgba(78,161,255,0.18);
       color: var(--text);
       cursor:pointer;
       font-size: 13px;
       font-weight: 900;
       transition: var(--transition);
       display:inline-flex; align-items:center; gap: 8px;
-      user-select: none;
+      user-select:none;
     }
     [data-theme="light"] .btn{
-      background: rgba(59,130,246,.15);
-      border-color: rgba(59,130,246,.30);
+      background: rgba(59,130,246,0.15);
+      border-color: rgba(59,130,246,0.30);
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(78,161,255,.26); }
+    .btn:hover{ transform: translateY(-1px); background: rgba(78,161,255,0.26); }
     .btn:active{ transform: translateY(1px); }
+    .btn:disabled{ opacity: .6; cursor: not-allowed; transform:none; }
 
+    /* ===== Layout: sidebar LEFT + content RIGHT (even in RTL) ===== */
+    .main-layout{
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      align-items: start;
+
+      /* Force columns placement left-to-right so sidebar becomes LEFT */
+      direction: ltr;
+    }
+    .sidebar, .main-content{ direction: rtl; }
+    @media (max-width: 1024px){
+      .main-layout{ grid-template-columns: 1fr; direction: rtl; }
+    }
+
+    .sidebar{
+      position: sticky;
+      top: 80px;
+    }
+    @media (max-width: 1024px){
+      .sidebar{ position: relative; top: 0; }
+    }
+
+    .recent-header{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .recent-header h3{
+      margin: 0;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .recent-header i{ color: var(--accent); }
+
+    .recent-list{ padding: 12px; }
+
+    .recent-item{
+      display: flex;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .recent-item:hover{
+      background: rgba(255,255,255,0.05);
+      border-color: var(--line);
+      transform: translateX(-2px);
+    }
+    [data-theme="light"] .recent-item:hover{ background: rgba(0,0,0,0.03); }
+
+    .recent-thumb{
+      width: 84px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .recent-info{ flex: 1; min-width: 0; }
+    .recent-title{
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin: 0 0 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .recent-meta{
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .recent-badge{
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      font-size: 10px;
+    }
+    [data-theme="light"] .recent-badge{ background: rgba(0,0,0,0.05); }
+
+    .recent-empty{
+      padding: 22px 14px;
+      text-align: center;
+    }
+    .recent-empty i{
+      font-size: 32px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .recent-empty-text{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Cards grid */
     .grid{
       margin-top: 14px;
       display:grid;
@@ -213,27 +295,52 @@
     @media (min-width: 720px){ .item{ grid-column: span 6; } }
     @media (min-width: 1020px){ .item{ grid-column: span 4; } }
 
-    .item .head{ padding: 16px 16px 12px; border-bottom: 1px solid var(--line); }
-    .item .item-title{
-      font-size: 16px; font-weight: 900;
-      margin:0 0 8px; line-height: 1.35;
-      display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden;
+    .item .head{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line);
     }
-    .item .sub{
-      font-size: 12px; color: var(--muted);
-      display:flex; gap: 10px; flex-wrap: wrap; align-items:center;
+    .item-title{
+      font-size: 16px;
+      font-weight: 900;
+      margin: 0 0 8px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
+    .sub{
+      font-size: 12px;
+      color: var(--muted);
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+
     .badge{
-      display:inline-flex; padding: 4px 10px;
+      display:inline-flex;
+      padding: 4px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,0.06);
       line-height: 1.2;
       font-size: 11px;
       transition: var(--transition);
+      align-items:center;
+      gap: 6px;
     }
-    [data-theme="light"] .badge{ background: rgba(0,0,0,.05); }
-    .badge.offline{ border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.12); color: #c8ffe9; }
+    [data-theme="light"] .badge{ background: rgba(0,0,0,0.05); }
+    .badge.offline{
+      border-color: rgba(61,220,151,0.35);
+      background: rgba(61,220,151,0.12);
+      color: #c8ffe9;
+    }
+    [data-theme="light"] .badge.offline{
+      background: rgba(16,185,129,0.10);
+      border-color: rgba(16,185,129,0.30);
+      color: #059669;
+    }
 
     .viewer{
       position: relative;
@@ -243,185 +350,209 @@
       background: #000;
       overflow: hidden;
       cursor: pointer;
-      user-select: none;
+      user-select:none;
       transition: var(--transition);
+      border-radius: var(--radius) var(--radius) 0 0;
     }
     .viewer img{
-      position:absolute; inset:0; width:100%; height:100%;
-      object-fit: cover; display:block; border:0;
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      border:0;
       filter: saturate(1.05);
       transform: scale(1.01);
       transition: var(--transition);
     }
-    .viewer:hover img{
-      transform: scale(1.03);
-      filter: brightness(1.05) saturate(1.1);
-    }
-    .viewer .overlay{
+    .viewer:hover img{ transform: scale(1.03); filter: brightness(1.05) saturate(1.1); }
+
+    .overlay{
       position:absolute; inset:0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.12), rgba(0,0,0,.62));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.12), rgba(0,0,0,0.62));
       display:flex; align-items:center; justify-content:center;
-      opacity: 0;
-      transition: var(--transition);
+      opacity:0; transition: var(--transition);
     }
-    .viewer:hover .overlay{ opacity: 1; }
-    .viewer .play{
+    .viewer:hover .overlay{ opacity:1; }
+    .play{
       width: 62px; height: 62px;
       border-radius: 999px;
-      border: 2px solid rgba(255,255,255,.88);
-      background: rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,0.88);
+      background: rgba(0,0,0,0.35);
       display:grid; place-items:center;
-      box-shadow: 0 12px 30px rgba(0,0,0,.55);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.55);
       transition: var(--transition);
     }
     .viewer:hover .play{ transform: scale(1.08); border-color: rgba(255,255,255,1); }
-    .viewer .play:before{
+    .play::before{
       content:"";
       width:0; height:0;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;
-      border-left: 18px solid rgba(255,255,255,.96);
+      border-left: 18px solid rgba(255,255,255,0.96);
       margin-left: 4px;
       display:block;
     }
 
     .actions{
       padding: 12px 16px 16px;
-      display:flex;
-      gap: 12px;
+      display:flex; gap: 12px;
       flex-wrap: wrap;
       margin-top: auto;
       border-top: 1px solid var(--line);
-      background: rgba(0,0,0,.14);
+      background: rgba(0,0,0,0.14);
     }
-    [data-theme="light"] .actions{ background: rgba(0,0,0,.03); }
+    [data-theme="light"] .actions{ background: rgba(0,0,0,0.03); }
     .actions button, .actions a{
-      flex: 1 1 140px;
+      flex: 1 1 120px;
       padding: 12px 14px;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
       text-decoration:none;
       cursor:pointer;
       font-size: 13px;
       font-weight: 900;
       font-family: inherit;
-      text-align:center;
+      text-align: center;
       white-space: nowrap;
       transition: var(--transition);
       display:flex; align-items:center; justify-content:center; gap: 8px;
-      user-select: none;
+      user-select:none;
     }
-    [data-theme="light"] .actions button,
-    [data-theme="light"] .actions a{
-      background: rgba(0,0,0,.04);
-    }
+    [data-theme="light"] .actions button, [data-theme="light"] .actions a{ background: rgba(0,0,0,0.04); }
     .actions button:hover, .actions a:hover{
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,.18);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.18);
     }
     .actions .primary{
-      background: rgba(78,161,255,.18);
-      border-color: rgba(78,161,255,.35);
+      background: rgba(78,161,255,0.18);
+      border-color: rgba(78,161,255,0.35);
     }
     .actions .download{
-      background: rgba(61,220,151,.12);
-      border-color: rgba(61,220,151,.33);
+      background: rgba(61,220,151,0.12);
+      border-color: rgba(61,220,151,0.33);
       color: #c8ffe9;
     }
     [data-theme="light"] .actions .download{
-      background: rgba(16,185,129,.10);
-      border-color: rgba(16,185,129,.30);
+      background: rgba(16,185,129,0.10);
+      border-color: rgba(16,185,129,0.30);
       color: #059669;
     }
     .actions .offline{
-      background: rgba(255,193,7,.10);
-      border-color: rgba(255,193,7,.25);
+      background: rgba(255,193,7,0.10);
+      border-color: rgba(255,193,7,0.25);
       color: #ffe9a8;
     }
     [data-theme="light"] .actions .offline{ color: #7c5b00; }
     .actions .danger{
-      background: rgba(255,91,110,.12);
-      border-color: rgba(255,91,110,.25);
+      background: rgba(255,91,110,0.12);
+      border-color: rgba(255,91,110,0.25);
       color: #ffcdd2;
     }
 
+    /* Player modal */
     #playerModal{
-      position: fixed; inset: 0;
-      z-index: 9999;
-      display: none;
-      background: rgba(0,0,0,.95);
+      position: fixed; inset: 0; z-index: 9999;
+      display:none;
+      background: rgba(0,0,0,0.95);
       backdrop-filter: blur(10px);
       opacity: 0;
       transition: opacity .25s ease;
     }
     #playerModal.open{ display:flex; opacity: 1; }
+
     #playerShell{
       position: relative;
       width: 100%;
       height: 100%;
-      display:flex;
-      flex-direction: column;
+      display:flex; flex-direction: column;
     }
+
     #playerBar{
       flex: 0 0 auto;
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 14px 14px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      background: rgba(11,18,32,.95);
+      display:flex; align-items:center; gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      background: rgba(11,18,32,0.95);
       backdrop-filter: blur(12px);
       z-index: 10;
     }
     [data-theme="light"] #playerBar{
-      background: rgba(248,250,252,.95);
-      border-bottom: 1px solid rgba(0,0,0,.10);
+      background: rgba(248,250,252,0.95);
+      border-bottom: 1px solid rgba(0,0,0,0.10);
     }
+
     #playerTitle{
-      flex: 1; min-width: 0;
-      font-size: 14px; font-weight: 900;
-      overflow:hidden; text-overflow: ellipsis; white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 900;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .barBtn, .barLink{
+
+    .barBtn,.barLink{
       padding: 10px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
       text-decoration:none;
       font-size: 13px;
       font-weight: 900;
-      cursor: pointer;
+      cursor:pointer;
       transition: var(--transition);
       display:inline-flex; align-items:center; gap: 8px;
-      user-select: none;
+      user-select:none;
     }
-    [data-theme="light"] .barBtn,
-    [data-theme="light"] .barLink{
-      background: rgba(0,0,0,.05);
-      border-color: rgba(0,0,0,.10);
+    [data-theme="light"] .barBtn,[data-theme="light"] .barLink{
+      background: rgba(0,0,0,0.05);
+      border-color: rgba(0,0,0,0.10);
     }
-    .barBtn:hover, .barLink:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); }
-    [data-theme="light"] .barBtn:hover,
-    [data-theme="light"] .barLink:hover{ background: rgba(0,0,0,.10); }
-    .barBtn:active, .barLink:active{ transform: translateY(1px); }
+    .barBtn:hover, .barLink:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.12);
+    }
+    [data-theme="light"] .barBtn:hover, [data-theme="light"] .barLink:hover{
+      background: rgba(0,0,0,0.10);
+    }
 
     #playerStage{
       flex: 1 1 auto;
       min-height: 0;
-      background: #000;
+      width: 100%;
       position: relative;
-      display:flex; align-items:center; justify-content:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
     }
+
+    .player-aspect{
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #000;
+    }
+    .player-aspect.sq{ padding-bottom: 100%; }
+    .player-aspect.v{ padding-bottom: 133.33%; }
+
+    .player-container{ position:absolute; inset:0; width:100%; height:100%; }
+    .plyr{ width:100%; height:100%; border-radius: var(--radius) !important; }
 
     .player-loading{
       position:absolute; inset:0;
-      display:flex; flex-direction:column;
+      display:flex; flex-direction: column;
       align-items:center; justify-content:center;
       gap: 12px;
-      background: rgba(0,0,0,.55);
+      background: rgba(0,0,0,0.55);
       backdrop-filter: blur(2px);
       z-index: 2;
     }
@@ -429,74 +560,77 @@
     .spinner{
       width: 44px; height: 44px;
       border-radius: 999px;
-      border: 4px solid rgba(255,255,255,.12);
+      border: 4px solid rgba(255,255,255,0.12);
       border-top-color: var(--accent);
       animation: spin 1s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
 
     #playerModal.pseudo-fullscreen #playerBar{
       position:absolute;
       top: env(safe-area-inset-top);
-      left: 0; right: 0;
+      left:0; right:0;
       border-bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.20));
     }
-    #playerModal.pseudo-fullscreen #playerStage{
-      position:absolute;
-      inset: 0;
+    #playerModal.pseudo-fullscreen #playerStage{ position:absolute; inset:0; padding:0; }
+    #playerModal.pseudo-fullscreen .player-aspect{
+      max-width: 100%;
+      border-radius: 0 !important;
+      padding-bottom: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px);
     }
-    .video-js{ width: 100%; height: 100%; }
-    .vjs-control-bar{
-      padding-bottom: env(safe-area-inset-bottom);
-      background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.08));
-    }
-    .vjs-volume-panel{ display:none; }
-    .vjs-remaining-time{ display:none; }
+    #playerModal.pseudo-fullscreen .plyr{ border-radius: 0 !important; }
 
+    @media (max-width: 480px){
+      .player-aspect{ padding-bottom: 70%; }
+      #playerBar{ flex-wrap: wrap; gap: 8px; }
+      #playerTitle{ font-size: 12px; }
+      .barBtn, .barLink{ font-size: 12px; padding: 8px 12px; }
+    }
+
+    /* Offline panel */
     #offlinePanel{
       position: fixed;
       inset: auto 0 0 0;
       transform: translateY(110%);
       transition: transform .25s ease;
       z-index: 9998;
-      background: rgba(18,27,47,.97);
+      background: rgba(18,27,47,0.97);
       border-top: 1px solid var(--line);
-      box-shadow: 0 -12px 40px rgba(0,0,0,.45);
+      box-shadow: 0 -12px 40px rgba(0,0,0,0.45);
       padding-bottom: env(safe-area-inset-bottom);
       max-height: 78vh;
       overflow:auto;
     }
-    [data-theme="light"] #offlinePanel{ background: rgba(255,255,255,.97); }
+    [data-theme="light"] #offlinePanel{ background: rgba(255,255,255,0.97); }
     #offlinePanel.open{ transform: translateY(0); }
     #offlinePanel .panelHeader{
-      padding: 14px 14px;
-      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+      padding: 14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
       border-bottom: 1px solid var(--line);
       position: sticky; top: 0;
       background: inherit;
       backdrop-filter: blur(12px);
       z-index: 2;
     }
-    #offlinePanel .panelHeader h3{
-      margin:0; font-size: 14px; font-weight: 900;
-    }
-    #offlinePanel .panelBody{ padding: 14px; }
+    #offlinePanel .panelHeader h3{ margin:0; font-size: 14px; font-weight: 900; display:flex; gap:8px; align-items:center; }
+    #offlinePanel .panelBody{ padding: 14px 16px; }
     .panelRow{
-      display:flex; gap: 12px; align-items:center; justify-content: space-between;
+      display:flex; gap: 12px;
+      align-items:center; justify-content:space-between;
       padding: 12px;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,0.05);
       margin-bottom: 10px;
     }
-    [data-theme="light"] .panelRow{ background: rgba(0,0,0,.04); }
+    [data-theme="light"] .panelRow{ background: rgba(0,0,0,0.04); }
     .panelRow .metaTxt{ color: var(--muted); font-size: 12px; margin-top: 6px; }
     .miniBtn{
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
       cursor:pointer;
       font-weight: 900;
@@ -504,101 +638,137 @@
       transition: var(--transition);
       white-space: nowrap;
     }
+    [data-theme="light"] .miniBtn{ background: rgba(0,0,0,0.05); }
 
+    /* Footer */
     .footer{
       margin-top: 24px;
       border-top: 1px solid var(--line);
-      background: rgba(0,0,0,.18);
+      background: rgba(0,0,0,0.18);
       color: var(--muted);
       transition: var(--transition);
     }
-    [data-theme="light"] .footer{ background: rgba(0,0,0,.03); border-top: 1px solid rgba(0,0,0,.08); }
-    .footer .container{ max-width: 1100px; margin: 0 auto; padding: 28px 12px; }
+    [data-theme="light"] .footer{
+      background: rgba(0,0,0,0.03);
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .footer .container{ max-width: 1100px; margin: 0 auto; padding: 28px 16px; }
     .footer-content{
-      display:flex;
-      gap: 24px;
-      align-items: center;
-      justify-content: space-between;
+      display:flex; gap: 24px;
+      align-items:center; justify-content:space-between;
       flex-wrap: wrap;
     }
     .footer-logo h3{
-      margin:0;
-      color: var(--text);
-      font-size: 18px;
-      font-weight: 900;
+      margin: 0; color: var(--text);
+      font-size: 18px; font-weight: 900;
       background: linear-gradient(90deg, var(--accent), #9c6dff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
     }
-    .footer-logo p{
-      margin: 8px 0 0;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .footer-logo p{ margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
     .footer-social{ display:flex; gap: 14px; align-items:center; }
     .footer-social a{
       width: 48px; height: 48px;
       display:grid; place-items:center;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
       text-decoration:none;
       transition: var(--transition);
       font-size: 18px;
+	  
     }
-    [data-theme="light"] .footer-social a{ background: rgba(0,0,0,.05); }
+    [data-theme="light"] .footer-social a{ background: rgba(0,0,0,0.05); }
     .footer-social a:hover{
       transform: translateY(-3px);
-      background: rgba(78,161,255,.2);
-      border-color: rgba(78,161,255,.4);
+      background: rgba(78,161,255,0.2);
+      border-color: rgba(78,161,255,0.4);
     }
     .footer-bottom{
       margin-top: 20px;
       padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,.08);
+      border-top: 1px solid rgba(255,255,255,0.08);
       font-size: 13px;
       text-align:center;
       line-height: 1.6;
     }
-    [data-theme="light"] .footer-bottom{ border-top: 1px solid rgba(0,0,0,.08); }
+    [data-theme="light"] .footer-bottom{ border-top: 1px solid rgba(0,0,0,0.08); }
 
+	/* Center footer content */
+	.footer-content{
+	  justify-content: center !important;  /* override space-between */
+	  align-items: center;
+	  text-align: center;
+	  gap: 12px;
+	}
+
+	/* Center the social icons row */
+	.footer-social{
+	  justify-content: center;
+	}
+
+	/* Ensure text is centered in the logo block */
+	.footer-logo,
+	.footer-logo p{
+	  text-align: center;
+	}
+
+
+    /* Toast */
     #toast{
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(120px);
       opacity: 0;
-      background: rgba(30,41,59,.95);
+      background: rgba(30,41,59,0.95);
       color: var(--text);
       padding: 14px 18px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       z-index: 10000;
-      display:flex; align-items:center; gap: 10px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
       transition: transform .25s ease, opacity .25s ease;
       max-width: 92vw;
-      text-align: center;
+      text-align:center;
       font-weight: 800;
+      pointer-events: none;
     }
-    [data-theme="light"] #toast{ background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.1); }
+    [data-theme="light"] #toast{
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(0,0,0,0.1);
+    }
     #toast.show{ transform: translateX(-50%) translateY(0); opacity: 1; }
-    #toast.success{ border-color: rgba(61,220,151,.4); }
-    #toast.error{ border-color: rgba(255,91,110,.4); }
-    #toast.warning{ border-color: rgba(255,193,7,.4); }
+    #toast.success{ border-color: rgba(61,220,151,0.4); }
+    #toast.error{ border-color: rgba(255,91,110,0.4); }
+    #toast.warning{ border-color: rgba(255,193,7,0.4); }
 
-    @media (max-width: 820px){
-      .filters{ grid-template-columns: 1fr; }
-      .meta{ justify-content: space-between; }
-      .actions button, .actions a{ flex: 1 1 100%; }
-      .status{ max-width: 55vw; }
+    /* Plyr theme tweaks */
+    .plyr__controls{
+      background: rgba(0,0,0,0.7) !important;
+      backdrop-filter: blur(8px) !important;
     }
-
-    @media (prefers-reduced-motion: reduce){
-      *{ transition: none !important; animation: none !important; }
+    .plyr__control{ color: var(--text) !important; }
+    .plyr--video .plyr__control.plyr__tab-focus,
+    .plyr--video .plyr__control:hover,
+    .plyr--video .plyr__control[aria-expanded="true"]{
+      background: rgba(255,255,255,0.15) !important;
+    }
+    .plyr__progress__buffer{ color: rgba(255,255,255,0.2) !important; }
+    .plyr__menu__container{
+      background: var(--card) !important;
+      border: 1px solid var(--line) !important;
+      border-radius: 12px !important;
+      box-shadow: var(--shadow) !important;
+    }
+    .plyr__menu__container .plyr__control{ color: var(--text) !important; }
+    .plyr__menu__container .plyr__control:hover,
+    .plyr__menu__container .plyr__control[aria-selected="true"]{
+      background: rgba(78,161,255,0.15) !important;
+      color: var(--accent) !important;
     }
   </style>
 </head>
@@ -609,22 +779,23 @@
   <header class="topbar">
     <div class="brand">
       <div class="left">
-        <div class="title">🎬 مكتبة الدروس</div>
-        <div class="subtitle">عربي • فن • صيني • إنجليزي • ترفيه • إسلاميات • قرآن • رياضيات • أخرى</div>
+        <div class="title">مكتبة الدروس</div>
+        <div class="subtitle">مكتبة تعليمية تفاعلية للأطفال - دروس فيديو ومواد تعليمية</div>
       </div>
 
       <div class="right">
-        <button class="iconBtn" id="themeToggle" title="تبديل المظهر" type="button" aria-label="Theme">
+        <button class="iconBtn" id="themeToggle" title="تغيير المظهر" type="button" aria-label="Theme">
           <i class="fas fa-moon"></i>
         </button>
 
-        <div class="pill" title="عدد الدروس">
+        <div class="pill" title="عدد الدروس" style="cursor: default;">
           <i class="fas fa-list"></i>
+          <span>المعروض</span>
           <strong id="countPill">0</strong>
         </div>
 
-        <button class="pill" id="btnOfflinePanel" type="button" title="إدارة الأوفلاين">
-          <i class="fas fa-box-archive"></i>
+        <button class="pill" id="btnOfflinePanel" type="button" title="مدير الأوفلاين">
+          <i class="fas fa-box"></i>
           <span>Offline</span>
           <strong id="offlineCountPill">0</strong>
         </button>
@@ -636,12 +807,14 @@
     <section class="filters card" aria-label="Filters">
       <div class="field">
         <label for="q">بحث</label>
-        <input id="q" type="search" placeholder="ابحث بالعنوان..." autocomplete="off" />
+        <input id="q" type="search" placeholder="ابحث عن درس..." autocomplete="off" />
       </div>
 
       <div class="field">
         <label for="category">المادة</label>
-        <select id="category"></select>
+        <select id="category">
+          <option value="all">كل المواد</option>
+        </select>
       </div>
 
       <div class="field">
@@ -656,894 +829,1053 @@
         </select>
       </div>
 
+      <div class="field">
+        <label for="fileType">نوع الملف</label>
+        <select id="fileType">
+          <option value="all">كل الأنواع</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="classLevel">الصف</label>
+        <select id="classLevel">
+          <option value="all">كل الصفوف</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="sort">الترتيب</label>
+        <select id="sort">
+          <option value="date-desc">الأحدث أولاً</option>
+          <option value="date-asc">الأقدم أولاً</option>
+          <option value="title-asc">العنوان (أ-ي)</option>
+          <option value="title-desc">العنوان (ي-أ)</option>
+        </select>
+      </div>
+
       <div class="meta">
-        <div id="status" class="status ok"><i class="fas fa-check-circle"></i> جاهز</div>
-        <button id="reload" class="btn" type="button"><i class="fas fa-sync-alt"></i> تحديث</button>
+        <div id="status" class="status ok">
+          <i class="fas fa-check-circle"></i>
+          <span>جاهز</span>
+        </div>
+        <button id="reload" class="btn" type="button">
+          <i class="fas fa-sync-alt"></i>
+          تحديث
+        </button>
       </div>
     </section>
 
-    <section id="list" class="grid" aria-label="Lessons"></section>
+    <div class="main-layout">
+      <aside class="sidebar">
+        <div class="card">
+          <div class="recent-header">
+            <i class="fas fa-clock"></i>
+            <h3>آخر المشاهدات</h3>
+          </div>
+          <div id="recentList" class="recent-list"></div>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <section id="list" class="grid" aria-label="Lessons"></section>
+      </div>
+    </div>
   </main>
 
+  <!-- Player Modal -->
   <div id="playerModal" aria-hidden="true">
     <div id="playerShell" class="safe-bottom">
       <div id="playerBar" class="safe-top">
-        <button id="btnClose" class="barBtn" type="button"><i class="fas fa-times"></i> إغلاق</button>
+        <button id="btnClose" class="barBtn" type="button">
+          <i class="fas fa-times"></i>
+          إغلاق
+        </button>
+
         <div id="playerTitle"></div>
-        <a id="btnExternal" class="barLink" href="#" target="_blank" rel="noopener" style="display:none"><i class="fas fa-external-link-alt"></i> فتح خارجي</a>
-        <button id="btnPseudoFs" class="barBtn" type="button" title="Fullscreen"><i class="fas fa-expand-alt"></i></button>
+
+        <a id="btnExternal" class="barLink" href="#" target="_blank" rel="noopener" style="display:none">
+          <i class="fas fa-external-link-alt"></i>
+          فتح خارجي
+        </a>
+
+        <button id="btnPseudoFs" class="barBtn" type="button" title="ملء الشاشة">
+          <i class="fas fa-expand-alt"></i>
+        </button>
       </div>
-      <div id="playerStage"></div>
+
+      <div id="playerStage">
+        <div class="player-loading">
+          <div class="spinner"></div>
+          <div style="color:var(--muted); font-weight: 900;">جاري التحميل...</div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- Offline Panel -->
   <section id="offlinePanel" aria-hidden="true">
     <div class="panelHeader">
-      <h3><i class="fas fa-box-archive"></i> Offline Manager</h3>
+      <h3><i class="fas fa-box"></i> مدير الأوفلاين</h3>
       <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-        <button id="btnChooseFolder" class="miniBtn" type="button" title="اختيار مجلد (تجريبي)">
-          <i class="fas fa-folder-open"></i> Device Folder (Exp)
-        </button>
         <button id="btnCloseOfflinePanel" class="miniBtn" type="button">
-          <i class="fas fa-chevron-down"></i> إغلاق
+          <i class="fas fa-chevron-down"></i>
+          إغلاق
         </button>
       </div>
     </div>
     <div class="panelBody">
       <div class="badge" style="margin-bottom:10px;">
-        <i class="fas fa-circle-info"></i>
-        التخزين الافتراضي: OPFS (خاص بالموقع). التصدير لمجلد جهازك: تجريبي.
+        <i class="fas fa-info-circle"></i>
+        يتم حفظ الملفات محلياً في IndexedDB
       </div>
       <div id="offlineList"></div>
     </div>
   </section>
 
-  <div id="toast" role="status" aria-live="polite">
+  <!-- Toast -->
+  <section id="toast" role="status" aria-live="polite">
     <i class="fas fa-info-circle"></i>
     <span id="toastMessage"></span>
-  </div>
+  </section>
 
   <footer class="footer">
-
-
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h3>Hayl Khadhami</h3>
+          <p>Automation Engineer | Researcher | Educator</p>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/haylkhadhami" title="facebook" aria-label="facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://wa.me/+8615229032051" title="WhatsApp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
       <div class="footer-bottom">
-        <p>&copy; <span id="currentYear"></span> All rights reserved.</p>
-        <p><strong> Hayl Al-Khadhami | Automation Engineer | Researcher | Educator</strong></p>
+        <p>© جميع الحقوق محفوظة<span id="currentYear"></span></p>
       </div>
     </div>
   </footer>
 
   <div class="safe-bottom"></div>
 
-  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
-
   <script>
-  "use strict";
+    "use strict";
 
-  const CONFIG = {
-    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
-    categoryOrder: ["Arabic","Art","Chinese","English","Fun","Islamic","Kuran","Math","Other"],
-    categoryAr: {
-      Arabic:"عربي", Art:"فن", Chinese:"صيني", English:"إنجليزي",
-      Fun:"ترفيه", Islamic:"إسلاميات", Kuran:"قرآن", Math:"رياضيات", Other:"أخرى"
-    },
-    offline: {
-      proxyPrefix: ""
-    }
-  };
+    const CONFIG = {
+      // ضع رابط CSV الخاص بالشيت هنا (كما كان عندك)
+      sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLx7eaIKwI4yVGNE84i_btsnqMDmQZwC7bQFkMyUiuMqo4nGyC-K7Jq0fYZ7TULPZi4JUv1RnqEkwr/pub?output=csv",
+      offline: { dbVersion: 1, dbName: "kidsLessonsDB", storeName: "offlineLessons" }
+    };
 
-  class Utils {
-    static $ (sel, root=document){ return root.querySelector(sel); }
-    static $$ (sel, root=document){ return [...root.querySelectorAll(sel)]; }
+    class Utils {
+      static q(sel, root=document){ return root.querySelector(sel); }
+      static qa(sel, root=document){ return [...root.querySelectorAll(sel)]; }
 
-    static escapeHtml(s){
-      return String(s ?? "").replace(/[&<>"']/g, c => (
-        { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[c]
-      ));
-    }
+      static get toast(){ return Utils.q("#toast"); }
+      static get toastMessage(){ return Utils.q("#toastMessage"); }
+      static get status(){ return Utils.q("#status"); }
 
-	// CHANGE 1: Parse MM/DD/YYYY instead of DD/MM/YYYY
-	static parseDDMMYYYY(s){
-	  if (!s) return null;
-	  const parts = String(s).trim().split("/");
-	  if (parts.length !== 3) return null;
-	  const [mm, dd, yyyy] = parts.map(Number);  // Changed order: mm, dd instead of dd, mm
-	  if (!dd || !mm || !yyyy) return null;
-	  return new Date(yyyy, mm-1, dd, 12, 0, 0);
-	}
+      static get playerModal(){ return Utils.q("#playerModal"); }
+      static get playerStage(){ return Utils.q("#playerStage"); }
+      static get playerTitle(){ return Utils.q("#playerTitle"); }
+      static get btnClose(){ return Utils.q("#btnClose"); }
+      static get btnExternal(){ return Utils.q("#btnExternal"); }
+      static get btnPseudoFs(){ return Utils.q("#btnPseudoFs"); }
 
-	// CHANGE 2: Display as MM/DD/YYYY (US format)
-	static formatDateAr(d){
-	  if (!d) return "—";
-	  try { 
-		return new Intl.DateTimeFormat("en-US", {
-		  year:"numeric",
-		  month:"2-digit",
-		  day:"2-digit"
-		}).format(d); 
-	  }
-	  catch { return d.toLocaleDateString(); }
-	}
+      static get qInput(){ return Utils.q("#q"); }
+      static get category(){ return Utils.q("#category"); }
+      static get time(){ return Utils.q("#time"); }
+      static get fileType(){ return Utils.q("#fileType"); }
+      static get classLevel(){ return Utils.q("#classLevel"); }
+      static get sort(){ return Utils.q("#sort"); }
 
+      static get list(){ return Utils.q("#list"); }
+      static get reload(){ return Utils.q("#reload"); }
+      static get countPill(){ return Utils.q("#countPill"); }
+      static get offlineCountPill(){ return Utils.q("#offlineCountPill"); }
+      static get themeToggle(){ return Utils.q("#themeToggle"); }
+      static get btnOfflinePanel(){ return Utils.q("#btnOfflinePanel"); }
+      static get offlinePanel(){ return Utils.q("#offlinePanel"); }
+      static get btnCloseOfflinePanel(){ return Utils.q("#btnCloseOfflinePanel"); }
+      static get offlineList(){ return Utils.q("#offlineList"); }
+      static get currentYear(){ return Utils.q("#currentYear"); }
+      static get recentList(){ return Utils.q("#recentList"); }
 
-    static daysBetween(a, b){
-      const MS = 86400000;
-      const d1 = new Date(a.getFullYear(), a.getMonth(), a.getDate());
-      const d2 = new Date(b.getFullYear(), b.getMonth(), b.getDate());
-      return Math.round((d1 - d2) / MS);
-    }
+      static escapeHtml(s){
+        return String(s ?? "")
+          .replace(/[&<>"']/g, c => ({
+            "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+          }[c]));
+      }
 
-    static parseCSV(text){
-      const rows = [];
-      let row = [];
-      let cur = "";
-      let inQuotes = false;
+      static parseMMDDYYYY(s){
+        if (!s) return null;
+        const parts = String(s).trim().split("/");
+        if (parts.length !== 3) return null;
+        const [mm, dd, yyyy] = parts.map(Number);
+        if (!mm || !dd || !yyyy) return null;
+        return new Date(yyyy, mm - 1, dd, 12, 0, 0);
+      }
 
-      for (let i=0; i<text.length; i++){
-        const ch = text[i];
-        const next = text[i+1];
-
-        if (ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
-        if (ch === '"'){ inQuotes = !inQuotes; continue; }
-
-        if (!inQuotes && ch === ","){ row.push(cur); cur=""; continue; }
-        if (!inQuotes && (ch === "\n" || ch === "\r")){
-          if (ch === "\r" && next === "\n") i++;
-          row.push(cur); cur="";
-          if (row.some(c => String(c).trim() !== "")) rows.push(row);
-          row = [];
-          continue;
+      static formatDateAr(d){
+        if (!d) return "";
+        try {
+          return new Intl.DateTimeFormat("ar-EG", { year:"numeric", month:"2-digit", day:"2-digit" }).format(d);
+        } catch {
+          return d.toLocaleDateString("ar-EG");
         }
-        cur += ch;
       }
-      row.push(cur);
-      if (row.some(c => String(c).trim() !== "")) rows.push(row);
-      return rows;
-    }
 
-    static extractYoutubeId(url){
-      const s = String(url || "");
-      const m = s.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-      return m ? m[1] : null;
-    }
-
-    static extractDriveId(url){
-      const s = String(url || "");
-      const m1 = s.match(/\/file\/d\/([^/]+)/); if (m1) return m1[1];
-      const m2 = s.match(/[?&]id=([^&]+)/); if (m2) return m2[1];
-      const m3 = s.match(/\/d\/([^/]+)/); if (m3) return m3[1];
-      return null;
-    }
-
-    static driveLinks(url){
-      const id = this.extractDriveId(url);
-      if (!id) return null;
-      return {
-        id,
-        preview: `https://drive.google.com/file/d/${id}/preview`,
-        view: `https://drive.google.com/file/d/${id}/view`,
-        download: `https://drive.google.com/uc?export=download&id=${id}`,
-        thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
-      };
-    }
-
-    static guessType(url){
-      const u = String(url||"").toLowerCase();
-      const clean = u.split("?")[0];
-      if (this.extractYoutubeId(url)) return "youtube";
-      if (u.includes("drive.google.com")) return "drive";
-      if (/\.(mp4|webm|ogg|m4v|mov)$/i.test(clean)) return "video";
-      if (/\.(m3u8)$/i.test(clean)) return "hls";
-      if (/\.(pdf)$/i.test(clean)) return "pdf";
-      if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(clean)) return "image";
-      return "link";
-    }
-
-    static formatBytes(bytes){
-      if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
-      const k = 1024;
-      const sizes = ["B","KB","MB","GB","TB"];
-      const i = Math.floor(Math.log(bytes)/Math.log(k));
-      const val = bytes / Math.pow(k, i);
-      return `${val.toFixed(val >= 10 || i===0 ? 0 : 1)} ${sizes[i]}`;
-    }
-
-    static toastTimer = null;
-    static toast(message, type="info", ms=2600){
-      const t = Utils.$("#toast");
-      const msg = Utils.$("#toastMessage");
-      msg.textContent = message;
-      t.className = "";
-      t.classList.add(type);
-      t.classList.add("show");
-      clearTimeout(Utils.toastTimer);
-      Utils.toastTimer = setTimeout(() => t.classList.remove("show"), ms);
-    }
-
-    static setStatus(html, css="ok"){
-      const el = Utils.$("#status");
-      el.className = `status ${css}`;
-      el.innerHTML = html;
-    }
-
-    static sanitizeFileBase(name){
-      return String(name || "video")
-        .replace(/[^\p{L}\p{N}\-_ ]/gu, "")
-        .trim()
-        .replace(/\s+/g, "_")
-        .slice(0, 80) || "video";
-    }
-  }
-
-  class OfflineStore {
-    constructor(){
-      this.metaKey = "offline_meta_v1";
-      this.folderHandleKey = "offline_device_folder_handle_v1";
-      this.meta = this._loadMeta();
-      this.deviceFolderHandle = null;
-    }
-
-    isOpfsSupported(){
-      return !!(navigator.storage && navigator.storage.getDirectory);
-    }
-
-    isFolderPickerSupported(){
-      return typeof window.showDirectoryPicker === "function";
-    }
-
-    _loadMeta(){
-      try { return JSON.parse(localStorage.getItem(this.metaKey) || "{}"); }
-      catch { return {}; }
-    }
-    _saveMeta(){
-      localStorage.setItem(this.metaKey, JSON.stringify(this.meta));
-    }
-
-    list(){
-      return Object.values(this.meta).sort((a,b) => (b.savedAt||0)-(a.savedAt||0));
-    }
-
-    has(lessonId){
-      return !!this.meta[String(lessonId||"")];
-    }
-
-    getMeta(lessonId){
-      return this.meta[String(lessonId||"")] || null;
-    }
-
-    async _opfsRootDir(){
-      const root = await navigator.storage.getDirectory();
-      return await root.getDirectoryHandle("offline-videos", { create: true });
-    }
-
-    async _opfsGetFileHandle(lessonId, filename, create=false){
-      const dir = await this._opfsRootDir();
-      const safe = `${String(lessonId)}__${filename}`;
-      return await dir.getFileHandle(safe, { create });
-    }
-
-    async _opfsGetFileUrl(lessonId){
-      const m = this.getMeta(lessonId);
-      if (!m || !this.isOpfsSupported()) return null;
-      const fh = await this._opfsGetFileHandle(lessonId, m.filename, false);
-      const file = await fh.getFile();
-      return URL.createObjectURL(file);
-    }
-
-    async chooseDeviceFolder(){
-      if (!this.isFolderPickerSupported()){
-        throw new Error("Folder picker not supported on this browser/WebView.");
+      static daysBetween(a, b){
+        const MS = 86400000;
+        const d1 = new Date(a.getFullYear(), a.getMonth(), a.getDate());
+        const d2 = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+        return Math.round((d1 - d2) / MS);
       }
-      const handle = await window.showDirectoryPicker();
-      this.deviceFolderHandle = handle;
-      Utils.toast("تم اختيار مجلد الجهاز (تجريبي).", "success");
-    }
 
-    async _deviceWriteFile(filename, blob){
-      if (!this.deviceFolderHandle) throw new Error("No device folder selected.");
-      const fh = await this.deviceFolderHandle.getFileHandle(filename, { create: true });
-      const writable = await fh.createWritable();
-      await writable.write(blob);
-      await writable.close();
-    }
+      // CSV parser بسيط يدعم "quotes"
+      static parseCSV(text){
+        const rows = [];
+        let row = [];
+        let cur = "";
+        let inQuotes = false;
 
-    async save(lessonId, title, sourceUrl, onProgress){
-      const id = String(lessonId || "");
-      if (!id) throw new Error("Missing LessonID");
+        for (let i = 0; i < text.length; i++) {
+          const ch = text[i];
+          const next = text[i + 1];
 
-      const url = CONFIG.offline.proxyPrefix ? (CONFIG.offline.proxyPrefix + encodeURIComponent(sourceUrl)) : sourceUrl;
-      const filenameBase = Utils.sanitizeFileBase(title || id);
-      const filename = `${filenameBase}.mp4`;
+          if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; continue; }
+          if (ch === '"') { inQuotes = !inQuotes; continue; }
 
-      try {
-        if (navigator.storage && navigator.storage.estimate){
-          const est = await navigator.storage.estimate();
-          const free = (est.quota || 0) - (est.usage || 0);
-          if (Number.isFinite(free) && free < 50 * 1024 * 1024){
-            Utils.toast("قد تكون المساحة غير كافية للأوفلاين.", "warning", 3200);
+          if (!inQuotes && ch === ",") { row.push(cur); cur = ""; continue; }
+          if (!inQuotes && (ch === "\n" || ch === "\r")) {
+            if (ch === "\r" && next === "\n") i++;
+            row.push(cur); cur = "";
+            if (row.some(c => String(c).trim() !== "")) rows.push(row);
+            row = [];
+            continue;
           }
+          cur += ch;
         }
-      } catch {}
+        row.push(cur);
+        if (row.some(c => String(c).trim() !== "")) rows.push(row);
+        return rows;
+      }
 
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(`Download failed: HTTP ${res.status}`);
+      static extractYoutubeId(url){
+        const s = String(url || "");
+        const m = s.match(/(?:youtube\.com\/.*[?&]v=|youtube\.com\/embed\/|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        return m ? m[1] : null;
+      }
 
-      const total = Number(res.headers.get("content-length") || 0);
-      const mime = res.headers.get("content-type") || "video/mp4";
+      static extractDriveId(url){
+        const s = String(url || "");
+        const m1 = s.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (m1) return m1[1];
+        const m2 = s.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (m2) return m2[1];
+        const m3 = s.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        if (m3) return m3[1];
+        return null;
+      }
 
-      if (this.isOpfsSupported()){
-        const fh = await this._opfsGetFileHandle(id, filename, true);
-        const writable = await fh.createWritable();
+      static driveLinks(url){
+        const id = this.extractDriveId(url);
+        if (!id) return null;
+        return {
+          id,
+          preview: `https://drive.google.com/file/d/${id}/preview`,
+          view: `https://drive.google.com/file/d/${id}/view`,
+          download: `https://drive.google.com/uc?export=download&id=${id}`,
+          thumb: `https://drive.google.com/thumbnail?id=${id}&sz=w640`
+        };
+      }
 
-        let received = 0;
-        if (res.body && res.body.getReader){
-          const reader = res.body.getReader();
-          while (true){
-            const {done, value} = await reader.read();
-            if (done) break;
-            await writable.write(value);
-            received += value.byteLength || value.length || 0;
-            if (typeof onProgress === "function" && total > 0){
-              onProgress(Math.min(1, received / total), received, total);
+      static guessType(url){
+        const u = String(url || "").toLowerCase();
+        const clean = u.split("?")[0];
+        if (this.extractYoutubeId(url)) return "youtube";
+        if (u.includes("drive.google.com")) return "drive";
+        if (/\.(mp4|webm|ogg|m4v|mov)$/i.test(clean)) return "video";
+        if (/\.(m3u8)$/i.test(clean)) return "hls";
+        if (/\.(pdf)$/i.test(clean)) return "pdf";
+        if (/\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(clean)) return "image";
+        return "link";
+      }
+
+      static formatBytes(bytes){
+        if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+        const k = 1024;
+        const sizes = ["B","KB","MB","GB","TB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        const val = bytes / Math.pow(k, i);
+        return `${val.toFixed(val >= 10 || i === 0 ? 0 : 1)} ${sizes[i]}`;
+      }
+
+      static toastTimer = null;
+      static toast(message, type="info", ms=2600){
+        const t = Utils.toast;
+        Utils.toastMessage.textContent = message;
+        t.className = "";
+        t.classList.add(type);
+        t.classList.add("show");
+        clearTimeout(Utils.toastTimer);
+        Utils.toastTimer = setTimeout(() => t.classList.remove("show"), ms);
+      }
+
+      static setStatus(html, css="ok"){
+        const el = Utils.status;
+        el.className = `status ${css}`;
+        el.innerHTML = html;
+      }
+
+      static sanitizeFileBase(name="video"){
+        return String(name || "video")
+          .replace(/[^\p{L}\p{N}\s._-]/gu, "")
+          .trim()
+          .replace(/\s+/g, "_")
+          .slice(0, 80) || "video";
+      }
+
+      static generateThumbUrl(contentUrl, type, fileTypeLabel=""){
+        // YouTube
+        if (type === "youtube") {
+          const ytId = this.extractYoutubeId(contentUrl);
+          return ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : null;
+        }
+        // Drive thumbnail
+        if (type === "drive") {
+          const d = this.driveLinks(contentUrl);
+          return d ? d.thumb : null;
+        }
+
+        // Fallback placeholders based on FileType label if provided
+        const ft = String(fileTypeLabel || "").toLowerCase();
+        if (ft.includes("pdf")) return "https://placehold.co/640x360/121b2f/9fb0d0?text=PDF";
+        if (ft.includes("صورة") || ft.includes("image")) return "https://placehold.co/640x360/121b2f/9fb0d0?text=IMAGE";
+        if (ft.includes("فيديو") || ft.includes("video")) return "https://placehold.co/640x360/121b2f/9fb0d0?text=VIDEO";
+
+        // Otherwise generic
+        return "https://placehold.co/640x360/121b2f/9fb0d0?text=Preview";
+      }
+    }
+
+    class OfflineStore {
+      constructor(){
+        this.db = null;
+        this.metaKey = "offlineMetaV2";
+        this.recentKey = "recentLessons";
+        this.initDB();
+      }
+
+      initDB(){
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(CONFIG.offline.dbName, CONFIG.offline.dbVersion);
+
+          request.onupgradeneeded = (event) => {
+            this.db = event.target.result;
+            if (!this.db.objectStoreNames.contains(CONFIG.offline.storeName)) {
+              const store = this.db.createObjectStore(CONFIG.offline.storeName, { keyPath: "lessonId" });
+              store.createIndex("date", "savedAt", { unique: false });
+              store.createIndex("title", "title", { unique: false });
             }
+          };
+
+          request.onsuccess = (event) => {
+            this.db = event.target.result;
+            this.db.onversionchange = () => this.db.close();
+            resolve(this.db);
+          };
+
+          request.onerror = (event) => {
+            console.error("Database error", event.target.error);
+            reject(event.target.error);
+          };
+        });
+      }
+
+      async saveVideo(lessonId, title, contentUrl, onProgress){
+        await this.initDB();
+
+        const type = Utils.guessType(contentUrl);
+        if (!(type === "video" || type === "hls")) {
+          throw new Error("يمكن حفظ ملفات MP4/HLS فقط حالياً.");
+        }
+
+        const existing = await this.getLesson(lessonId);
+        if (existing) throw new Error("هذا الملف موجود بالفعل في الأوفلاين.");
+
+        const fileName = Utils.sanitizeFileBase(title);
+        const fullFileName = `${fileName}.mp4`;
+
+        const response = await fetch(contentUrl, { mode: "cors" });
+        if (!response.ok) throw new Error(String(response.status));
+
+        const contentLength = parseInt(response.headers.get("content-length") || "0", 10);
+        const reader = response.body?.getReader?.();
+        if (!reader) throw new Error("المتصفح لا يدعم الحفظ لهذا النوع.");
+
+        const chunks = [];
+        let receivedLength = 0;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+          receivedLength += value.length;
+          if (typeof onProgress === "function") {
+            onProgress(contentLength ? (receivedLength / contentLength) : 0, receivedLength, contentLength);
           }
-        } else {
-          const blob = await res.blob();
-          await writable.write(blob);
-          received = blob.size;
-          if (typeof onProgress === "function"){
-            onProgress(1, received, received);
-          }
         }
-        await writable.close();
 
-        this.meta[id] = { lessonId: id, title, filename, mime, size: received || total || 0, savedAt: Date.now(), mode: "opfs" };
-        this._saveMeta();
-        return;
-      }
+        const blob = new Blob(chunks, { type: response.headers.get("content-type") || "video/mp4" });
 
-      const blob = await res.blob();
-      if (this.deviceFolderHandle){
-        await this._deviceWriteFile(`${id}__${filename}`, blob);
-        this.meta[id] = { lessonId: id, title, filename, mime, size: blob.size, savedAt: Date.now(), mode: "device" };
-        this._saveMeta();
-        return;
-      }
+        const transaction = this.db.transaction(CONFIG.offline.storeName, "readwrite");
+        const store = transaction.objectStore(CONFIG.offline.storeName);
 
-      throw new Error("Offline not supported (no OPFS, and no device folder selected).");
-    }
+        const offlineVideo = {
+          lessonId: String(lessonId),
+          title,
+          fileName: fullFileName,
+          blob,
+          size: blob.size,
+          savedAt: Date.now(),
+          originalUrl: contentUrl,
+          type
+        };
 
-    async remove(lessonId){
-      const id = String(lessonId || "");
-      const m = this.meta[id];
-      if (!m) return;
-
-      if (m.mode === "opfs" && this.isOpfsSupported()){
-        try{
-          const dir = await this._opfsRootDir();
-          const safe = `${id}__${m.filename}`;
-          await dir.removeEntry(safe);
-        } catch {}
-      }
-
-      delete this.meta[id];
-      this._saveMeta();
-    }
-
-    async getPlayableUrl(lessonId){
-      const m = this.getMeta(lessonId);
-      if (!m) return null;
-
-      if (m.mode === "opfs" && this.isOpfsSupported()){
-        return await this._opfsGetFileUrl(lessonId);
-      }
-
-      return null;
-    }
-  }
-
-  class PlayerManager {
-    constructor(){
-      this.modal = Utils.$("#playerModal");
-      this.stage = Utils.$("#playerStage");
-      this.titleEl = Utils.$("#playerTitle");
-      this.btnClose = Utils.$("#btnClose");
-      this.btnExternal = Utils.$("#btnExternal");
-      this.btnPseudoFs = Utils.$("#btnPseudoFs");
-
-      this.vjs = null;
-      this.loadingEl = null;
-
-      this._bind();
-    }
-
-    _bind(){
-      this.btnClose.addEventListener("click", () => this.close());
-      this.modal.addEventListener("click", (e) => { if (e.target === this.modal) this.close(); });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && this.modal.classList.contains("open")) this.close();
-      });
-      this.btnPseudoFs.addEventListener("click", () => this.toggleFullscreenMode());
-      document.addEventListener("fullscreenchange", () => this.syncFullscreenUi());
-    }
-
-    _mountLoading(){
-      const el = document.createElement("div");
-      el.className = "player-loading";
-      el.innerHTML = `<div class="spinner"></div><div style="color:var(--muted);font-weight:900">جاري التحميل...</div>`;
-      this.stage.appendChild(el);
-      this.loadingEl = el;
-      return el;
-    }
-    _hideLoading(){
-      if (this.loadingEl) this.loadingEl.classList.add("is-hidden");
-    }
-    _showLoading(){
-      if (this.loadingEl) this.loadingEl.classList.remove("is-hidden");
-    }
-
-    open({title, type, url, externalUrl}){
-      this.close(true);
-
-      this.titleEl.textContent = title || "—";
-      if (externalUrl){
-        this.btnExternal.href = externalUrl;
-        this.btnExternal.style.display = "inline-flex";
-      } else {
-        this.btnExternal.style.display = "none";
-      }
-
-      this.modal.classList.add("open");
-      this.modal.setAttribute("aria-hidden","false");
-      document.body.style.overflow = "hidden";
-      this.stage.innerHTML = "";
-      this.modal.classList.remove("pseudo-fullscreen");
-      this.btnPseudoFs.innerHTML = `<i class="fas fa-expand-alt"></i>`;
-
-      this._mountLoading();
-      this._showLoading();
-
-      const token = Math.random().toString(36).slice(2);
-      this._token = token;
-      setTimeout(() => {
-        if (this._token === token) this._hideLoading();
-      }, 12000);
-
-      if (type === "video" || type === "hls"){
-        this._mountVideoJs(url, type);
-        return;
-      }
-      if (type === "image"){
-        this._mountImage(url, title);
-        return;
-      }
-
-      this._mountIframe(url, title);
-    }
-
-    _mountVideoJs(src, type){
-      const video = document.createElement("video");
-      video.className = "video-js vjs-default-skin vjs-big-play-centered";
-      video.setAttribute("controls", "");
-      video.setAttribute("preload", "metadata");
-      video.setAttribute("playsinline", "");
-      video.setAttribute("webkit-playsinline", "");
-      video.setAttribute("crossorigin", "anonymous");
-      this.stage.appendChild(video);
-
-      const player = videojs(video, {
-        fluid: true,
-        responsive: true,
-        controls: true,
-        autoplay: false,
-        preload: "metadata",
-        html5: { vhs: { overrideNative: true }, nativeVideoTracks: false, nativeAudioTracks: false, nativeTextTracks: false },
-        controlBar: {
-          children: ["playToggle","progressControl","currentTimeDisplay","timeDivider","durationDisplay","fullscreenToggle"]
-        },
-        userActions: { doubleClick: false, hotkeys: true }
-      });
-
-      const sourceType = type === "hls"
-        ? "application/x-mpegURL"
-        : (src.toLowerCase().includes(".webm") ? "video/webm" : "video/mp4");
-
-      player.ready(() => {
-        player.src({ src, type: sourceType });
-      });
-
-      const done = () => this._hideLoading();
-      player.on("loadedmetadata", done);
-      player.on("playing", done);
-      player.on("canplay", done);
-      player.on("error", () => {
-        done();
-        Utils.toast("تعذر تشغيل الفيديو داخل WebView. جرّب فتح خارجي.", "warning", 3500);
-      });
-
-      this.vjs = player;
-    }
-
-    _mountImage(src, title){
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = title || "image";
-      img.style.maxWidth = "92%";
-      img.style.maxHeight = "92%";
-      img.style.objectFit = "contain";
-      img.onload = () => this._hideLoading();
-      img.onerror = () => this._hideLoading();
-      this.stage.appendChild(img);
-    }
-
-    _mountIframe(src, title){
-      const iframe = document.createElement("iframe");
-      iframe.title = title || "frame";
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "none";
-      iframe.setAttribute("allowfullscreen", "");
-      iframe.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
-      iframe.referrerPolicy = "no-referrer";
-      iframe.src = src;
-      iframe.addEventListener("load", () => setTimeout(() => this._hideLoading(), 350));
-      iframe.addEventListener("error", () => this._hideLoading());
-      this.stage.appendChild(iframe);
-    }
-
-    async toggleFullscreenMode(){
-      try{
-        const target = this.stage;
-        if (!document.fullscreenElement){
-          await target.requestFullscreen();
-        } else {
-          await document.exitFullscreen();
-        }
-      } catch {
-        this.modal.classList.toggle("pseudo-fullscreen");
-        this.syncFullscreenUi();
-      }
-    }
-
-    syncFullscreenUi(){
-      const isRealFs = !!document.fullscreenElement;
-      const isPseudo = this.modal.classList.contains("pseudo-fullscreen");
-      this.btnPseudoFs.innerHTML = (isRealFs || isPseudo) ? `<i class="fas fa-compress-alt"></i>` : `<i class="fas fa-expand-alt"></i>`;
-    }
-
-    close(quiet=false){
-      this._token = null;
-
-      if (this.vjs){
-        try { this.vjs.pause(); this.vjs.dispose(); } catch {}
-        this.vjs = null;
-      }
-
-      if (!quiet && document.fullscreenElement){
-        document.exitFullscreen().catch(()=>{});
-      }
-
-      this.stage.innerHTML = "";
-      this.loadingEl = null;
-
-      this.modal.classList.remove("open");
-      this.modal.classList.remove("pseudo-fullscreen");
-      this.modal.setAttribute("aria-hidden","true");
-      document.body.style.overflow = "";
-    }
-  }
-
-  class LessonsApp {
-    constructor(){
-      this.ui = {
-        q: Utils.$("#q"),
-        category: Utils.$("#category"),
-        time: Utils.$("#time"),
-        list: Utils.$("#list"),
-        reload: Utils.$("#reload"),
-        countPill: Utils.$("#countPill"),
-        offlineCountPill: Utils.$("#offlineCountPill"),
-        themeToggle: Utils.$("#themeToggle"),
-        btnOfflinePanel: Utils.$("#btnOfflinePanel"),
-        offlinePanel: Utils.$("#offlinePanel"),
-        btnCloseOfflinePanel: Utils.$("#btnCloseOfflinePanel"),
-        offlineList: Utils.$("#offlineList"),
-        btnChooseFolder: Utils.$("#btnChooseFolder")
-      };
-
-      this.player = new PlayerManager();
-      this.offline = new OfflineStore();
-      this.all = [];
-
-      this.currentTheme = localStorage.getItem("theme") || "dark";
-      this._applyTheme(this.currentTheme);
-
-      this._bind();
-      this.load();
-      this.refreshOfflineUI();
-    }
-
-    _bind(){
-      this.ui.q.addEventListener("input", () => this.render());
-      this.ui.category.addEventListener("change", () => this.render());
-      this.ui.time.addEventListener("change", () => this.render());
-      this.ui.reload.addEventListener("click", () => this.load(true));
-      this.ui.list.addEventListener("click", (e) => this.onListClick(e));
-      this.ui.themeToggle.addEventListener("click", () => this.toggleTheme());
-
-      this.ui.btnOfflinePanel.addEventListener("click", () => this.openOfflinePanel());
-      this.ui.btnCloseOfflinePanel.addEventListener("click", () => this.closeOfflinePanel());
-
-      this.ui.btnChooseFolder.addEventListener("click", async () => {
-        try{
-          await this.offline.chooseDeviceFolder();
-          Utils.toast("Device folder mode enabled (experimental).", "success", 3200);
-        } catch (err){
-          Utils.toast(err.message || "Folder picker failed.", "error", 3400);
-        }
-      });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible"){
-          Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok");
-        }
-      });
-    }
-
-    _applyTheme(theme){
-      document.documentElement.setAttribute("data-theme", theme);
-      const icon = this.ui.themeToggle.querySelector("i");
-      icon.className = theme === "dark" ? "fas fa-moon" : "fas fa-sun";
-    }
-    toggleTheme(){
-      this.currentTheme = (this.currentTheme === "dark") ? "light" : "dark";
-      localStorage.setItem("theme", this.currentTheme);
-      this._applyTheme(this.currentTheme);
-      Utils.toast(this.currentTheme === "dark" ? "Dark mode" : "Light mode", "success");
-    }
-
-    async load(force=false){
-      Utils.setStatus(`<i class="fas fa-spinner fa-spin"></i> جاري التحميل...`, "warn");
-      this.ui.list.innerHTML = "";
-
-      try{
-        const res = await fetch(CONFIG.sheetCsvUrl, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const csv = await res.text();
-        const parsed = Utils.parseCSV(csv);
-        if (parsed.length < 2) throw new Error("CSV فارغ/غير صالح");
-
-        const headers = parsed[0].map(h => String(h).trim());
-        const data = parsed.slice(1).map(cols => {
-          const obj = {};
-          headers.forEach((h,i) => obj[h] = cols[i] ?? "");
-          return obj;
+        await new Promise((resolve, reject) => {
+          const req = store.add(offlineVideo);
+          req.onsuccess = () => resolve();
+          req.onerror = () => reject(req.error);
         });
 
-        this.all = data.map(r => this.normalize(r)).filter(x => x.Title && x.ContentURL);
+        const meta = this.loadMeta();
+        meta[String(lessonId)] = {
+          lessonId: String(lessonId),
+          title,
+          fileName: fullFileName,
+          size: blob.size,
+          savedAt: Date.now(),
+          type
+        };
+        this.saveMeta(meta);
 
-        this.all.sort((a,b) => (b.DateUploaded?.getTime() || 0) - (a.DateUploaded?.getTime() || 0));
+        return offlineVideo;
+      }
 
-        this.buildCategoryOptions();
-        this.render();
+      async getLesson(lessonId){
+        await this.initDB();
+        const transaction = this.db.transaction(CONFIG.offline.storeName, "readonly");
+        const store = transaction.objectStore(CONFIG.offline.storeName);
 
-        this.ui.countPill.textContent = String(this.all.length);
-        Utils.setStatus(`<i class="fas fa-check-circle"></i> تم التحميل (${this.all.length})`, "ok");
-        setTimeout(() => Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok"), 1200);
-      } catch (err){
-        console.error(err);
-        Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> خطأ: ${Utils.escapeHtml(err.message)}`, "error");
-        this.ui.list.innerHTML = `
-          <div class="card" style="grid-column: span 12; padding: 22px; text-align:center">
-            <i class="fas fa-exclamation-triangle" style="font-size:48px; color: var(--danger)"></i>
-            <h3 style="margin:12px 0 8px; font-weight: 900">تعذر تحميل البيانات</h3>
-            <p style="margin:0; color: var(--muted); line-height:1.6">
-              تأكد من رابط Google Sheet المنشور (CSV) ومن الاتصال.
-            </p>
-          </div>
-        `;
+        return new Promise((resolve, reject) => {
+          const req = store.get(String(lessonId));
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      async listLessons(){
+        await this.initDB();
+        const transaction = this.db.transaction(CONFIG.offline.storeName, "readonly");
+        const store = transaction.objectStore(CONFIG.offline.storeName);
+        const index = store.index("date");
+
+        return new Promise((resolve, reject) => {
+          const results = [];
+          const req = index.openCursor(null, "prev");
+          req.onsuccess = (event) => {
+            const cursor = event.target.result;
+            if (cursor) { results.push(cursor.value); cursor.continue(); }
+            else resolve(results);
+          };
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      async removeLesson(lessonId){
+        await this.initDB();
+        const transaction = this.db.transaction(CONFIG.offline.storeName, "readwrite");
+        const store = transaction.objectStore(CONFIG.offline.storeName);
+
+        await new Promise((resolve, reject) => {
+          const req = store.delete(String(lessonId));
+          req.onsuccess = () => resolve();
+          req.onerror = () => reject(req.error);
+        });
+
+        const meta = this.loadMeta();
+        delete meta[String(lessonId)];
+        this.saveMeta(meta);
+        return true;
+      }
+
+      loadMeta(){
+        try { return JSON.parse(localStorage.getItem(this.metaKey) || "{}"); }
+        catch { return {}; }
+      }
+
+      saveMeta(meta){
+        localStorage.setItem(this.metaKey, JSON.stringify(meta || {}));
+      }
+
+      hasLesson(lessonId){
+        const meta = this.loadMeta();
+        return !!meta[String(lessonId)];
+      }
+
+      async getPlayableUrl(lessonId){
+        const lesson = await this.getLesson(lessonId);
+        if (!lesson || !lesson.blob) return null;
+        return URL.createObjectURL(lesson.blob);
+      }
+
+      addRecentLesson(lessonId, title, category){
+        let recent = [];
+        try { recent = JSON.parse(localStorage.getItem(this.recentKey) || "[]"); } catch {}
+        const filtered = recent.filter(item => String(item.lessonId) !== String(lessonId));
+        const newItem = { lessonId: String(lessonId), title, category, viewedAt: Date.now() };
+        filtered.unshift(newItem);
+        localStorage.setItem(this.recentKey, JSON.stringify(filtered.slice(0, 10)));
+      }
+
+      getRecentLessons(){
+        try { return JSON.parse(localStorage.getItem(this.recentKey) || "[]"); }
+        catch { return []; }
       }
     }
 
-    normalize(r){
-      return {
-        LessonID: String(r.LessonID ?? "").trim(),
-        Title: String(r.Title ?? "").trim(),
-        Category: String(r.Category ?? "Other").trim() || "Other",
-        DateUploaded: Utils.parseDDMMYYYY(String(r.DateUploaded ?? "").trim()),
-        ContentURL: String(r.ContentURL ?? "").trim()
-      };
-    }
+    class PlayerManager {
+      constructor(){
+        this.modal = Utils.playerModal;
+        this.stage = Utils.playerStage;
+        this.titleEl = Utils.playerTitle;
+        this.btnClose = Utils.btnClose;
+        this.btnExternal = Utils.btnExternal;
+        this.btnPseudoFs = Utils.btnPseudoFs;
 
-    buildCategoryOptions(){
-      const set = new Set(this.all.map(x => x.Category || "Other"));
-      const cats = CONFIG.categoryOrder.filter(c => set.has(c)).concat([...set].filter(c => !CONFIG.categoryOrder.includes(c)));
+        this.player = null;
 
-      this.ui.category.innerHTML = "";
-      const optAll = document.createElement("option");
-      optAll.value = "all";
-      optAll.textContent = "كل المواد";
-      this.ui.category.appendChild(optAll);
+        this.bind();
+      }
 
-      cats.forEach(c => {
-        const o = document.createElement("option");
-        o.value = c;
-        o.textContent = CONFIG.categoryAr[c] || c;
-        this.ui.category.appendChild(o);
-      });
-    }
+      bind(){
+        this.btnClose.addEventListener("click", () => this.close());
+        this.modal.addEventListener("click", (e) => { if (e.target === this.modal) this.close(); });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && this.modal.classList.contains("open")) this.close();
+        });
 
-    filterRows(){
-      const q = this.ui.q.value.trim().toLowerCase();
-      const cat = this.ui.category.value;
-      const timeKey = this.ui.time.value;
-      const now = new Date();
+        this.btnPseudoFs.addEventListener("click", () => this.toggleFullscreenMode());
+        document.addEventListener("fullscreenchange", () => this.syncFullscreenUi());
+      }
 
-      const timePred = (row) => {
-        if (timeKey === "all") return true;
-        if (!row.DateUploaded) return false;
-        const diff = Utils.daysBetween(now, row.DateUploaded);
-        switch (timeKey){
-          case "today": return diff === 0;
-          case "yesterday": return diff === 1;
-          case "week": return diff >= 0 && diff <= 7;
-          case "month": return diff >= 0 && diff <= 30;
-          case "year": return diff >= 0 && diff <= 365;
-          default: return true;
+      open({ title, type, url, externalUrl, aspectRatio = "16:9" }){
+        this.close(true);
+
+        this.titleEl.textContent = title || "";
+        if (externalUrl) {
+          this.btnExternal.href = externalUrl;
+          this.btnExternal.style.display = "inline-flex";
+        } else {
+          this.btnExternal.style.display = "none";
         }
-      };
 
-      return this.all.filter(r => {
-        const okQ = !q || r.Title.toLowerCase().includes(q);
-        const okCat = (cat === "all") || (r.Category === cat);
-        const okTime = timePred(r);
-        return okQ && okCat && okTime;
-      });
-    }
+        this.modal.classList.add("open");
+        this.modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
 
-    computeMedia(row){
-      const type = Utils.guessType(row.ContentURL);
-      const yt = Utils.extractYoutubeId(row.ContentURL);
-      const d = Utils.driveLinks(row.ContentURL);
-
-      let thumb = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect fill='%23121b2f' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239fb0d0' font-size='18' font-family='sans-serif'%3EPreview%3C/text%3E%3C/svg%3E`;
-      if (yt) thumb = `https://i.ytimg.com/vi/${yt}/hqdefault.jpg`;
-      else if (d) thumb = d.thumb;
-
-      let playerUrl = row.ContentURL;
-      let externalUrl = row.ContentURL;
-      let downloadUrl = row.ContentURL;
-
-      if (yt){
-        playerUrl = `https://www.youtube-nocookie.com/embed/${yt}?rel=0&modestbranding=1`;
-        externalUrl = `https://www.youtube.com/watch?v=${yt}`;
-        downloadUrl = externalUrl;
-      } else if (d){
-        playerUrl = d.preview;
-        externalUrl = d.view;
-        downloadUrl = d.download;
-      }
-
-      return { type, thumb, playerUrl, externalUrl, downloadUrl, yt, d };
-    }
-
-    render(){
-      const rows = this.filterRows();
-      this.ui.list.innerHTML = "";
-
-      if (!rows.length){
-        this.ui.list.innerHTML = `
-          <div class="card" style="grid-column: span 12; padding: 22px; text-align:center">
-            <i class="fas fa-search" style="font-size:48px; color: var(--accent)"></i>
-            <h3 style="margin:12px 0 8px; font-weight: 900">لا توجد نتائج</h3>
-            <p style="margin:0; color: var(--muted); line-height:1.6">
-              جرّب تغيير البحث أو الفلاتر.
-            </p>
+        this.stage.innerHTML = `
+          <div class="player-aspect ${aspectRatio === "1:1" ? "sq" : (aspectRatio === "9:16" ? "v" : "")}">
+            <div class="player-container" id="plyr-container"></div>
+          </div>
+          <div class="player-loading">
+            <div class="spinner"></div>
+            <div style="color:var(--muted); font-weight: 900;">جاري التحميل...</div>
           </div>
         `;
-        this.ui.countPill.textContent = "0";
-        return;
+
+        // Drive = iframe preview (IMPORTANT)
+        if (type === "drive") {
+          const container = Utils.q("#plyr-container", this.stage);
+          const iframe = document.createElement("iframe");
+          iframe.src = url;
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          iframe.style.border = "none";
+          iframe.allow = "autoplay; fullscreen; picture-in-picture";
+          iframe.allowFullscreen = true;
+          iframe.referrerPolicy = "no-referrer";
+          container.innerHTML = "";
+          container.appendChild(iframe);
+
+          const l = Utils.q(".player-loading", this.stage);
+          if (l) l.classList.add("is-hidden");
+          return;
+        }
+
+        // Non-video fallback (pdf/image/link): iframe
+        if (type === "pdf" || type === "image" || type === "link") {
+          const container = Utils.q("#plyr-container", this.stage);
+          const iframe = document.createElement("iframe");
+          iframe.src = url;
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          iframe.style.border = "none";
+          iframe.allowFullscreen = true;
+          container.innerHTML = "";
+          container.appendChild(iframe);
+
+          const l = Utils.q(".player-loading", this.stage);
+          if (l) l.classList.add("is-hidden");
+          return;
+        }
+
+        // Plyr: youtube / video / hls
+        let plyrType = "video";
+        let plyrSources = [{ src: url, type: "video/mp4" }];
+
+        if (type === "youtube") {
+          plyrType = "youtube";
+          plyrSources = [{ src: Utils.extractYoutubeId(url), provider: "youtube" }];
+        } else if (type === "hls") {
+          plyrType = "video";
+          plyrSources = [{ src: url, type: "application/x-mpegURL" }];
+        }
+
+        try {
+          this.player = new Plyr("#plyr-container", {
+            type: plyrType,
+            sources: plyrSources,
+            autoplay: false,
+            controls: ["play-large","play","progress","current-time","mute","volume","fullscreen"],
+            listeners: {
+              ready: () => {
+                const l = Utils.q(".player-loading", this.stage);
+                if (l) l.classList.add("is-hidden");
+              }
+            }
+          });
+
+          this.player.on("loadedmetadata", () => {
+            const l = Utils.q(".player-loading", this.stage);
+            if (l) l.classList.add("is-hidden");
+          });
+
+          this.player.on("error", () => {
+            const l = Utils.q(".player-loading", this.stage);
+            if (l) l.classList.add("is-hidden");
+            Utils.toast("خطأ في تشغيل الملف (تحقق من الرابط/الصلاحيات).", "error", 4000);
+          });
+        } catch (err) {
+          console.error("Plyr init error", err);
+          Utils.toast("خطأ في تشغيل المشغل.", "error", 3000);
+        }
       }
 
-      const frag = document.createDocumentFragment();
-      rows.forEach(r => frag.appendChild(this.renderCard(r)));
-      this.ui.list.appendChild(frag);
-      this.ui.countPill.textContent = String(rows.length);
-    }
+      async toggleFullscreenMode(){
+        try {
+          if (!document.fullscreenElement) await this.stage.requestFullscreen();
+          else await document.exitFullscreen();
+        } catch (err) {
+          console.error("Fullscreen error", err);
+          this.modal.classList.toggle("pseudo-fullscreen");
+          this.syncFullscreenUi();
+        }
+      }
 
-    renderCard(row){
-      const m = this.computeMedia(row);
-      const catLabel = CONFIG.categoryAr[row.Category] || row.Category;
-      const isSaved = this.offline.has(row.LessonID);
+      syncFullscreenUi(){
+        const isRealFs = !!document.fullscreenElement;
+        const isPseudo = this.modal.classList.contains("pseudo-fullscreen");
+        this.btnPseudoFs.innerHTML = (isRealFs || isPseudo)
+          ? '<i class="fas fa-compress-alt"></i>'
+          : '<i class="fas fa-expand-alt"></i>';
+      }
 
-      const el = document.createElement("article");
-      el.className = "item card";
-      el.dataset.lessonId = row.LessonID;
-
-      const offlineBadge = isSaved ? `<span class="badge offline"><i class="fas fa-check"></i> Offline</span>` : "";
-
-      const downloadLabel = m.yt ? "YouTube" : "تحميل";
-      const downloadIcon = m.yt ? "fa-youtube" : "fa-download";
-      const downloadAttrs = m.yt ? `target="_blank" rel="noopener"` : `download`;
-
-      const canOffline = (!m.yt && !m.d && (m.type === "video" || m.type === "hls"));
-
-      el.innerHTML = `
-        <div class="head">
-          <div class="item-title">${Utils.escapeHtml(row.Title)}</div>
-          <div class="sub">
-            <span class="badge">${Utils.escapeHtml(catLabel)}</span>
-            <span class="badge">${Utils.escapeHtml(Utils.formatDateAr(row.DateUploaded))}</span>
-            <span class="badge">#${Utils.escapeHtml(row.LessonID)}</span>
-            <span class="badge">${Utils.escapeHtml(m.type.toUpperCase())}</span>
-            ${offlineBadge}
+      close(quiet=false){
+        if (this.player) {
+          try { this.player.destroy(); } catch {}
+          this.player = null;
+        }
+        this.stage.innerHTML = `
+          <div class="player-loading">
+            <div class="spinner"></div>
+            <div style="color:var(--muted); font-weight: 900;">جاري التحميل...</div>
           </div>
-        </div>
-
-        <div class="viewer" data-action="open" role="button" aria-label="Open">
-          <img src="${m.thumb}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
-          <div class="overlay"><div class="play" aria-hidden="true"></div></div>
-        </div>
-
-        <div class="actions">
-          <button class="primary" type="button" data-action="open"><i class="fas fa-play"></i> مشاهدة</button>
-
-          <a class="download"
-             href="${m.downloadUrl}"
-             ${downloadAttrs}
-             data-action="download">
-             <i class="fas ${downloadIcon}"></i> ${Utils.escapeHtml(downloadLabel)}
-          </a>
-
-          ${canOffline && !isSaved ? `
-            <button class="offline" type="button" data-action="saveOffline"><i class="fas fa-cloud-arrow-down"></i> حفظ أوفلاين</button>
-          ` : ""}
-
-          ${canOffline && isSaved ? `
-            <button class="danger" type="button" data-action="removeOffline"><i class="fas fa-trash"></i> حذف أوفلاين</button>
-          ` : ""}
-
-          ${m.externalUrl ? `
-            <a href="${m.externalUrl}" target="_blank" rel="noopener" data-action="external">
-              <i class="fas fa-external-link-alt"></i> فتح خارجي
-            </a>
-          ` : ""}
-        </div>
-      `;
-      return el;
+        `;
+        this.modal.classList.remove("open");
+        this.modal.classList.remove("pseudo-fullscreen");
+        this.modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
     }
 
-    async onListClick(e){
-      const actionEl = e.target.closest("[data-action]");
-      if (!actionEl) return;
+    class LessonsApp {
+      constructor(){
+        this.ui = {
+          q: Utils.qInput,
+          category: Utils.category,
+          time: Utils.time,
+          fileType: Utils.fileType,
+          classLevel: Utils.classLevel,
+          sort: Utils.sort,
 
-      const action = actionEl.dataset.action;
+          list: Utils.list,
+          reload: Utils.reload,
+          countPill: Utils.countPill,
+          offlineCountPill: Utils.offlineCountPill,
+          themeToggle: Utils.themeToggle,
 
-      // CRITICAL FIX: Download must NOT be handled by JS (prevents stuck spinner in WebView)
-      if (action === "download") {
-        // Just show a quick toast - NO status change, NO preventDefault
-        Utils.toast("جاري التحميل... تحقق من شريط الإشعارات", "success", 2200);
-        return;
+          btnOfflinePanel: Utils.btnOfflinePanel,
+          offlinePanel: Utils.offlinePanel,
+          btnCloseOfflinePanel: Utils.btnCloseOfflinePanel,
+          offlineList: Utils.offlineList,
+
+          recentList: Utils.recentList
+        };
+
+        this.player = new PlayerManager();
+        this.offlineStore = new OfflineStore();
+
+        this.all = [];
+        this.isLoading = false;
+
+        this.currentTheme = localStorage.getItem("theme") || "dark";
+        this.applyTheme(this.currentTheme);
+
+        this.bind();
+        this.load();
+        this.refreshOfflineUI();
+        this.renderRecentSidebar(); // shows empty state initially
+
+        Utils.currentYear.textContent = new Date().getFullYear();
+
+        window.addEventListener("online", () => {
+          Utils.toast("تم الاتصال بالإنترنت.", "success", 2000);
+          Utils.setStatus('<i class="fas fa-wifi"></i> متصل', "ok");
+        });
+        window.addEventListener("offline", () => {
+          Utils.toast("أنت غير متصل بالإنترنت.", "warning", 4000);
+          Utils.setStatus('<i class="fas fa-wifi-slash"></i> أوفلاين', "warn");
+        });
+        if (!navigator.onLine) Utils.setStatus('<i class="fas fa-wifi-slash"></i> أوفلاين', "warn");
       }
 
-      const card = e.target.closest(".item");
-      if (!card) return;
-      const lessonId = card.dataset.lessonId;
-      const row = this.all.find(x => String(x.LessonID) === String(lessonId));
-      if (!row) return;
+      bind(){
+        this.ui.q.addEventListener("input", () => this.render());
+        this.ui.category.addEventListener("change", () => this.render());
+        this.ui.time.addEventListener("change", () => this.render());
+        this.ui.fileType.addEventListener("change", () => this.render());
+        this.ui.classLevel.addEventListener("change", () => this.render());
+        this.ui.sort.addEventListener("change", () => this.render());
 
-      const m = this.computeMedia(row);
+        this.ui.reload.addEventListener("click", () => this.load(true));
+        this.ui.list.addEventListener("click", (e) => this.onListClick(e));
 
-      if (action === "open"){
+        this.ui.themeToggle.addEventListener("click", () => this.toggleTheme());
+
+        this.ui.btnOfflinePanel.addEventListener("click", () => this.openOfflinePanel());
+        this.ui.btnCloseOfflinePanel.addEventListener("click", () => this.closeOfflinePanel());
+      }
+
+      applyTheme(theme){
+        document.documentElement.setAttribute("data-theme", theme);
+        const icon = this.ui.themeToggle.querySelector("i");
+        icon.className = (theme === "dark") ? "fas fa-moon" : "fas fa-sun";
+      }
+
+      toggleTheme(){
+        this.currentTheme = (this.currentTheme === "dark") ? "light" : "dark";
+        localStorage.setItem("theme", this.currentTheme);
+        this.applyTheme(this.currentTheme);
+        Utils.toast(this.currentTheme === "dark" ? "الوضع الداكن" : "الوضع الفاتح", "success", 1500);
+      }
+
+      async fetchCsv(force=false){
+        const cacheBuster = force ? (CONFIG.sheetCsvUrl.includes("?") ? `&t=${Date.now()}` : `?t=${Date.now()}`) : "";
+        const directUrl = CONFIG.sheetCsvUrl + cacheBuster;
+
+        try {
+          const res = await fetch(directUrl, { mode: "cors", cache: force ? "no-store" : "default" });
+          if (res.ok) return await res.text();
+        } catch {}
+
+        // Proxy fallback
+        const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(directUrl);
+        const res2 = await fetch(proxyUrl, { mode: "cors", cache: force ? "no-store" : "default" });
+        if (!res2.ok) throw new Error(String(res2.status));
+        return await res2.text();
+      }
+
+      async load(force=false){
+        if (this.isLoading) { Utils.toast("جاري التحميل بالفعل...", "warning", 1500); return; }
+        this.isLoading = true;
+        this.ui.reload.disabled = true;
+
+        Utils.setStatus('<i class="fas fa-spinner fa-spin"></i> جاري التحميل...', "warn");
+        this.ui.list.innerHTML = `
+          <div class="card" style="grid-column: span 12; padding: 32px; text-align:center;">
+            <div class="spinner" style="margin: 0 auto 16px;"></div>
+            <h4 style="font-weight:900; margin:0 0 8px;">جاري التحميل...</h4>
+            <p style="color:var(--muted); line-height:1.5; margin:0;">انتظر قليلاً</p>
+          </div>
+        `;
+
+        try {
+          const csv = await this.fetchCsv(force);
+          const parsed = Utils.parseCSV(csv);
+          if (parsed.length < 2) throw new Error("لا توجد بيانات في الشيت.");
+
+          const headers = parsed[0].map(h => String(h).trim());
+          const data = parsed.slice(1).map(cols => {
+            const obj = {};
+            headers.forEach((h, i) => obj[h] = (cols[i] ?? "").trim());
+            return obj;
+          });
+
+          // Expected columns:
+          // SN, LessonID, Title, Category, DateUploaded, FileType, ClassLevel, ContentURL
+          this.all = data
+            .map(r => this.normalize(r))
+            .filter(x => x.Title && x.ContentURL);
+
+          this.buildCategoryOptions();
+          this.buildFileTypeOptions();
+          this.buildClassLevelOptions();
+          this.restoreFilters();
+
+          this.render();
+          this.renderRecentSidebar();
+
+          Utils.setStatus(`<i class="fas fa-check-circle"></i> تم التحميل`, "ok");
+          setTimeout(() => { Utils.setStatus('<i class="fas fa-check-circle"></i> جاهز', "ok"); }, 1200);
+        } catch (err) {
+          console.error("Load error", err);
+          const msg = String(err?.message || err || "خطأ غير معروف");
+          Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> ${Utils.escapeHtml(msg)}`, "error");
+          this.ui.list.innerHTML = `
+            <div class="card" style="grid-column: span 12; padding: 32px; text-align:center;">
+              <i class="fas fa-exclamation-triangle" style="font-size:48px; color: var(--danger); margin-bottom: 16px;"></i>
+              <h3 style="font-weight:900; margin: 0 0 12px;">خطأ في التحميل</h3>
+              <p style="color: var(--muted); line-height: 1.6; margin: 0 0 20px;">${Utils.escapeHtml(msg)}</p>
+              <button id="retryLoad" class="btn" style="margin: 0 auto;">
+                <i class="fas fa-redo"></i>
+                إعادة المحاولة
+              </button>
+            </div>
+          `;
+          Utils.q("#retryLoad")?.addEventListener("click", () => this.load(true));
+        } finally {
+          this.isLoading = false;
+          this.ui.reload.disabled = false;
+        }
+      }
+
+      normalize(r){
+        return {
+          SN: String(r.SN ?? "").trim(),
+          LessonID: String(r.LessonID ?? "").trim(),
+          Title: String(r.Title ?? "").trim(),
+          Category: String(r.Category ?? "").trim(),
+          DateUploaded: Utils.parseMMDDYYYY(String(r.DateUploaded ?? "").trim()),
+          FileType: String(r.FileType ?? "").trim(),        // مثال: "فيديو" / "PDF" / "صورة"
+          ClassLevel: String(r.ClassLevel ?? "").trim(),    // مثال: "أول" / "ثاني" / "ثالث"
+          ContentURL: String(r.ContentURL ?? "").trim()
+        };
+      }
+
+      buildSelectOptions(selectEl, values, allLabel){
+        const current = selectEl.value;
+        selectEl.innerHTML = "";
+
+        const optAll = document.createElement("option");
+        optAll.value = "all";
+        optAll.textContent = allLabel;
+        selectEl.appendChild(optAll);
+
+        values.forEach(v => {
+          const o = document.createElement("option");
+          o.value = v;
+          o.textContent = v;
+          selectEl.appendChild(o);
+        });
+
+        if ([...selectEl.options].some(o => o.value === current)) selectEl.value = current;
+      }
+
+      buildCategoryOptions(){
+        const cats = [...new Set(this.all.map(x => x.Category).filter(Boolean))]
+          .sort((a,b) => a.localeCompare(b, "ar"));
+        this.buildSelectOptions(this.ui.category, cats, "كل المواد");
+      }
+
+      buildFileTypeOptions(){
+        const types = [...new Set(this.all.map(x => x.FileType).filter(Boolean))]
+          .sort((a,b) => a.localeCompare(b, "ar"));
+        this.buildSelectOptions(this.ui.fileType, types, "كل الأنواع");
+      }
+
+      buildClassLevelOptions(){
+        const levels = [...new Set(this.all.map(x => x.ClassLevel).filter(Boolean))]
+          .sort((a,b) => a.localeCompare(b, "ar"));
+        this.buildSelectOptions(this.ui.classLevel, levels, "كل الصفوف");
+      }
+
+      restoreFilters(){
+        const savedCat = localStorage.getItem("selectedCategory");
+        const savedTime = localStorage.getItem("selectedTime");
+        const savedSort = localStorage.getItem("selectedSort");
+        const savedFileType = localStorage.getItem("selectedFileType");
+        const savedClassLevel = localStorage.getItem("selectedClassLevel");
+
+        if (savedCat && [...this.ui.category.options].some(o => o.value === savedCat)) this.ui.category.value = savedCat;
+        if (savedTime && [...this.ui.time.options].some(o => o.value === savedTime)) this.ui.time.value = savedTime;
+        if (savedSort && [...this.ui.sort.options].some(o => o.value === savedSort)) this.ui.sort.value = savedSort;
+
+        if (savedFileType && [...this.ui.fileType.options].some(o => o.value === savedFileType)) this.ui.fileType.value = savedFileType;
+        if (savedClassLevel && [...this.ui.classLevel.options].some(o => o.value === savedClassLevel)) this.ui.classLevel.value = savedClassLevel;
+      }
+
+      filterRows(){
+        const q = this.ui.q.value.trim().toLowerCase();
+        const cat = this.ui.category.value;
+        const timeKey = this.ui.time.value;
+        const ft = this.ui.fileType.value;
+        const cl = this.ui.classLevel.value;
+        const now = new Date();
+
+        const timePred = (row) => {
+          if (timeKey === "all") return true;
+          if (!row.DateUploaded) return false;
+          const diff = Utils.daysBetween(now, row.DateUploaded);
+          if (timeKey === "today") return diff === 0;
+          if (timeKey === "yesterday") return diff === 1;
+          if (timeKey === "week") return diff >= 0 && diff <= 7;
+          if (timeKey === "month") return diff >= 0 && diff <= 30;
+          if (timeKey === "year") return diff >= 0 && diff <= 365;
+          return true;
+        };
+
+        return this.all.filter(r => {
+          const okQ = !q || r.Title.toLowerCase().includes(q);
+          const okCat = (cat === "all") || (r.Category === cat);
+          const okTime = timePred(r);
+          const okFt = (ft === "all") || (r.FileType === ft);
+          const okCl = (cl === "all") || (r.ClassLevel === cl);
+          return okQ && okCat && okTime && okFt && okCl;
+        });
+      }
+
+      sortRows(rows){
+        const sortKey = this.ui.sort.value;
+        const sorted = [...rows];
+
+        switch (sortKey) {
+          case "date-desc":
+            sorted.sort((a, b) => (b.DateUploaded?.getTime?.() || 0) - (a.DateUploaded?.getTime?.() || 0));
+            break;
+          case "date-asc":
+            sorted.sort((a, b) => (a.DateUploaded?.getTime?.() || 0) - (b.DateUploaded?.getTime?.() || 0));
+            break;
+          case "title-asc":
+            sorted.sort((a, b) => a.Title.localeCompare(b.Title, "ar"));
+            break;
+          case "title-desc":
+            sorted.sort((a, b) => b.Title.localeCompare(a.Title, "ar"));
+            break;
+        }
+        return sorted;
+      }
+
+      computeMedia(row){
+        const type = Utils.guessType(row.ContentURL);
+        const yt = Utils.extractYoutubeId(row.ContentURL);
+        const d = Utils.driveLinks(row.ContentURL);
+
+        let thumb = Utils.generateThumbUrl(row.ContentURL, type, row.FileType);
+        let playerUrl = row.ContentURL;
+        let externalUrl = row.ContentURL;
+        let downloadUrl = row.ContentURL;
+
+        if (yt) {
+          playerUrl = `https://www.youtube.com/embed/${yt}?rel=0&modestbranding=1`;
+          externalUrl = `https://www.youtube.com/watch?v=${yt}`;
+          downloadUrl = externalUrl;
+          thumb = `https://i.ytimg.com/vi/${yt}/hqdefault.jpg`;
+        } else if (d) {
+          playerUrl = d.preview;
+          externalUrl = d.view;
+          downloadUrl = d.download;
+          thumb = d.thumb;
+        }
+
+        // Optional: aspect hint
+        let aspectRatio = "16:9";
+        const u = row.ContentURL.toLowerCase();
+        if (u.includes("square") || u.includes("1by1") || u.includes("1x1")) aspectRatio = "1:1";
+        if (u.includes("vertical") || u.includes("portrait") || u.includes("9by16") || u.includes("3by4")) aspectRatio = "9:16";
+
+        return { type, thumb, playerUrl, externalUrl, downloadUrl, yt, d, aspectRatio };
+      }
+
+      renderRecentSidebar(){
+        const recentLessons = this.offlineStore.getRecentLessons();
+
+        if (!recentLessons.length) {
+          this.ui.recentList.innerHTML = `
+            <div class="recent-empty">
+              <i class="fas fa-clock"></i>
+              <div class="recent-empty-text">لا توجد مشاهدات حديثة.<br/>ابدأ بمشاهدة درس!</div>
+            </div>
+          `;
+          return;
+        }
+
+        this.ui.recentList.innerHTML = "";
+        recentLessons.forEach(lesson => {
+          const row = this.all.find(r => String(r.LessonID) === String(lesson.lessonId));
+          if (!row) return;
+
+          const m = this.computeMedia(row);
+
+          const div = document.createElement("div");
+          div.className = "recent-item";
+          div.dataset.lessonId = row.LessonID;
+          div.innerHTML = `
+            <img class="recent-thumb" src="${Utils.escapeHtml(m.thumb)}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
+            <div class="recent-info">
+              <div class="recent-title">${Utils.escapeHtml(row.Title)}</div>
+              <div class="recent-meta">
+                <span class="recent-badge">${Utils.escapeHtml(row.Category || "—")}</span>
+                <span class="recent-badge">${Utils.escapeHtml(row.FileType || "—")}</span>
+                <span class="recent-badge">${Utils.escapeHtml(row.ClassLevel || "—")}</span>
+              </div>
+            </div>
+          `;
+
+          div.addEventListener("click", () => this.openRow(row));
+          this.ui.recentList.appendChild(div);
+        });
+      }
+
+      async openRow(row){
+        const m = this.computeMedia(row);
+
+        // save in recent
+        this.offlineStore.addRecentLesson(row.LessonID, row.Title, row.Category);
+        this.renderRecentSidebar();
+
         let url = m.playerUrl;
         let type = m.type;
 
-        if (!m.yt && !m.d && (m.type === "video" || m.type === "hls") && this.offline.has(row.LessonID)){
-          const offlineUrl = await this.offline.getPlayableUrl(row.LessonID);
-          if (offlineUrl){
+        // offline override (only if saved)
+        if (this.offlineStore.hasLesson(row.LessonID)) {
+          const offlineUrl = await this.offlineStore.getPlayableUrl(row.LessonID);
+          if (offlineUrl) {
             url = offlineUrl;
             type = "video";
-            Utils.toast("تشغيل من الأوفلاين", "success");
+            Utils.toast("تشغيل من الأوفلاين.", "success", 2000);
           }
         }
 
@@ -1551,125 +1883,259 @@
           title: row.Title,
           type,
           url,
-          externalUrl: m.externalUrl
+          externalUrl: m.externalUrl,
+          aspectRatio: m.aspectRatio
         });
-        return;
       }
 
-      if (action === "external"){
-        Utils.toast("فتح خارجي...", "success", 1200);
-        return;
-      }
+      render(){
+        const rows = this.filterRows();
+        const sorted = this.sortRows(rows);
 
-      if (action === "saveOffline"){
-        e.preventDefault();
-        const canOffline = (!m.yt && !m.d && (m.type === "video" || m.type === "hls"));
-        if (!canOffline){
-          Utils.toast("هذا المصدر لا يمكن حفظه أوفلاين داخل المتصفح.", "warning", 3200);
+        // Save filters
+        localStorage.setItem("selectedCategory", this.ui.category.value);
+        localStorage.setItem("selectedTime", this.ui.time.value);
+        localStorage.setItem("selectedFileType", this.ui.fileType.value);
+        localStorage.setItem("selectedClassLevel", this.ui.classLevel.value);
+        localStorage.setItem("selectedSort", this.ui.sort.value);
+
+        this.ui.list.innerHTML = "";
+
+        if (!sorted.length) {
+          this.ui.list.innerHTML = `
+            <div class="card" style="grid-column: span 12; padding: 32px; text-align:center;">
+              <i class="fas fa-search" style="font-size:48px; color: var(--accent); margin-bottom: 16px;"></i>
+              <h3 style="font-weight:900; margin: 0 0 12px;">لا توجد نتائج</h3>
+              <p style="color: var(--muted); line-height: 1.6; margin: 0;">جرب تغيير البحث أو الفلاتر.</p>
+            </div>
+          `;
+          this.ui.countPill.textContent = "0";
           return;
         }
 
-        try{
-          Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> تنزيل للأوفلاين...`, "warn");
-          Utils.toast("بدء حفظ الفيديو للأوفلاين...", "success", 2400);
-
-          const progressToast = (p, received, total) => {
-            if (total > 0){
-              Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> Offline ${(p*100).toFixed(0)}% (${Utils.formatBytes(received)} / ${Utils.formatBytes(total)})`, "warn");
-            } else {
-              Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> Offline... (${Utils.formatBytes(received)})`, "warn");
-            }
-          };
-
-          await this.offline.save(row.LessonID, row.Title, row.ContentURL, progressToast);
-
-          Utils.toast("تم الحفظ للأوفلاين.", "success", 2600);
-          Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok");
-          this.refreshOfflineUI();
-          this.render();
-        } catch (err){
-          console.error(err);
-          Utils.toast(err.message || "فشل الحفظ للأوفلاين.", "error", 3400);
-          Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> فشل الأوفلاين`, "error");
-          setTimeout(() => Utils.setStatus(`<i class="fas fa-check-circle"></i> جاهز`, "ok"), 2000);
-        }
-        return;
+        const frag = document.createDocumentFragment();
+        sorted.forEach(r => frag.appendChild(this.renderCard(r)));
+        this.ui.list.appendChild(frag);
+        this.ui.countPill.textContent = String(sorted.length);
       }
 
-      if (action === "removeOffline"){
-        e.preventDefault();
-        try{
-          await this.offline.remove(row.LessonID);
-          Utils.toast("تم حذف الأوفلاين.", "success", 2200);
-          this.refreshOfflineUI();
-          this.render();
-        } catch (err){
-          Utils.toast("فشل حذف الأوفلاين.", "error", 2600);
-        }
-        return;
-      }
-    }
+      renderCard(row){
+        const m = this.computeMedia(row);
+        const isSaved = this.offlineStore.hasLesson(row.LessonID);
 
-    openOfflinePanel(){
-      this.ui.offlinePanel.classList.add("open");
-      this.ui.offlinePanel.setAttribute("aria-hidden","false");
-      this.refreshOfflineUI();
-    }
-    closeOfflinePanel(){
-      this.ui.offlinePanel.classList.remove("open");
-      this.ui.offlinePanel.setAttribute("aria-hidden","true");
-    }
+        const offlineBadge = isSaved ? `<span class="badge offline"><i class="fas fa-check"></i> Offline</span>` : "";
 
-    refreshOfflineUI(){
-      const items = this.offline.list();
-      this.ui.offlineCountPill.textContent = String(items.length);
+        // Offline saving allowed only for direct video/hls (not YouTube/Drive preview)
+        const canOffline = !m.yt && (m.type === "video" || m.type === "hls");
 
-      if (!items.length){
-        this.ui.offlineList.innerHTML = `
-          <div class="card" style="padding: 16px; text-align:center">
-            <i class="fas fa-box-open" style="font-size:42px; color: var(--muted)"></i>
-            <div style="margin-top: 10px; font-weight: 900">لا توجد ملفات أوفلاين</div>
-            <div style="margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.6">
-              استخدم زر "حفظ أوفلاين" في بطاقات الفيديو (للروابط المباشرة).
+        const downloadLabel = m.yt ? "YouTube" : "تحميل";
+        const downloadIcon = m.yt ? "fab fa-youtube" : "fas fa-download";
+
+        const el = document.createElement("article");
+        el.className = "item card";
+        el.dataset.lessonId = row.LessonID;
+
+        el.innerHTML = `
+          <div class="head">
+            <div class="item-title">${Utils.escapeHtml(row.Title)}</div>
+            <div class="sub">
+              <span class="badge">${Utils.escapeHtml(row.Category || "—")}</span>
+              <span class="badge">${Utils.escapeHtml(Utils.formatDateAr(row.DateUploaded) || "—")}</span>
+              <span class="badge">${Utils.escapeHtml(row.FileType || "—")}</span>
+              <span class="badge">${Utils.escapeHtml(row.ClassLevel || "—")}</span>
+              ${offlineBadge}
             </div>
           </div>
-        `;
-        return;
-      }
 
-      this.ui.offlineList.innerHTML = "";
-      items.forEach(m => {
-        const div = document.createElement("div");
-        div.className = "panelRow";
-        div.innerHTML = `
-          <div style="min-width:0">
-            <div style="font-weight: 900; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">
-              ${Utils.escapeHtml(m.title || m.lessonId)}
-            </div>
-            <div class="metaTxt">
-              #${Utils.escapeHtml(m.lessonId)} • ${Utils.escapeHtml(Utils.formatBytes(m.size || 0))} • ${Utils.escapeHtml(m.mode || "opfs")}
-            </div>
+          <div class="viewer" data-action="open" role="button" aria-label="Open">
+            <img src="${Utils.escapeHtml(m.thumb)}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
+            <div class="overlay"><div class="play" aria-hidden="true"></div></div>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-            <button class="miniBtn" type="button" data-act="remove" data-id="${Utils.escapeHtml(m.lessonId)}">
-              <i class="fas fa-trash"></i> حذف
+
+          <div class="actions">
+            <button class="primary" type="button" data-action="open">
+              <i class="fas fa-play"></i> تشغيل
             </button>
+
+            <a class="download" href="${Utils.escapeHtml(m.downloadUrl)}" target="_blank" rel="noopener">
+              <i class="${downloadIcon}"></i> ${Utils.escapeHtml(downloadLabel)}
+            </a>
+
+            ${canOffline && !isSaved ? `
+              <button class="offline" type="button" data-action="saveOffline">
+                <i class="fas fa-cloud-arrow-down"></i> حفظ أوفلاين
+              </button>
+            ` : ""}
+
+            ${canOffline && isSaved ? `
+              <button class="danger" type="button" data-action="removeOffline">
+                <i class="fas fa-trash"></i> حذف أوفلاين
+              </button>
+            ` : ""}
+
+            <a href="${Utils.escapeHtml(m.externalUrl)}" target="_blank" rel="noopener" data-action="external">
+              <i class="fas fa-external-link-alt"></i> فتح خارجي
+            </a>
           </div>
         `;
-        div.querySelector('[data-act="remove"]').addEventListener("click", async () => {
-          await this.offline.remove(m.lessonId);
-          Utils.toast("تم الحذف.", "success", 1600);
-          this.refreshOfflineUI();
-          this.render();
-        });
-        this.ui.offlineList.appendChild(div);
-      });
-    }
-  }
 
-  Utils.$("#currentYear").textContent = String(new Date().getFullYear());
-  window.addEventListener("DOMContentLoaded", () => new LessonsApp());
+        return el;
+      }
+
+      async onListClick(e){
+        const actionEl = e.target.closest("[data-action]");
+        if (!actionEl) return;
+
+        const action = actionEl.dataset.action;
+        const card = e.target.closest(".item");
+        if (!card) return;
+
+        const lessonId = card.dataset.lessonId;
+        if (!lessonId) return;
+
+        const row = this.all.find(x => String(x.LessonID) === String(lessonId));
+        if (!row) return;
+
+        const m = this.computeMedia(row);
+
+        if (action === "open") {
+          e.preventDefault();
+          await this.openRow(row);
+          return;
+        }
+
+        if (action === "external") {
+          e.preventDefault();
+          Utils.toast("تم فتح الرابط في نافذة جديدة.", "success", 1500);
+          return;
+        }
+
+        if (action === "saveOffline") {
+          e.preventDefault();
+          if (m.yt) { Utils.toast("لا يمكن حفظ YouTube أوفلاين هنا.", "warning", 3000); return; }
+
+          try {
+            Utils.setStatus('<i class="fas fa-cloud-arrow-down"></i> حفظ أوفلاين...', "warn");
+            Utils.toast("بدء الحفظ أوفلاين...", "success", 2000);
+
+            const progressToast = (progress, received, total) => {
+              if (total > 0) {
+                const percent = Math.min(100, Math.round(progress * 100));
+                Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> ${percent}% (${Utils.formatBytes(received)} / ${Utils.formatBytes(total)})`, "warn");
+              } else {
+                Utils.setStatus(`<i class="fas fa-cloud-arrow-down"></i> ${Utils.formatBytes(received)}`, "warn");
+              }
+            };
+
+            await this.offlineStore.saveVideo(row.LessonID, row.Title, row.ContentURL, progressToast);
+
+            Utils.toast("تم الحفظ أوفلاين!", "success", 3000);
+            Utils.setStatus('<i class="fas fa-check-circle"></i> جاهز', "ok");
+
+            await this.refreshOfflineUI();
+            this.render();
+            this.renderRecentSidebar();
+          } catch (err) {
+            console.error("Save offline error", err);
+            const msg = String(err?.message || "فشل الحفظ");
+            Utils.toast(msg, "error", 4000);
+            Utils.setStatus(`<i class="fas fa-exclamation-triangle"></i> ${Utils.escapeHtml(msg)}`, "error");
+            setTimeout(() => Utils.setStatus('<i class="fas fa-check-circle"></i> جاهز', "ok"), 3000);
+          }
+          return;
+        }
+
+        if (action === "removeOffline") {
+          e.preventDefault();
+          try {
+            await this.offlineStore.removeLesson(row.LessonID);
+            Utils.toast("تم حذف الملف من الأوفلاين.", "success", 2500);
+            await this.refreshOfflineUI();
+            this.render();
+          } catch (err) {
+            console.error("Remove offline error", err);
+            Utils.toast(String(err?.message || "فشل الحذف"), "error", 3000);
+          }
+          return;
+        }
+      }
+
+      openOfflinePanel(){
+        this.ui.offlinePanel.classList.add("open");
+        this.ui.offlinePanel.setAttribute("aria-hidden", "false");
+        this.refreshOfflineUI();
+      }
+
+      closeOfflinePanel(){
+        this.ui.offlinePanel.classList.remove("open");
+        this.ui.offlinePanel.setAttribute("aria-hidden", "true");
+      }
+
+      async refreshOfflineUI(){
+        try {
+          const items = await this.offlineStore.listLessons();
+          this.ui.offlineCountPill.textContent = String(items.length);
+
+          if (!items.length) {
+            this.ui.offlineList.innerHTML = `
+              <div class="card" style="padding: 24px; text-align:center;">
+                <i class="fas fa-box" style="font-size:48px; color: var(--muted); margin-bottom: 16px;"></i>
+                <div style="font-weight:900; margin-bottom: 8px;">لا يوجد ملفات محفوظة</div>
+                <div style="color: var(--muted); line-height:1.6;">اضغط “حفظ أوفلاين” داخل أي درس MP4/HLS.</div>
+              </div>
+            `;
+            return;
+          }
+
+          this.ui.offlineList.innerHTML = "";
+          items.forEach(m => {
+            const div = document.createElement("div");
+            div.className = "panelRow";
+            div.innerHTML = `
+              <div style="min-width:0; flex:1;">
+                <div style="font-weight:900; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                  ${Utils.escapeHtml(m.title)} <span style="opacity:.7">(${Utils.escapeHtml(m.lessonId)})</span>
+                </div>
+                <div class="metaTxt">
+                  ${Utils.escapeHtml(Utils.formatBytes(m.size || 0))} •
+                  ${m.savedAt ? Utils.escapeHtml(new Date(m.savedAt).toLocaleDateString("ar-EG")) : ""}
+                </div>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; min-width:120px;">
+                <button class="miniBtn" type="button" data-act="remove" data-id="${Utils.escapeHtml(m.lessonId)}">
+                  <i class="fas fa-trash"></i> حذف
+                </button>
+              </div>
+            `;
+
+            div.querySelector('[data-act="remove"]').addEventListener("click", async (e) => {
+              e.preventDefault();
+              if (!confirm("حذف الملف من الأوفلاين؟")) return;
+              await this.offlineStore.removeLesson(m.lessonId);
+              Utils.toast("تم الحذف.", "success", 1500);
+              await this.refreshOfflineUI();
+              this.render();
+            });
+
+            this.ui.offlineList.appendChild(div);
+          });
+        } catch (error) {
+          console.error("Error refreshing offline UI", error);
+          this.ui.offlineList.innerHTML = `
+            <div class="card" style="padding: 24px; text-align:center;">
+              <i class="fas fa-exclamation-triangle" style="font-size:48px; color: var(--danger); margin-bottom: 16px;"></i>
+              <div style="font-weight:900; margin-bottom: 8px;">خطأ</div>
+              <div style="color: var(--muted); line-height:1.6;">${Utils.escapeHtml(String(error?.message || error))}</div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      window.app = new LessonsApp();
+    });
   </script>
 </body>
 </html>
-
