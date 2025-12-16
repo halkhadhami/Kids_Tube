@@ -1654,43 +1654,79 @@
 
   
 
-    /* ====== Floating Buttons: Filters + Recent + Important (Mobile) ====== */
+    /* ====== Floating Buttons (Mobile Only): Filters + Recent + Important ====== */
+    /* مخفية افتراضياً (ديسكتوب) */
     .open-filters-btn, .open-recent-btn, .open-important-btn{
-      display:none; /* يظهر فقط على الموبايل */
-      position:fixed;
-      bottom:20px;
-      background:var(--accent);
-      color:#fff;
-      border:none;
-      border-radius:var(--radius);
-      padding:12px 18px;
-      font-size:14px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:var(--shadow);
-      z-index:999;
-      align-items:center;
-      gap:10px;
-      transition:var(--transition);
-      max-width: 46vw;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      display:none;
     }
-    .open-filters-btn:hover, .open-recent-btn:hover, .open-important-btn:hover{ background:var(--accent-dark); transform:translateY(-2px); }
 
-    /* مواقع الأزرار الثلاثة */
-    .open-filters-btn{ left:20px; }
-    .open-recent-btn{ left:50%; transform:translateX(-50%); }
-    .open-important-btn{ right:20px; }
-
-    /* موبايل: إظهار الأزرار وإخفاء عمود اليمين (آخر المشاهدات/مهم) لأننا سنستخدم Sidebars */
+    /* موبايل فقط: نظهر الأزرار بنفس الحجم والمحاذاة */
     @media (max-width: 768px){
-      .open-filters-btn, .open-recent-btn, .open-important-btn{ display:flex; }
-      .sidebar{ display:none; }
+      /* إخفاء قائمة الديسكتوب اليمنى (نستبدلها بـ sidebars) */
+      .sidebar{ display:none !important; }
+
+      /* إظهار الأزرار الثلاثة */
+      .open-filters-btn, .open-recent-btn, .open-important-btn{
+        display:flex !important;
+        position:fixed;
+        bottom:20px;
+        background:var(--accent);
+        color:#fff;
+        border:none;
+        border-radius:var(--radius);
+        height:50px;
+        width:100px;
+        padding:0 12px;
+        font-size:13px;
+        font-weight:800;
+        cursor:pointer;
+        box-shadow:var(--shadow);
+        z-index:999;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        transition:var(--transition);
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        line-height:1;
+      }
+
+      /* مواقع الأزرار */
+      .open-filters-btn{ 
+        left:10px; 
+      }
+      .open-recent-btn{ 
+        left:50%; 
+        transform:translateX(-50%);
+      }
+      .open-important-btn{ 
+        right:10px; 
+      }
+
+      /* Hover */
+      .open-filters-btn:hover, .open-important-btn:hover{ 
+        background:var(--accent-dark); 
+        transform:translateY(-3px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      }
+      .open-recent-btn:hover{ 
+        background:var(--accent-dark); 
+        transform:translateX(-50%) translateY(-3px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      }
     }
 
-    /* شارة مهم داخل قوائم (نفس ستايل recent-badge لكن بلون مختلف) */
+    /* للشاشات الصغيرة جداً: نصغّر العرض */
+    @media (max-width: 400px){
+      .open-filters-btn, .open-recent-btn, .open-important-btn{
+        width:90px;
+        font-size:12px;
+        gap:6px;
+      }
+    }
+
+    /* شارة مهم داخل القوائم */
     .badge-important{
       background: rgba(93,140,255,0.18);
       border: 1px solid rgba(93,140,255,0.35);
