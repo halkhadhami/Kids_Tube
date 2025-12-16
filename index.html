@@ -41,8 +41,8 @@
     body{
       font-family: 'Segoe UI', system-ui, -apple-system, 'Noto Sans Arabic', sans-serif;
       background:
-        radial-gradient(1500px 700px at 65% 15%, rgba(93, 140, 255, 0.15), transparent 70%),
-        radial-gradient(1100px 600px at 20% 25%, rgba(101, 72, 255, 0.12), transparent 70%),
+        radial-gradient(1500px 700px at 65% 15%, rgba(93,140,255,0.15), transparent 70%),
+        radial-gradient(1100px 600px at 20% 25%, rgba(101,72,255,0.12), transparent 70%),
         var(--bg);
       color: var(--text);
       overflow-x: hidden;
@@ -55,8 +55,8 @@
       position: fixed;
       inset: 0;
       background: 
-        radial-gradient(circle at 10% 20%, rgba(93, 140, 255, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(101, 72, 255, 0.05) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(93,140,255,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(101,72,255,0.05) 0%, transparent 40%);
       opacity: 0.6;
       z-index: -1;
       pointer-events: none;
@@ -64,8 +64,8 @@
     }
     [data-theme="light"] body::before{
       background: 
-        radial-gradient(circle at 10% 20%, rgba(79, 107, 255, 0.03) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(65, 89, 224, 0.03) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(79,107,255,0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(65,89,224,0.03) 0%, transparent 40%);
     }
     .safe-top{padding-top: env(safe-area-inset-top)}
     .safe-bottom{padding-bottom: env(safe-area-inset-bottom)}
@@ -91,7 +91,7 @@
       font-size: 20px; font-weight: 900; letter-spacing:-0.5px;
       background: linear-gradient(90deg, var(--accent), #9c6dff);
       -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      text-shadow: 0 2px 4px rgba(93, 140, 255, 0.2);
+      text-shadow: 0 2px 4px rgba(93,140,255,0.2);
       position: relative;
       display: inline-block;
     }
@@ -1011,46 +1011,69 @@
         font-size: 14px;
         max-width: 60%;
       }
-    }
-    
-    /* Landscape mode improvements */
-    @media (max-width: 768px) and (orientation: landscape) {
-      #playerModal.open {
-        touch-action: manipulation;
-      }
       
-      .player-aspect {
+      /* Control positioning for mobile */
+      .plyr__controls {
+        position: absolute;
+        bottom: env(safe-area-inset-bottom);
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.7) !important;
         border-radius: 0 !important;
-        max-width: 100% !important;
+        border-top: 1px solid rgba(255,255,255,0.15) !important;
+        z-index: 10;
       }
       
-      .plyr--video .plyr__controls {
-        padding: 8px 12px !important;
+      .plyr__controls .plyr__progress {
+        margin-bottom: 5px !important;
       }
       
-      .plyr__control {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        font-size: 18px !important;
+      .plyr__controls .plyr__time {
+        font-size: 12px !important;
       }
       
-      .plyr__progress__container {
-        height: 6px !important;
-      }
-      
-      .plyr__time {
-        font-size: 11px !important;
-      }
-      
-      /* Hide volume controls on mobile */
-      .plyr__volume {
+      .plyr__controls .plyr__volume {
         display: none !important;
       }
       
-      /* Show mute button */
-      .plyr__mute {
-        display: block !important;
+      .plyr__controls .plyr__control {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        font-size: 16px !important;
+      }
+      
+      .plyr__controls .plyr__progress__container {
+        height: 6px !important;
+      }
+      
+      /* Hide controls after inactivity */
+      .plyr__controls.auto-hide {
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+      }
+      
+      .plyr__controls.auto-hide:hover {
+        opacity: 1;
+      }
+      
+      /* Adjust player for mobile landscape */
+      @media (max-width: 768px) and (orientation: landscape) {
+        .player-aspect {
+          border-radius: 0 !important;
+          max-width: 100% !important;
+        }
+        
+        #playerModal.pseudo-fullscreen .player-aspect,
+        #playerModal.fullscreen-mobile .player-aspect {
+          padding-bottom: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+        }
+        
+        .plyr__controls {
+          bottom: 10px !important;
+          background: rgba(0,0,0,0.8) !important;
+          border-radius: 0 !important;
+        }
       }
     }
     
@@ -1453,6 +1476,18 @@
       #playerModal.fullscreen-mobile #playerShell {
         padding-top: env(safe-area-inset-top) !important;
         padding-bottom: env(safe-area-inset-bottom) !important;
+      }
+      
+      /* Make sure video fills entire screen in landscape */
+      @media (max-width: 768px) and (orientation: landscape) {
+        #playerModal.pseudo-fullscreen .player-aspect,
+        #playerModal.fullscreen-mobile .player-aspect {
+          padding-bottom: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+        }
+        
+        .plyr__controls {
+          bottom: env(safe-area-inset-bottom);
+        }
       }
     }
     
@@ -2126,6 +2161,21 @@
             aspect.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
           }
         });
+        
+        // Add touch events for mobile
+        if (this.isMobile) {
+          this.stage.addEventListener('touchstart', (e) => {
+            this.handleTouchStart(e);
+          }, { passive: true });
+          
+          this.stage.addEventListener('touchend', (e) => {
+            this.handleTouchEnd(e);
+          }, { passive: true });
+          
+          this.stage.addEventListener('touchmove', (e) => {
+            this.handleTouchMove(e);
+          }, { passive: true });
+        }
       }
       
       setupOrientationChange() {
@@ -2137,8 +2187,133 @@
             } else {
               this.modal.classList.remove("mobile-landscape");
             }
+            this.adjustPlayerLayout();
           }, 300);
         });
+      }
+      
+      handleTouchStart(e) {
+        if (!this.isMobile) return;
+        
+        const touch = e.touches[0];
+        this.touchStartX = touch.clientX;
+        this.touchStartY = touch.clientY;
+        this.touchStartTime = Date.now();
+        this.isTouchMoving = false;
+      }
+      
+      handleTouchMove(e) {
+        if (!this.isMobile || !this.touchStartX) return;
+        
+        const touch = e.touches[0];
+        const dx = touch.clientX - this.touchStartX;
+        const dy = touch.clientY - this.touchStartY;
+        
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+          this.isTouchMoving = true;
+        }
+      }
+      
+      handleTouchEnd(e) {
+        if (!this.isMobile || this.isTouchMoving) return;
+        
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - (this.touchStartTime || 0);
+        
+        // Single tap: toggle controls
+        if (touchDuration < 300) {
+          this.toggleControlsVisibility();
+        }
+        // Double tap: play/pause
+        else if (touchDuration < 600) {
+          if (this.player) {
+            if (this.player.playing) {
+              this.player.pause();
+            } else {
+              this.player.play();
+            }
+          }
+        }
+        
+        this.touchStartX = null;
+        this.touchStartY = null;
+        this.touchStartTime = null;
+        this.isTouchMoving = false;
+      }
+      
+      toggleControlsVisibility() {
+        if (!this.isMobile || !this.isFullScreen) return;
+        
+        const controls = this.getControlsElement();
+        const playerBar = Utils.q("#playerBar");
+        
+        if (!controls || !playerBar) return;
+        
+        const controlsHidden = controls.classList.contains('auto-hide') && controls.style.opacity === '0';
+        const barHidden = playerBar.classList.contains('mobile-hidden');
+        
+        if (controlsHidden || barHidden) {
+          // Show controls
+          controls.style.opacity = '1';
+          controls.style.pointerEvents = 'auto';
+          playerBar.classList.remove('mobile-hidden');
+          this.showControlsTemporarily();
+        } else {
+          // Hide controls after delay
+          clearTimeout(this.hideControlsTimeout);
+          this.hideControlsTimeout = setTimeout(() => {
+            if (!this.modal.matches(':hover')) {
+              controls.style.opacity = '0';
+              controls.style.pointerEvents = 'none';
+              playerBar.classList.add('mobile-hidden');
+            }
+          }, 3000);
+        }
+      }
+      
+      showControlsTemporarily() {
+        const controls = this.getControlsElement();
+        const playerBar = Utils.q("#playerBar");
+        
+        if (controls) {
+          controls.style.opacity = '1';
+          controls.style.pointerEvents = 'auto';
+        }
+        
+        if (playerBar) {
+          playerBar.classList.remove('mobile-hidden');
+        }
+        
+        clearTimeout(this.hideControlsTimeout);
+        this.hideControlsTimeout = setTimeout(() => {
+          if (this.isFullScreen && this.isMobile && !this.modal.matches(':hover')) {
+            if (controls) {
+              controls.style.opacity = '0';
+              controls.style.pointerEvents = 'none';
+            }
+            if (playerBar) {
+              playerBar.classList.add('mobile-hidden');
+            }
+          }
+        }, 3000);
+      }
+      
+      hidePlayerBar() {
+        const playerBar = Utils.q("#playerBar");
+        if (playerBar) {
+          playerBar.classList.add('mobile-hidden');
+        }
+      }
+      
+      showPlayerBar() {
+        const playerBar = Utils.q("#playerBar");
+        if (playerBar) {
+          playerBar.classList.remove('mobile-hidden');
+        }
+      }
+      
+      getControlsElement() {
+        return this.player ? Utils.q('.plyr__controls', this.player.elements.container) : null;
       }
       
       open({ title, type, url, externalUrl, aspectRatio = "16:9" }){
@@ -2154,6 +2329,9 @@
         this.modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
         
+        // Reset mobile state
+        this.updateMobileState();
+        
         this.stage.innerHTML = `
           <div class="player-aspect ${aspectRatio === "1:1" ? "sq" : (aspectRatio === "9:16" ? "v" : "")}">
             <div class="player-container" id="plyr-container"></div>
@@ -2164,7 +2342,7 @@
           </div>
         `;
         
-        // Drive = iframe preview
+        // Drive = iframe preview (IMPORTANT)
         if (type === "drive") {
           const container = Utils.q("#plyr-container", this.stage);
           const iframe = document.createElement("iframe");
@@ -2182,7 +2360,7 @@
           return;
         }
         
-        // Non-video fallback
+        // Non-video fallback (pdf/image/link): iframe
         if (type === "pdf" || type === "image" || type === "link") {
           const container = Utils.q("#plyr-container", this.stage);
           const iframe = document.createElement("iframe");
@@ -2234,23 +2412,11 @@
                 const l = Utils.q(".player-loading", this.stage);
                 if (l) l.classList.add("is-hidden");
                 
-                // Add breathing effect to controls
-                const controls = Utils.q('.plyr__controls');
-                if (controls) {
-                  controls.style.transition = 'opacity 0.4s ease';
-                  
-                  this.stage.addEventListener('mouseenter', () => {
-                    controls.style.opacity = '1';
-                  });
-                  
-                  this.stage.addEventListener('mouseleave', () => {
-                    if (!this.isFullScreen) {
-                      setTimeout(() => {
-                        controls.style.opacity = '0.8';
-                      }, 2000);
-                    }
-                  });
-                }
+                // Initialize mobile controls
+                this.setupMobileControls();
+                
+                // Add event listeners for mobile
+                this.addMobileEventListeners();
               }
             }
           });
@@ -2266,21 +2432,87 @@
             Utils.toast("خطأ في تشغيل الملف (تحقق من الرابط/الصلاحيات).", "error", 4000);
           });
           
+          // Add mobile-specific control positioning
+          if (this.isMobile) {
+            const controls = this.getControlsElement();
+            if (controls) {
+              controls.classList.add('auto-hide');
+              controls.style.position = 'absolute';
+              controls.style.bottom = 'env(safe-area-inset-bottom)';
+              controls.style.left = '0';
+              controls.style.right = '0';
+              controls.style.background = 'rgba(0,0,0,0.75) !important';
+              controls.style.borderRadius = '0 !important';
+              controls.style.borderTop = '1px solid rgba(255,255,255,0.15) !important';
+              
+              // Hide volume controls on mobile
+              const volume = Utils.q('.plyr__volume', controls);
+              if (volume) volume.style.display = 'none';
+            }
+          }
+          
         } catch (err) {
           console.error("Plyr init error", err);
           Utils.toast("خطأ في تشغيل المشغل.", "error", 3000);
         }
       }
       
+      setupMobileControls() {
+        if (!this.isMobile) return;
+        
+        // Add touch events for better control
+        document.addEventListener('touchstart', (e) => {
+          if (this.modal.classList.contains("open")) {
+            this.lastTouchTime = Date.now();
+            this.modal.classList.add('touch-active');
+            this.showControlsTemporarily();
+          }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+          if (this.modal.classList.contains("open") && this.isFullScreen) {
+            setTimeout(() => {
+              this.modal.classList.remove('touch-active');
+            }, 3000);
+          }
+        }, { passive: true });
+      }
+      
+      addMobileEventListeners() {
+        if (!this.isMobile || !this.player) return;
+        
+        // Add event listener for when user starts interacting with the video
+        this.player.on('play', () => {
+          this.showControlsTemporarily();
+        });
+        
+        this.player.on('pause', () => {
+          this.showControlsTemporarily();
+        });
+        
+        // Add event listener for when video is played
+        this.player.on('playing', () => {
+          this.showControlsTemporarily();
+        });
+        
+        // Add event listener for when video is paused
+        this.player.on('pause', () => {
+          this.showControlsTemporarily();
+        });
+      }
+      
       async toggleFullscreenMode(){
         try {
           if (this.isMobile) {
-            this.modal.classList.toggle("pseudo-fullscreen");
-            this.isFullScreen = this.modal.classList.contains("pseudo-fullscreen");
+            // For mobile, use pseudo-fullscreen with better control
+            this.modal.classList.toggle('pseudo-fullscreen');
+            this.isFullScreen = this.modal.classList.contains('pseudo-fullscreen');
             if (this.isLandscape) {
               this.modal.classList.add("mobile-landscape");
             }
             this.syncFullscreenUi();
+            this.adjustPlayerLayout();
+            this.showControlsTemporarily();
           } else {
             if (!document.fullscreenElement) {
               await this.stage.requestFullscreen();
@@ -2292,28 +2524,62 @@
           }
         } catch (err) {
           console.error("Fullscreen error", err);
-          this.modal.classList.toggle("pseudo-fullscreen");
-          this.isFullScreen = this.modal.classList.contains("pseudo-fullscreen");
+          // Fallback to pseudo-fullscreen
+          this.modal.classList.toggle('pseudo-fullscreen');
+          this.isFullScreen = this.modal.classList.contains('pseudo-fullscreen');
           if (this.isLandscape) {
             this.modal.classList.add("mobile-landscape");
           }
           this.syncFullscreenUi();
+          this.adjustPlayerLayout();
         }
       }
       
       async exitFullscreen() {
         try {
           if (this.isMobile) {
-            this.modal.classList.remove("pseudo-fullscreen");
-            this.modal.classList.remove("mobile-landscape");
+            this.modal.classList.remove('pseudo-fullscreen');
+            this.modal.classList.remove('mobile-landscape');
             this.isFullScreen = false;
           } else {
             await document.exitFullscreen();
             this.isFullScreen = false;
           }
           this.syncFullscreenUi();
+          this.adjustPlayerLayout();
         } catch (err) {
           console.error("Exit fullscreen error", err);
+        }
+      }
+      
+      adjustPlayerLayout() {
+        if (!this.player) return;
+        
+        const isFullScreen = this.isFullScreen || document.fullscreenElement;
+        
+        if (this.isMobile) {
+          if (isFullScreen || this.isLandscape) {
+            this.modal.classList.add('mobile-landscape');
+            // Ensure video fills the screen in landscape
+            const aspect = Utils.q('.player-aspect', this.stage);
+            if (aspect) {
+              aspect.style.paddingBottom = "calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom))";
+            }
+          } else {
+            this.modal.classList.remove('mobile-landscape');
+          }
+          
+          // Adjust controls position for mobile
+          const controls = this.getControlsElement();
+          if (controls) {
+            if (isFullScreen || this.isLandscape) {
+              controls.style.bottom = '10px';
+              controls.style.background = 'rgba(0,0,0,0.8) !important';
+            } else {
+              controls.style.bottom = 'env(safe-area-inset-bottom)';
+              controls.style.background = 'rgba(0,0,0,0.75) !important';
+            }
+          }
         }
       }
       
@@ -2362,6 +2628,11 @@
         this.isFullScreen = false;
         clearTimeout(this.hideControlsTimeout);
       }
+      
+      updateMobileState() {
+        this.isMobile = Utils.isMobileDevice();
+        this.isLandscape = Utils.isLandscape();
+      }
     }
     
     class LessonsApp {
@@ -2393,7 +2664,7 @@
         this.bind();
         this.load();
         this.refreshOfflineUI();
-        this.renderRecentSidebar();
+        this.renderRecentSidebar(); // shows empty state initially
         Utils.currentYear.textContent = new Date().getFullYear();
         
         // Initialize breathing effect
