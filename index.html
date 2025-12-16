@@ -1654,22 +1654,18 @@
 
   
 
-    /* ====== Mobile Plyr Fixes (remove duplicate play + stuck preview) ====== */
-    @media (max-width: 768px){
-      .plyr__tooltip{ display:none !important; }
-      .plyr__preview-thumb{ display:none !important; }
-      .plyr__control--overlaid{ display:none !important; } /* يمنع زر التشغيل الكبير إذا ظهر */
+    /* ====== Floating Buttons (Mobile Only): Filters + Recent + Important ====== */
+    /* مخفية افتراضياً (ديسكتوب) */
+    .open-filters-btn, .open-recent-btn, .open-important-btn{
+      display:none;
     }
 
-
-    /* ====== Floating Buttons (Mobile Only): Filters + Recent + Important ====== */
-    .open-recent-btn, .open-important-btn{ display:none; }
-
+    /* موبايل فقط: نظهر الأزرار بنفس الحجم والمحاذاة */
     @media (max-width: 768px){
-      /* إخفاء عمود الديسكتوب في الموبايل */
+      /* إخفاء قائمة الديسكتوب اليمنى (نستبدلها بـ sidebars) */
       .sidebar{ display:none !important; }
 
-      /* توحيد ستايل الأزرار الثلاثة */
+      /* إظهار الأزرار الثلاثة */
       .open-filters-btn, .open-recent-btn, .open-important-btn{
         display:flex !important;
         position:fixed;
@@ -1679,7 +1675,7 @@
         border:none;
         border-radius:var(--radius);
         height:50px;
-        width:110px;
+        width:100px;
         padding:0 12px;
         font-size:13px;
         font-weight:800;
@@ -1697,23 +1693,68 @@
       }
 
       /* مواقع الأزرار */
-      .open-filters-btn{ left:10px; }
-      .open-recent-btn{ left:50%; transform:translateX(-50%); }
-      .open-important-btn{ right:10px; }
+      .open-filters-btn{ 
+        left:10px; 
+      }
+      .open-recent-btn{ 
+        left:50%; 
+        transform:translateX(-50%);
+      }
+      .open-important-btn{ 
+        right:10px; 
+      }
 
-      /* Hover (مع الحفاظ على تمركز زر المنتصف) */
-      .open-filters-btn:hover, .open-important-btn:hover{ background:var(--accent-dark); transform:translateY(-3px); }
-      .open-recent-btn:hover{ background:var(--accent-dark); transform:translateX(-50%) translateY(-3px); }
+      /* Hover */
+      .open-filters-btn:hover, .open-important-btn:hover{ 
+        background:var(--accent-dark); 
+        transform:translateY(-3px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      }
+      .open-recent-btn:hover{ 
+        background:var(--accent-dark); 
+        transform:translateX(-50%) translateY(-3px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      }
     }
 
+    /* للشاشات الصغيرة جداً: نصغّر العرض */
     @media (max-width: 400px){
-      .open-filters-btn, .open-recent-btn, .open-important-btn{ width:95px; font-size:12px; gap:6px; }
+      .open-filters-btn, .open-recent-btn, .open-important-btn{
+        width:90px;
+        font-size:12px;
+        gap:6px;
+      }
     }
 
+    /* شارة مهم داخل القوائم */
     .badge-important{
       background: rgba(93,140,255,0.18);
       border: 1px solid rgba(93,140,255,0.35);
       color: var(--accent-light);
+    }
+
+
+    /* ====== WebView Simple Video Player (Clean HTML5 Video) ====== */
+    body.webview-mode video::-webkit-media-controls-panel {
+      background: rgba(0,0,0,0.8) !important;
+    }
+
+    body.webview-mode video {
+      background: #000;
+    }
+
+    /* Ensure video controls are always visible in WebView */
+    body.webview-mode video::-webkit-media-controls {
+      opacity: 1 !important;
+    }
+
+    /* Mobile: better video player positioning */
+    @media (max-width: 768px) {
+      #plyr-container video {
+        max-height: 100vh;
+        width: 100%;
+        object-fit: contain;
+      }
     }
 </style>
 </head>
@@ -1971,6 +2012,16 @@
     };
     
     class Utils {
+
+      // ====== WebView Detection (Website2APK) ======
+      static isWebView() {
+        const ua = navigator.userAgent || '';
+        // Detect Android WebView / Website2APK wrapper
+        return /wv|WebView/i.test(ua) || 
+               (window.Android !== undefined) ||
+               (ua.includes('Android') && !ua.includes('Chrome'));
+      }
+
       static q(sel, root=document){ return root.querySelector(sel); }
       static qa(sel, root=document){ return [...root.querySelectorAll(sel)]; }
       static get toast(){ return Utils.q("#toast"); }
@@ -2604,16 +2655,7 @@
         // Reset mobile state
         this.updateMobileState();
         
-        
-        // Mobile fix: destroy any previous Plyr instance before creating a new one
-        try {
-          if (this.player && typeof this.player.destroy === 'function') {
-            this.player.destroy();
-          }
-        } catch (e) {}
-        this.player = null;
-
-this.stage.innerHTML = `
+        this.stage.innerHTML = `
           <div class="player-aspect ${aspectRatio === "1:1" ? "sq" : (aspectRatio === "9:16" ? "v" : "")}">
             <div class="player-container" id="plyr-container"></div>
           </div>
@@ -2668,71 +2710,105 @@ this.stage.innerHTML = `
           plyrSources = [{ src: url, type: "application/x-mpegURL" }];
         }
         
-        try {
-          this.player = new Plyr("#plyr-container", {
-            type: plyrType,
-            sources: plyrSources,
-            autoplay: false,
-            controls: (Utils.isMobileDevice() ? ["play","progress","current-time","mute","volume","fullscreen"] : ["play-large","play","progress","current-time","mute","volume","fullscreen"]),
-            fullscreen: {
-              enabled: true,
-              fallback: true,
-              iosNative: true
-            },
-            clickToPlay: true,
-            keyboard: {
-              focused: true,
-              global: false
-            },
-            tooltips: { controls: true, seek: !Utils.isMobileDevice() },
-            listeners: {
-              ready: () => {
-                const l = Utils.q(".player-loading", this.stage);
-                if (l) l.classList.add("is-hidden");
-                
-                // Initialize mobile controls
-                this.setupMobileControls();
-                
-                // Add event listeners for mobile
-                this.addMobileEventListeners();
-              }
-            }
-          });
-          
-          this.player.on("loadedmetadata", () => {
-            const l = Utils.q(".player-loading", this.stage);
-            if (l) l.classList.add("is-hidden");
-          });
-          
-          this.player.on("error", () => {
-            const l = Utils.q(".player-loading", this.stage);
-            if (l) l.classList.add("is-hidden");
-            Utils.toast("خطأ في تشغيل الملف (تحقق من الرابط/الصلاحيات).", "error", 4000);
-          });
-          
-          // Add mobile-specific control positioning
-          if (this.isMobile) {
-            const controls = this.getControlsElement();
-            if (controls) {
-              controls.classList.add('auto-hide');
-              controls.style.position = 'absolute';
-              controls.style.bottom = 'env(safe-area-inset-bottom)';
-              controls.style.left = '0';
-              controls.style.right = '0';
-              controls.style.background = 'rgba(0,0,0,0.75) !important';
-              controls.style.borderRadius = '0 !important';
-              controls.style.borderTop = '1px solid rgba(255,255,255,0.15) !important';
-              
-              // Hide volume controls on mobile
-              const volume = Utils.q('.plyr__volume', controls);
-              if (volume) volume.style.display = 'none';
-            }
+        
+        // ====== DUAL PLAYER: Simple for WebView, Plyr for Browsers ======
+        if (Utils.isWebView()) {
+          // WebView Mode: Use simple HTML5 video (clean, no overlay conflicts)
+          const container = Utils.q("#plyr-container", this.stage);
+          container.innerHTML = "";
+
+          if (type === "youtube" || type === "drive") {
+            // For YouTube/Drive in WebView, use iframe
+            const iframe = document.createElement("iframe");
+            iframe.src = type === "youtube" 
+              ? `https://www.youtube.com/embed/${Utils.extractYoutubeId(url)}?autoplay=0&rel=0&modestbranding=1`
+              : url;
+            iframe.style.cssText = "width:100%;height:100%;border:none;border-radius:18px;";
+            iframe.allow = "autoplay; fullscreen; picture-in-picture";
+            iframe.allowFullscreen = true;
+            iframe.referrerPolicy = "no-referrer";
+            container.appendChild(iframe);
+          } else {
+            // For video files: use clean HTML5 video element
+            const video = document.createElement("video");
+            video.src = url;
+            video.controls = true;
+            video.controlsList = "nodownload";
+            video.playsInline = true;
+            video.preload = "metadata";
+            video.style.cssText = "width:100%;height:100%;border-radius:18px;object-fit:contain;background:#000;";
+
+            // Event listeners for loading state
+            video.addEventListener('loadeddata', () => {
+              const l = Utils.q(".player-loading", this.stage);
+              if (l) l.classList.add("is-hidden");
+            });
+
+            video.addEventListener('error', () => {
+              container.innerHTML = '<div style="color:var(--danger);padding:40px;text-align:center;">خطأ في تحميل الفيديو</div>';
+            });
+
+            container.appendChild(video);
           }
-          
-        } catch (err) {
-          console.error("Plyr init error", err);
-          Utils.toast("خطأ في تشغيل المشغل.", "error", 3000);
+
+          // Hide loading after short delay (fallback)
+          setTimeout(() => {
+            const l = Utils.q(".player-loading", this.stage);
+            if (l) l.classList.add("is-hidden");
+          }, 1500);
+
+        } else {
+          // Browser Mode: Use Plyr (professional UI)
+          let plyrType = "video";
+          let plyrSources = [{ src: url, type: "video/mp4" }];
+          if (type === "youtube") {
+            plyrType = "youtube";
+            plyrSources = [{ src: Utils.extractYoutubeId(url), provider: "youtube" }];
+          } else if (type === "hls") {
+            plyrType = "video";
+            plyrSources = [{ src: url, type: "application/x-mpegURL" }];
+          }
+
+          try {
+            this.player = new Plyr("#plyr-container", {
+              type: plyrType,
+              sources: plyrSources,
+              autoplay: false,
+              controls: ["play-large","play","progress","current-time","mute","volume","fullscreen"],
+              fullscreen: {
+                enabled: true,
+                fallback: true,
+                iosNative: true
+              },
+              clickToPlay: true,
+              keyboard: {
+                focused: true,
+                global: false
+              },
+              tooltips: {
+                controls: true,
+                seek: true
+              },
+              listeners: {
+                ready: () => {
+                  const l = Utils.q(".player-loading", this.stage);
+                  if (l) l.classList.add("is-hidden");
+
+                  // Initialize mobile controls auto-hide
+                  if (this.isMobile) {
+                    this.player.on("playing", () => this.startAutoHideControls());
+                    this.player.on("pause", () => clearTimeout(this.hideControlsTimeout));
+                  }
+                }
+              }
+            });
+          } catch (e) {
+            console.error("Plyr init error:", e);
+            const l = Utils.q(".player-loading", this.stage);
+            if (l) l.innerHTML = '<div style="color:var(--danger);">خطأ في تشغيل المشغل</div>';
+          }
         }
+
       }
       
       setupMobileControls() {
@@ -2897,10 +2973,24 @@ this.stage.innerHTML = `
           </div>
         `;
 
-        // Mobile fix: force-hide any stuck Plyr tooltip/preview elements
+        // Clean both Plyr and simple video elements
         try {
-          document.querySelectorAll('.plyr__tooltip--visible, .plyr__preview-thumb, .plyr__preview-thumb__image-container')
-            .forEach(el => el.remove());
+          if (this.player && typeof this.player.destroy === 'function') {
+            this.player.destroy();
+          }
+          this.player = null;
+
+          // Clean any video/audio elements (for WebView mode)
+          document.querySelectorAll('video, audio, iframe').forEach(el => {
+            try {
+              if (el.tagName === 'VIDEO' || el.tagName === 'AUDIO') {
+                el.pause();
+                el.removeAttribute('src');
+                el.load();
+              }
+              el.remove();
+            } catch(e) {}
+          });
         } catch (e) {}
 
         
@@ -3244,7 +3334,10 @@ this.stage.innerHTML = `
 
         const renderInto = (container) => {
           if (!container) return;
-          if (!recentLessons.length) { container.innerHTML = emptyHtml; return; }
+          if (!recentLessons.length) {
+            container.innerHTML = emptyHtml;
+            return;
+          }
           container.innerHTML = "";
           recentLessons.forEach(lesson => {
             const row = this.all.find(r => String(r.LessonID) === String(lesson.lessonId));
@@ -3289,7 +3382,10 @@ this.stage.innerHTML = `
 
         const renderInto = (container) => {
           if (!container) return;
-          if (!importantRows.length) { container.innerHTML = emptyHtml; return; }
+          if (!importantRows.length) {
+            container.innerHTML = emptyHtml;
+            return;
+          }
           container.innerHTML = '';
           importantRows.forEach(row => {
             const m = this.computeMedia(row);
@@ -3653,6 +3749,7 @@ this.stage.innerHTML = `
         overlay?.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
       }
+
       function close(){
         sidebar?.classList.remove('active');
         overlay?.classList.remove('active');
@@ -3681,6 +3778,7 @@ this.stage.innerHTML = `
         overlay?.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
       }
+
       function close(){
         sidebar?.classList.remove('active');
         overlay?.classList.remove('active');
