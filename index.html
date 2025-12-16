@@ -1734,27 +1734,123 @@
     }
 
 
-    /* ====== WebView Simple Video Player (Clean HTML5 Video) ====== */
-    body.webview-mode video::-webkit-media-controls-panel {
-      background: rgba(0,0,0,0.8) !important;
+    /* ==================== CUSTOM VIDEO PLAYER (WebView) ==================== */
+    .custom-controls-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      transition: opacity 0.3s ease;
+      z-index: 1;
     }
 
-    body.webview-mode video {
-      background: #000;
+    .custom-play-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      padding: 0;
+      outline: none;
     }
 
-    /* Ensure video controls are always visible in WebView */
-    body.webview-mode video::-webkit-media-controls {
-      opacity: 1 !important;
+    .custom-play-btn:active {
+      transform: scale(0.95);
     }
 
-    /* Mobile: better video player positioning */
-    @media (max-width: 768px) {
-      #plyr-container video {
-        max-height: 100vh;
-        width: 100%;
-        object-fit: contain;
-      }
+    .custom-controls-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 20px 16px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .custom-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .custom-btn:active {
+      background: rgba(255,255,255,0.4);
+      transform: scale(0.95);
+    }
+
+    .custom-progress {
+      flex: 1;
+      position: relative;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .custom-progress-bar {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      z-index: 2;
+      margin: 0;
+    }
+
+    .custom-progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .custom-progress-filled {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: var(--accent, #5d8cff);
+      border-radius: 3px;
+      pointer-events: none;
+      transition: width 0.1s linear;
+    }
+
+    .custom-time {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+
+    /* Hide any stray native controls */
+    body.webview-mode video::-webkit-media-controls,
+    body.webview-mode video::-webkit-media-controls-enclosure {
+      display: none !important;
     }
 </style>
 </head>
@@ -2013,13 +2109,23 @@
     
     class Utils {
 
-      // ====== WebView Detection (Website2APK) ======
+      // ====== AGGRESSIVE WebView Detection ======
       static isWebView() {
-        const ua = navigator.userAgent || '';
-        // Detect Android WebView / Website2APK wrapper
-        return /wv|WebView/i.test(ua) || 
-               (window.Android !== undefined) ||
-               (ua.includes('Android') && !ua.includes('Chrome'));
+        try {
+          const ua = navigator.userAgent || '';
+          // Multiple detection methods
+          const checks = [
+            /wv/i.test(ua),
+            /WebView/i.test(ua),
+            window.Android !== undefined,
+            (ua.includes('Android') && !ua.includes('Chrome/')),
+            ua.includes('Version/') && ua.includes('Android'),
+            document.documentElement.getAttribute('data-app') === 'webview'
+          ];
+          return checks.some(Boolean);
+        } catch(e) {
+          return false;
+        }
       }
 
       static q(sel, root=document){ return root.querySelector(sel); }
@@ -2711,54 +2817,210 @@
         }
         
         
-        // ====== DUAL PLAYER: Simple for WebView, Plyr for Browsers ======
-        if (Utils.isWebView()) {
-          // WebView Mode: Use simple HTML5 video (clean, no overlay conflicts)
-          const container = Utils.q("#plyr-container", this.stage);
-          container.innerHTML = "";
+        // ==================== CUSTOM PLAYER (WebView) vs PLYR (Browser) ====================
 
-          if (type === "youtube" || type === "drive") {
-            // For YouTube/Drive in WebView, use iframe
+        const container = Utils.q("#plyr-container", this.stage);
+        container.innerHTML = "";
+
+        if (Utils.isWebView()) {
+          // ===== WEBVIEW: COMPLETELY CUSTOM PLAYER (NO PLYR, NO NATIVE CONTROLS) =====
+
+          if (type === "youtube") {
+            // YouTube in WebView: use iframe with YouTube player
             const iframe = document.createElement("iframe");
-            iframe.src = type === "youtube" 
-              ? `https://www.youtube.com/embed/${Utils.extractYoutubeId(url)}?autoplay=0&rel=0&modestbranding=1`
-              : url;
-            iframe.style.cssText = "width:100%;height:100%;border:none;border-radius:18px;";
-            iframe.allow = "autoplay; fullscreen; picture-in-picture";
+            iframe.src = `https://www.youtube.com/embed/${Utils.extractYoutubeId(url)}?autoplay=0&rel=0&modestbranding=1&playsinline=1`;
+            iframe.style.cssText = "width:100%;height:100%;border:none;border-radius:var(--radius);background:#000;";
+            iframe.allow = "autoplay; fullscreen; picture-in-picture; accelerometer; gyroscope";
             iframe.allowFullscreen = true;
             iframe.referrerPolicy = "no-referrer";
             container.appendChild(iframe);
+
+            setTimeout(() => {
+              const l = Utils.q(".player-loading", this.stage);
+              if (l) l.classList.add("is-hidden");
+            }, 800);
+
+          } else if (type === "drive") {
+            // Google Drive: direct iframe
+            const iframe = document.createElement("iframe");
+            iframe.src = url;
+            iframe.style.cssText = "width:100%;height:100%;border:none;border-radius:var(--radius);";
+            iframe.allow = "autoplay; fullscreen";
+            iframe.allowFullscreen = true;
+            container.appendChild(iframe);
+
+            setTimeout(() => {
+              const l = Utils.q(".player-loading", this.stage);
+              if (l) l.classList.add("is-hidden");
+            }, 800);
+
           } else {
-            // For video files: use clean HTML5 video element
+            // Video files: CUSTOM HTML5 PLAYER with ZERO native controls
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "custom-player-wrapper";
+            wrapper.style.cssText = "position:relative;width:100%;height:100%;background:#000;border-radius:var(--radius);overflow:hidden;";
+
             const video = document.createElement("video");
             video.src = url;
-            video.controls = true;
-            video.controlsList = "nodownload";
             video.playsInline = true;
             video.preload = "metadata";
-            video.style.cssText = "width:100%;height:100%;border-radius:18px;object-fit:contain;background:#000;";
+            video.style.cssText = "width:100%;height:100%;object-fit:contain;display:block;";
+            // NO CONTROLS - we'll build our own
+            video.removeAttribute('controls');
 
-            // Event listeners for loading state
-            video.addEventListener('loadeddata', () => {
+            // Custom controls overlay
+            const controls = document.createElement("div");
+            controls.className = "custom-controls";
+            controls.innerHTML = `
+              <div class="custom-controls-overlay">
+                <button class="custom-play-btn" aria-label="Play">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.9)" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                    <path d="M24 18L42 30L24 42V18Z" fill="#000"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="custom-controls-bar">
+                <button class="custom-btn custom-play-small" data-action="play">▶</button>
+                <div class="custom-progress">
+                  <input type="range" class="custom-progress-bar" min="0" max="100" value="0" step="0.1">
+                  <div class="custom-progress-filled"></div>
+                </div>
+                <span class="custom-time">0:00 / 0:00</span>
+                <button class="custom-btn" data-action="fullscreen">⛶</button>
+              </div>
+            `;
+            controls.style.cssText = `
+              position:absolute;
+              inset:0;
+              pointer-events:none;
+              z-index:10;
+            `;
+
+            wrapper.appendChild(video);
+            wrapper.appendChild(controls);
+            container.appendChild(wrapper);
+
+            // ===== CUSTOM CONTROLS LOGIC =====
+            const playBtnBig = controls.querySelector('.custom-play-btn');
+            const playBtnSmall = controls.querySelector('.custom-play-small');
+            const progressBar = controls.querySelector('.custom-progress-bar');
+            const progressFilled = controls.querySelector('.custom-progress-filled');
+            const timeDisplay = controls.querySelector('.custom-time');
+            const controlsBar = controls.querySelector('.custom-controls-bar');
+            const controlsOverlay = controls.querySelector('.custom-controls-overlay');
+
+            // Make controls interactive
+            controls.querySelectorAll('button, input').forEach(el => {
+              el.style.pointerEvents = 'auto';
+            });
+            controlsBar.style.pointerEvents = 'auto';
+
+            let isPlaying = false;
+            let hideTimeout;
+
+            const formatTime = (seconds) => {
+              const m = Math.floor(seconds / 60);
+              const s = Math.floor(seconds % 60);
+              return m + ':' + (s < 10 ? '0' : '') + s;
+            };
+
+            const togglePlay = () => {
+              if (video.paused) {
+                video.play();
+                isPlaying = true;
+                playBtnSmall.textContent = '⏸';
+                controlsOverlay.style.opacity = '0';
+                controlsOverlay.style.pointerEvents = 'none';
+              } else {
+                video.pause();
+                isPlaying = false;
+                playBtnSmall.textContent = '▶';
+                controlsOverlay.style.opacity = '1';
+                controlsOverlay.style.pointerEvents = 'auto';
+              }
+            };
+
+            const updateProgress = () => {
+              if (video.duration) {
+                const percent = (video.currentTime / video.duration) * 100;
+                progressBar.value = percent;
+                progressFilled.style.width = percent + '%';
+                timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+              }
+            };
+
+            // Event listeners
+            playBtnBig.addEventListener('click', togglePlay);
+            playBtnSmall.addEventListener('click', togglePlay);
+            video.addEventListener('click', togglePlay);
+
+            video.addEventListener('timeupdate', updateProgress);
+            video.addEventListener('loadedmetadata', () => {
+              updateProgress();
               const l = Utils.q(".player-loading", this.stage);
               if (l) l.classList.add("is-hidden");
             });
 
-            video.addEventListener('error', () => {
-              container.innerHTML = '<div style="color:var(--danger);padding:40px;text-align:center;">خطأ في تحميل الفيديو</div>';
+            progressBar.addEventListener('input', (e) => {
+              const time = (e.target.value / 100) * video.duration;
+              video.currentTime = time;
             });
 
-            container.appendChild(video);
+            controls.querySelector('[data-action="fullscreen"]')?.addEventListener('click', () => {
+              if (wrapper.requestFullscreen) {
+                wrapper.requestFullscreen();
+              } else if (wrapper.webkitRequestFullscreen) {
+                wrapper.webkitRequestFullscreen();
+              }
+            });
+
+            // Auto-hide controls
+            const showControls = () => {
+              controlsBar.style.opacity = '1';
+              clearTimeout(hideTimeout);
+              if (isPlaying) {
+                hideTimeout = setTimeout(() => {
+                  controlsBar.style.opacity = '0';
+                }, 3000);
+              }
+            };
+
+            wrapper.addEventListener('mousemove', showControls);
+            wrapper.addEventListener('touchstart', showControls);
+
+            video.addEventListener('play', () => {
+              isPlaying = true;
+              playBtnSmall.textContent = '⏸';
+              controlsOverlay.style.opacity = '0';
+              controlsOverlay.style.pointerEvents = 'none';
+              hideTimeout = setTimeout(() => {
+                controlsBar.style.opacity = '0';
+              }, 3000);
+            });
+
+            video.addEventListener('pause', () => {
+              isPlaying = false;
+              playBtnSmall.textContent = '▶';
+              controlsOverlay.style.opacity = '1';
+              controlsOverlay.style.pointerEvents = 'auto';
+              controlsBar.style.opacity = '1';
+              clearTimeout(hideTimeout);
+            });
+
+            video.addEventListener('ended', () => {
+              isPlaying = false;
+              playBtnSmall.textContent = '▶';
+              controlsOverlay.style.opacity = '1';
+              controlsOverlay.style.pointerEvents = 'auto';
+              video.currentTime = 0;
+            });
           }
 
-          // Hide loading after short delay (fallback)
-          setTimeout(() => {
-            const l = Utils.q(".player-loading", this.stage);
-            if (l) l.classList.add("is-hidden");
-          }, 1500);
-
         } else {
-          // Browser Mode: Use Plyr (professional UI)
+          // ===== BROWSER: USE PLYR (PROFESSIONAL UI) =====
+
           let plyrType = "video";
           let plyrSources = [{ src: url, type: "video/mp4" }];
           if (type === "youtube") {
@@ -2775,26 +3037,14 @@
               sources: plyrSources,
               autoplay: false,
               controls: ["play-large","play","progress","current-time","mute","volume","fullscreen"],
-              fullscreen: {
-                enabled: true,
-                fallback: true,
-                iosNative: true
-              },
+              fullscreen: { enabled: true, fallback: true, iosNative: true },
               clickToPlay: true,
-              keyboard: {
-                focused: true,
-                global: false
-              },
-              tooltips: {
-                controls: true,
-                seek: true
-              },
+              keyboard: { focused: true, global: false },
+              tooltips: { controls: true, seek: true },
               listeners: {
                 ready: () => {
                   const l = Utils.q(".player-loading", this.stage);
                   if (l) l.classList.add("is-hidden");
-
-                  // Initialize mobile controls auto-hide
                   if (this.isMobile) {
                     this.player.on("playing", () => this.startAutoHideControls());
                     this.player.on("pause", () => clearTimeout(this.hideControlsTimeout));
@@ -2803,9 +3053,9 @@
               }
             });
           } catch (e) {
-            console.error("Plyr init error:", e);
+            console.error("Plyr error:", e);
             const l = Utils.q(".player-loading", this.stage);
-            if (l) l.innerHTML = '<div style="color:var(--danger);">خطأ في تشغيل المشغل</div>';
+            if (l) l.innerHTML = '<div style="color:var(--danger);padding:40px;">خطأ في المشغل</div>';
           }
         }
 
@@ -2973,19 +3223,17 @@
           </div>
         `;
 
-        // Clean both Plyr and simple video elements
+        // ===== COMPLETE CLEANUP (Plyr + Custom Player) =====
         try {
           if (this.player && typeof this.player.destroy === 'function') {
             this.player.destroy();
           }
           this.player = null;
-
-          // Clean any video/audio elements (for WebView mode)
-          document.querySelectorAll('video, audio, iframe').forEach(el => {
+          document.querySelectorAll('video, audio, iframe, .custom-player-wrapper').forEach(el => {
             try {
               if (el.tagName === 'VIDEO' || el.tagName === 'AUDIO') {
                 el.pause();
-                el.removeAttribute('src');
+                el.src = '';
                 el.load();
               }
               el.remove();
