@@ -1527,6 +1527,210 @@
       border-radius: 999px;
       transition: width 0.4s ease;
     }
+  
+    /* ====== Mobile Filters Sidebar ====== */
+    .open-filters-btn {
+      display: none; /* مخفي افتراضياً، يظهر فقط على الموبايل */
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      gap: 8px;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .open-filters-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(93, 140, 255, 0.4);
+    }
+
+    .open-filters-btn:active {
+      transform: translateY(0);
+    }
+
+    .filters-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .filters-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .filters-sidebar {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 85%;
+      max-width: 400px;
+      height: 100%;
+      background: var(--bg);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s var(--easing);
+      box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .filters-sidebar.active {
+      right: 0;
+    }
+
+    .filters-sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .filters-sidebar-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filters-sidebar-header h2 i {
+      color: var(--accent);
+    }
+
+    .close-filters-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      line-height: 1;
+      transition: var(--transition);
+      border-radius: 8px;
+    }
+
+    .close-filters-btn:hover {
+      background: var(--line);
+      color: var(--text);
+    }
+
+    .filters-sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .filters-sidebar-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .filters-sidebar-content::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    .filters-sidebar-content::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 4px;
+    }
+
+    .filters-sidebar-content::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+
+    .apply-filters-btn {
+      width: 100%;
+      padding: 14px 20px;
+      margin-top: 16px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .apply-filters-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .apply-filters-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Desktop - المرشحات تظهر بشكل عادي */
+    @media (min-width: 769px) {
+      .open-filters-btn,
+      .filters-overlay,
+      .filters-sidebar,
+      .apply-filters-btn {
+        display: none !important;
+      }
+    }
+
+    /* Mobile - إخفاء المرشحات العادية وإظهار الزر والـ sidebar */
+    @media (max-width: 768px) {
+      .open-filters-btn {
+        display: flex;
+      }
+
+      .filters.card {
+        display: none !important;
+      }
+
+      .filters-sidebar .filters.card {
+        display: block !important;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .filters-sidebar .filters.card .field {
+        margin-bottom: 16px;
+      }
+
+      .filters-sidebar .filters.card .meta {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .filters-sidebar .filters.card .meta .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1555,7 +1759,28 @@
     </div>
   </header>
   <main class="container">
-    <section class="filters card" aria-label="Filters">
+        <!-- زر فتح المرشحات للهاتف المحمول -->
+    <button id="openFiltersBtn" class="open-filters-btn" type="button" aria-label="فتح المرشحات">
+      <i class="fas fa-filter"></i>
+      <span>المرشحات</span>
+    </button>
+
+    <!-- Overlay للخلفية -->
+    <div id="filtersOverlay" class="filters-overlay"></div>
+
+    <!-- Filters Sidebar -->
+    <div id="filtersSidebar" class="filters-sidebar">
+      <div class="filters-sidebar-header">
+        <h2>
+          <i class="fas fa-filter"></i>
+          المرشحات
+        </h2>
+        <button id="closeFiltersBtn" class="close-filters-btn" type="button" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="filters-sidebar-content">
+<section class="filters card" id="filtersSection" aria-label="Filters">
       <div class="field">
         <label for="q">بحث</label>
         <input id="q" type="search" placeholder="ابحث عن درس..." autocomplete="off" />
@@ -1608,7 +1833,14 @@
           تحديث
         </button>
       </div>
+          <button id="applyFiltersBtn" class="apply-filters-btn" type="button">
+        <i class="fas fa-check"></i>
+        تطبيق المرشحات
+      </button>
     </section>
+      </div>
+    </div>
+
     <div class="main-layout">
       <aside class="sidebar">
         <div class="card">
@@ -3231,6 +3463,60 @@
         document.body.style.setProperty('--parallax-y', `${y * 10}%`);
       });
     });
+  </script>
+  <script>
+
+    // ====== Mobile Filters Sidebar Control ======
+    (function() {
+      const openFiltersBtn = document.getElementById('openFiltersBtn');
+      const closeFiltersBtn = document.getElementById('closeFiltersBtn');
+      const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+      const filtersSidebar = document.getElementById('filtersSidebar');
+      const filtersOverlay = document.getElementById('filtersOverlay');
+
+      function openFiltersSidebar() {
+        filtersSidebar.classList.add('active');
+        filtersOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+      }
+
+      function closeFiltersSidebar() {
+        filtersSidebar.classList.remove('active');
+        filtersOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // استعادة التمرير
+      }
+
+      // فتح الـ sidebar عند الضغط على الزر
+      if (openFiltersBtn) {
+        openFiltersBtn.addEventListener('click', openFiltersSidebar);
+      }
+
+      // إغلاق الـ sidebar عند الضغط على زر الإغلاق
+      if (closeFiltersBtn) {
+        closeFiltersBtn.addEventListener('click', closeFiltersSidebar);
+      }
+
+      // إغلاق الـ sidebar عند الضغط على "تطبيق المرشحات"
+      if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', function() {
+          closeFiltersSidebar();
+          // يمكن إضافة أي عمليات إضافية هنا عند تطبيق المرشحات
+        });
+      }
+
+      // إغلاق الـ sidebar عند الضغط على الـ overlay
+      if (filtersOverlay) {
+        filtersOverlay.addEventListener('click', closeFiltersSidebar);
+      }
+
+      // إغلاق الـ sidebar عند الضغط على ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && filtersSidebar.classList.contains('active')) {
+          closeFiltersSidebar();
+        }
+      });
+    })();
+
   </script>
 </body>
 </html>
