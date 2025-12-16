@@ -1528,207 +1528,128 @@
       transition: width 0.4s ease;
     }
   
-    /* ====== Mobile Filters Sidebar ====== */
-    .open-filters-btn {
-      display: none; /* مخفي افتراضياً، يظهر فقط على الموبايل */
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      padding: 12px 20px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      z-index: 999;
-      gap: 8px;
-      align-items: center;
-      transition: var(--transition);
+
+    /* ====== Mobile Filters Sidebar (Fix: keep desktop filters visible) ====== */
+    .open-filters-btn{
+      display:none; /* يظهر فقط على الموبايل */
+      position:fixed;
+      bottom:20px;
+      left:20px;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      border-radius:var(--radius);
+      padding:12px 18px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      z-index:999;
+      align-items:center;
+      gap:10px;
+      transition:var(--transition);
+    }
+    .open-filters-btn:hover{ background:var(--accent-dark); transform:translateY(-2px); }
+
+    .filters-overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.65);
+      backdrop-filter:blur(6px);
+      opacity:0; visibility:hidden;
+      transition:opacity .25s ease, visibility .25s ease;
+      z-index:1000;
+    }
+    .filters-overlay.active{ opacity:1; visibility:visible; }
+
+    .filters-sidebar{
+      position:fixed;
+      top:0;
+      right:-100%;
+      width:min(420px, 88vw);
+      height:100vh;
+      background:var(--bg);
+      z-index:1001;
+      display:flex;
+      flex-direction:column;
+      transition:right .28s var(--easing);
+      box-shadow:-10px 0 40px rgba(0,0,0,.55);
+    }
+    .filters-sidebar.active{ right:0; }
+
+    .filters-sidebar-header{
+      padding:18px 18px;
+      background:var(--card);
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .filters-sidebar-header h2{
+      margin:0;
+      font-size:18px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--text);
+    }
+    .filters-sidebar-header h2 i{ color:var(--accent); }
+
+    .close-filters-btn{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:22px;
+      cursor:pointer;
+      padding:8px 10px;
+      border-radius:12px;
+      transition:var(--transition);
+    }
+    .close-filters-btn:hover{ background:rgba(255,255,255,.08); color:var(--text); }
+    [data-theme="light"] .close-filters-btn:hover{ background:rgba(0,0,0,.06); }
+
+    .filters-sidebar-content{ padding:18px; overflow:auto; }
+
+    .apply-filters-btn{
+      width:100%;
+      margin-top:16px;
+      padding:14px 16px;
+      border:none;
+      border-radius:var(--radius);
+      background:var(--accent);
+      color:#fff;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:var(--transition);
+    }
+    .apply-filters-btn:hover{ background:var(--accent-dark); transform:translateY(-1px); }
+
+    /* Desktop */
+    @media (min-width: 769px){
+      .open-filters-btn, .filters-overlay, .filters-sidebar, .apply-filters-btn{ display:none !important; }
+      #filtersDesktopMount{ display:block; }
     }
 
-    .open-filters-btn:hover {
-      background: var(--accent-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(93, 140, 255, 0.4);
-    }
+    /* Mobile */
+    @media (max-width: 768px){
+      .open-filters-btn{ display:flex; }
+      #filtersDesktopMount{ display:none; } /* نخفي مكان المرشحات في الصفحة لأننا سننقلها للـ sidebar */
 
-    .open-filters-btn:active {
-      transform: translateY(0);
-    }
-
-    .filters-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .filters-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .filters-sidebar {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 85%;
-      max-width: 400px;
-      height: 100%;
-      background: var(--bg);
-      z-index: 1001;
-      display: flex;
-      flex-direction: column;
-      transition: right 0.3s var(--easing);
-      box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .filters-sidebar.active {
-      right: 0;
-    }
-
-    .filters-sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background: var(--card);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .filters-sidebar-header h2 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .filters-sidebar-header h2 i {
-      color: var(--accent);
-    }
-
-    .close-filters-btn {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 24px;
-      cursor: pointer;
-      padding: 8px;
-      line-height: 1;
-      transition: var(--transition);
-      border-radius: 8px;
-    }
-
-    .close-filters-btn:hover {
-      background: var(--line);
-      color: var(--text);
-    }
-
-    .filters-sidebar-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .filters-sidebar-content::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .filters-sidebar-content::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    .filters-sidebar-content::-webkit-scrollbar-thumb {
-      background: var(--line);
-      border-radius: 4px;
-    }
-
-    .filters-sidebar-content::-webkit-scrollbar-thumb:hover {
-      background: var(--muted);
-    }
-
-    .apply-filters-btn {
-      width: 100%;
-      padding: 14px 20px;
-      margin-top: 16px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .apply-filters-btn:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .apply-filters-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Desktop - المرشحات تظهر بشكل عادي */
-    @media (min-width: 769px) {
-      .open-filters-btn,
-      .filters-overlay,
-      .filters-sidebar,
-      .apply-filters-btn {
-        display: none !important;
+      /* داخل الـ sidebar نجعل بطاقة المرشحات بدون ظلال زائدة */
+      .filters-sidebar .filters.card{
+        display:block;
+        background:transparent;
+        box-shadow:none;
+        border:1px solid var(--line);
       }
-    }
-
-    /* Mobile - إخفاء المرشحات العادية وإظهار الزر والـ sidebar */
-    @media (max-width: 768px) {
-      .open-filters-btn {
-        display: flex;
-      }
-
-      .filters.card {
-        display: none !important;
-      }
-
-      .filters-sidebar .filters.card {
-        display: block !important;
-        background: transparent;
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .filters-sidebar .filters.card .field {
-        margin-bottom: 16px;
-      }
-
-      .filters-sidebar .filters.card .meta {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .filters-sidebar .filters.card .meta .btn {
-        width: 100%;
-        justify-content: center;
-      }
+      .filters-sidebar .meta{ flex-direction:column; align-items:stretch; }
+      .filters-sidebar .meta .btn{ width:100%; justify-content:center; }
     }
 
   </style>
@@ -1759,28 +1680,8 @@
     </div>
   </header>
   <main class="container">
-        <!-- زر فتح المرشحات للهاتف المحمول -->
-    <button id="openFiltersBtn" class="open-filters-btn" type="button" aria-label="فتح المرشحات">
-      <i class="fas fa-filter"></i>
-      <span>المرشحات</span>
-    </button>
-
-    <!-- Overlay للخلفية -->
-    <div id="filtersOverlay" class="filters-overlay"></div>
-
-    <!-- Filters Sidebar -->
-    <div id="filtersSidebar" class="filters-sidebar">
-      <div class="filters-sidebar-header">
-        <h2>
-          <i class="fas fa-filter"></i>
-          المرشحات
-        </h2>
-        <button id="closeFiltersBtn" class="close-filters-btn" type="button" aria-label="إغلاق">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="filters-sidebar-content">
-<section class="filters card" id="filtersSection" aria-label="Filters">
+    <div id="filtersDesktopMount">
+    <section class="filters card" id="filtersSection" aria-label="Filters">
       <div class="field">
         <label for="q">بحث</label>
         <input id="q" type="search" placeholder="ابحث عن درس..." autocomplete="off" />
@@ -1833,11 +1734,33 @@
           تحديث
         </button>
       </div>
-          <button id="applyFiltersBtn" class="apply-filters-btn" type="button">
+    
+      <button id="applyFiltersBtn" class="apply-filters-btn" type="button">
         <i class="fas fa-check"></i>
         تطبيق المرشحات
       </button>
-    </section>
+</section>
+    </div>
+
+    <!-- زر فتح المرشحات للهاتف المحمول -->
+    <button id="openFiltersBtn" class="open-filters-btn" type="button" aria-label="فتح المرشحات">
+      <i class="fas fa-filter"></i>
+      <span>المرشحات</span>
+    </button>
+
+    <!-- Overlay للخلفية -->
+    <div id="filtersOverlay" class="filters-overlay" aria-hidden="true"></div>
+
+    <!-- Filters Sidebar (Mobile) -->
+    <div id="filtersSidebar" class="filters-sidebar" aria-hidden="true">
+      <div class="filters-sidebar-header">
+        <h2><i class="fas fa-filter"></i> المرشحات</h2>
+        <button id="closeFiltersBtn" class="close-filters-btn" type="button" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="filters-sidebar-content">
+        <div id="filtersMobileMount"></div>
       </div>
     </div>
 
@@ -3464,59 +3387,68 @@
       });
     });
   </script>
+
   <script>
+    // ====== Mobile Filters Sidebar (Keep desktop filters visible) ======
+    (function(){
+      const openBtn = document.getElementById('openFiltersBtn');
+      const closeBtn = document.getElementById('closeFiltersBtn');
+      const applyBtn = document.getElementById('applyFiltersBtn');
+      const sidebar = document.getElementById('filtersSidebar');
+      const overlay = document.getElementById('filtersOverlay');
 
-    // ====== Mobile Filters Sidebar Control ======
-    (function() {
-      const openFiltersBtn = document.getElementById('openFiltersBtn');
-      const closeFiltersBtn = document.getElementById('closeFiltersBtn');
-      const applyFiltersBtn = document.getElementById('applyFiltersBtn');
-      const filtersSidebar = document.getElementById('filtersSidebar');
-      const filtersOverlay = document.getElementById('filtersOverlay');
+      const desktopMount = document.getElementById('filtersDesktopMount');
+      const mobileMount = document.getElementById('filtersMobileMount');
+      const filtersSection = document.getElementById('filtersSection');
 
-      function openFiltersSidebar() {
-        filtersSidebar.classList.add('active');
-        filtersOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+      const mq = window.matchMedia('(max-width: 768px)');
+
+      function open(){
+        sidebar?.classList.add('active');
+        overlay?.classList.add('active');
+        sidebar?.setAttribute('aria-hidden','false');
+        overlay?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
       }
 
-      function closeFiltersSidebar() {
-        filtersSidebar.classList.remove('active');
-        filtersOverlay.classList.remove('active');
-        document.body.style.overflow = ''; // استعادة التمرير
+      function close(){
+        sidebar?.classList.remove('active');
+        overlay?.classList.remove('active');
+        sidebar?.setAttribute('aria-hidden','true');
+        overlay?.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
       }
 
-      // فتح الـ sidebar عند الضغط على الزر
-      if (openFiltersBtn) {
-        openFiltersBtn.addEventListener('click', openFiltersSidebar);
-      }
-
-      // إغلاق الـ sidebar عند الضغط على زر الإغلاق
-      if (closeFiltersBtn) {
-        closeFiltersBtn.addEventListener('click', closeFiltersSidebar);
-      }
-
-      // إغلاق الـ sidebar عند الضغط على "تطبيق المرشحات"
-      if (applyFiltersBtn) {
-        applyFiltersBtn.addEventListener('click', function() {
-          closeFiltersSidebar();
-          // يمكن إضافة أي عمليات إضافية هنا عند تطبيق المرشحات
-        });
-      }
-
-      // إغلاق الـ sidebar عند الضغط على الـ overlay
-      if (filtersOverlay) {
-        filtersOverlay.addEventListener('click', closeFiltersSidebar);
-      }
-
-      // إغلاق الـ sidebar عند الضغط على ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && filtersSidebar.classList.contains('active')) {
-          closeFiltersSidebar();
+      function relocate(){
+        if (!filtersSection || !desktopMount || !mobileMount) return;
+        if (mq.matches){
+          if (filtersSection.parentElement !== mobileMount) mobileMount.appendChild(filtersSection);
+        } else {
+          if (filtersSection.parentElement !== desktopMount) desktopMount.appendChild(filtersSection);
+          close();
         }
+      }
+
+      // Run once and keep in sync
+      relocate();
+      try{ mq.addEventListener('change', relocate); }catch{ mq.addListener(relocate); }
+      window.addEventListener('resize', relocate, {passive:true});
+
+      openBtn?.addEventListener('click', function(){ relocate(); open(); });
+      closeBtn?.addEventListener('click', close);
+      overlay?.addEventListener('click', close);
+
+      applyBtn?.addEventListener('click', function(){
+        close();
+        // الفلاتر أصلاً تعمل لحظياً، لكن هذا يحسم أي تحديث.
+        if (window.app && typeof window.app.render === 'function') window.app.render();
+      });
+
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && sidebar?.classList.contains('active')) close();
       });
     })();
-
   </script>
+
 </body>
 </html>
