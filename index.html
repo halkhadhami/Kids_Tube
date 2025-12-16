@@ -1652,7 +1652,51 @@
       .filters-sidebar .meta .btn{ width:100%; justify-content:center; }
     }
 
-  </style>
+  
+
+    /* ====== Floating Buttons: Filters + Recent + Important (Mobile) ====== */
+    .open-filters-btn, .open-recent-btn, .open-important-btn{
+      display:none; /* يظهر فقط على الموبايل */
+      position:fixed;
+      bottom:20px;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      border-radius:var(--radius);
+      padding:12px 18px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      z-index:999;
+      align-items:center;
+      gap:10px;
+      transition:var(--transition);
+      max-width: 46vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .open-filters-btn:hover, .open-recent-btn:hover, .open-important-btn:hover{ background:var(--accent-dark); transform:translateY(-2px); }
+
+    /* مواقع الأزرار الثلاثة */
+    .open-filters-btn{ left:20px; }
+    .open-recent-btn{ left:50%; transform:translateX(-50%); }
+    .open-important-btn{ right:20px; }
+
+    /* موبايل: إظهار الأزرار وإخفاء عمود اليمين (آخر المشاهدات/مهم) لأننا سنستخدم Sidebars */
+    @media (max-width: 768px){
+      .open-filters-btn, .open-recent-btn, .open-important-btn{ display:flex; }
+      .sidebar{ display:none; }
+    }
+
+    /* شارة مهم داخل قوائم (نفس ستايل recent-badge لكن بلون مختلف) */
+    .badge-important{
+      background: rgba(93,140,255,0.18);
+      border: 1px solid rgba(93,140,255,0.35);
+      color: var(--accent-light);
+    }
+</style>
 </head>
 <body>
   <div class="safe-top"></div>
@@ -1748,6 +1792,51 @@
       <span>المرشحات</span>
     </button>
 
+    <!-- زر آخر المشاهدات (موبايل) -->
+    <button id="openRecentBtn" class="open-recent-btn" type="button" aria-label="فتح آخر المشاهدات">
+      <i class="fas fa-clock"></i>
+      <span>آخر المشاهدات</span>
+    </button>
+
+    <!-- زر مهم (موبايل) -->
+    <button id="openImportantBtn" class="open-important-btn" type="button" aria-label="فتح المهم">
+      <i class="fas fa-star"></i>
+      <span>مهم</span>
+    </button>
+
+    <!-- Overlay للخلفية (آخر المشاهدات) -->
+    <div id="recentOverlay" class="filters-overlay" aria-hidden="true"></div>
+
+    <!-- Recent Sidebar (Mobile) -->
+    <div id="recentSidebar" class="filters-sidebar" aria-hidden="true">
+      <div class="filters-sidebar-header">
+        <h2><i class="fas fa-clock"></i> آخر المشاهدات</h2>
+        <button id="closeRecentBtn" class="close-filters-btn" type="button" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="filters-sidebar-content">
+        <div id="recentMobileList" class="recent-list"></div>
+      </div>
+    </div>
+
+    <!-- Overlay للخلفية (مهم) -->
+    <div id="importantOverlay" class="filters-overlay" aria-hidden="true"></div>
+
+    <!-- Important Sidebar (Mobile) -->
+    <div id="importantSidebar" class="filters-sidebar" aria-hidden="true">
+      <div class="filters-sidebar-header">
+        <h2><i class="fas fa-star"></i> مهم</h2>
+        <button id="closeImportantBtn" class="close-filters-btn" type="button" aria-label="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="filters-sidebar-content">
+        <div id="importantMobileList" class="recent-list"></div>
+      </div>
+    </div>
+
+
     <!-- Overlay للخلفية -->
     <div id="filtersOverlay" class="filters-overlay" aria-hidden="true"></div>
 
@@ -1766,7 +1855,16 @@
 
     <div class="main-layout">
       <aside class="sidebar">
+        
         <div class="card">
+          <div class="recent-header">
+            <i class="fas fa-star"></i>
+            <h3>مهم</h3>
+          </div>
+          <div id="importantDesktopList" class="recent-list"></div>
+        </div>
+
+<div class="card">
           <div class="recent-header">
             <i class="fas fa-clock"></i>
             <h3>آخر المشاهدات</h3>
@@ -2820,6 +2918,7 @@
         this.load();
         this.refreshOfflineUI();
         this.renderRecentSidebar(); // shows empty state initially
+        this.renderImportantSidebar(); // shows empty state initially
         Utils.currentYear.textContent = new Date().getFullYear();
         
         // Initialize breathing effect
@@ -2933,6 +3032,7 @@
           this.restoreFilters();
           this.render();
           this.renderRecentSidebar();
+          this.renderImportantSidebar();
           Utils.setStatus(`<i class="fas fa-check-circle"></i> تم التحميل`, "ok");
           setTimeout(() => { Utils.setStatus('<i class="fas fa-check-circle"></i> جاهز', "ok"); }, 1200);
           
@@ -2971,7 +3071,8 @@
           DateUploaded: Utils.parseMMDDYYYY(String(r.DateUploaded ?? "").trim()),
           FileType: String(r.FileType ?? "").trim(),
           ClassLevel: String(r.ClassLevel ?? "").trim(),
-          ContentURL: String(r.ContentURL ?? "").trim()
+          ContentURL: String(r.ContentURL ?? "").trim(),
+          Importance: String(r.Importance ?? "").trim()
         };
       }
       
@@ -3096,40 +3197,101 @@
         return { type, thumb, playerUrl, externalUrl, downloadUrl, yt, d, aspectRatio };
       }
       
+      
       renderRecentSidebar(){
         const recentLessons = this.offlineStore.getRecentLessons();
-        if (!recentLessons.length) {
-          this.ui.recentList.innerHTML = `
-            <div class="recent-empty">
-              <i class="fas fa-clock"></i>
-              <div class="recent-empty-text">لا توجد مشاهدات حديثة.<br/>ابدأ بمشاهدة درس!</div>
-            </div>
-          `;
-          return;
-        }
-        this.ui.recentList.innerHTML = "";
-        recentLessons.forEach(lesson => {
-          const row = this.all.find(r => String(r.LessonID) === String(lesson.lessonId));
-          if (!row) return;
-          const m = this.computeMedia(row);
-          const div = document.createElement("div");
-          div.className = "recent-item";
-          div.dataset.lessonId = row.LessonID;
-          div.innerHTML = `
-            <img class="recent-thumb" src="${Utils.escapeHtml(m.thumb)}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
-            <div class="recent-info">
-              <div class="recent-title">${Utils.escapeHtml(row.Title)}</div>
-              <div class="recent-meta">
-                <span class="recent-badge">${Utils.escapeHtml(row.Category || "—")}</span>
-                <span class="recent-badge">${Utils.escapeHtml(row.FileType || "—")}</span>
-                <span class="recent-badge">${Utils.escapeHtml(row.ClassLevel || "—")}</span>
+        const desktopList = this.ui.recentList; // #recentList (desktop)
+        const mobileList = document.getElementById('recentMobileList');
+
+        const emptyHtml = `
+          <div class="recent-empty">
+            <i class="fas fa-clock"></i>
+            <div class="recent-empty-text">لا توجد مشاهدات حديثة.<br/>ابدأ بمشاهدة درس!</div>
+          </div>
+        `;
+
+        const renderInto = (container) => {
+          if (!container) return;
+          if (!recentLessons.length) {
+            container.innerHTML = emptyHtml;
+            return;
+          }
+          container.innerHTML = "";
+          recentLessons.forEach(lesson => {
+            const row = this.all.find(r => String(r.LessonID) === String(lesson.lessonId));
+            if (!row) return;
+            const m = this.computeMedia(row);
+            const div = document.createElement("div");
+            div.className = "recent-item";
+            div.dataset.lessonId = row.LessonID;
+            div.innerHTML = `
+              <img class="recent-thumb" src="${Utils.escapeHtml(m.thumb)}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
+              <div class="recent-info">
+                <div class="recent-title">${Utils.escapeHtml(row.Title)}</div>
+                <div class="recent-meta">
+                  <span class="recent-badge">${Utils.escapeHtml(row.Category || "—")}</span>
+                  <span class="recent-badge">${Utils.escapeHtml(row.FileType || "—")}</span>
+                  <span class="recent-badge">${Utils.escapeHtml(row.ClassLevel || "—")}</span>
+                </div>
               </div>
-            </div>
-          `;
-          div.addEventListener("click", () => this.openRow(row));
-          this.ui.recentList.appendChild(div);
-        });
+            `;
+            div.addEventListener("click", () => this.openRow(row));
+            container.appendChild(div);
+          });
+        };
+
+        renderInto(desktopList);
+        renderInto(mobileList);
       }
+
+      renderImportantSidebar(){
+        const desktopList = document.getElementById('importantDesktopList');
+        const mobileList = document.getElementById('importantMobileList');
+        if (!desktopList && !mobileList) return;
+
+        const importantRows = (this.all || []).filter(r => String(r.Importance || '').trim() === 'مهم');
+
+        const emptyHtml = `
+          <div class="recent-empty">
+            <i class="fas fa-star"></i>
+            <div class="recent-empty-text">لا توجد عناصر مصنفة كمهم حالياً.</div>
+          </div>
+        `;
+
+        const renderInto = (container) => {
+          if (!container) return;
+          if (!importantRows.length) {
+            container.innerHTML = emptyHtml;
+            return;
+          }
+          container.innerHTML = '';
+          importantRows.forEach(row => {
+            const m = this.computeMedia(row);
+            const div = document.createElement('div');
+            div.className = 'recent-item';
+            div.dataset.lessonId = row.LessonID;
+            div.innerHTML = `
+              <img class="recent-thumb" src="${Utils.escapeHtml(m.thumb)}" alt="${Utils.escapeHtml(row.Title)}" loading="lazy" referrerpolicy="no-referrer" />
+              <div class="recent-info">
+                <div class="recent-title">${Utils.escapeHtml(row.Title)}</div>
+                <div class="recent-meta">
+                  <span class="recent-badge badge-important"><i class="fas fa-star"></i> مهم</span>
+                  <span class="recent-badge">${Utils.escapeHtml(row.Category || '—')}</span>
+                  <span class="recent-badge">${Utils.escapeHtml(row.FileType || '—')}</span>
+                  <span class="recent-badge">${Utils.escapeHtml(row.ClassLevel || '—')}</span>
+                </div>
+              </div>
+            `;
+            div.addEventListener('click', () => this.openRow(row));
+            container.appendChild(div);
+          });
+        };
+
+        renderInto(desktopList);
+        renderInto(mobileList);
+      }
+
+
       
       async openRow(row){
         const m = this.computeMedia(row);
@@ -3449,6 +3611,67 @@
       });
     })();
   </script>
+
+  <script>
+    // ====== Mobile Recent Sidebar ======
+    (function(){
+      const openBtn = document.getElementById('openRecentBtn');
+      const closeBtn = document.getElementById('closeRecentBtn');
+      const sidebar = document.getElementById('recentSidebar');
+      const overlay = document.getElementById('recentOverlay');
+
+      function open(){
+        sidebar?.classList.add('active');
+        overlay?.classList.add('active');
+        sidebar?.setAttribute('aria-hidden','false');
+        overlay?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close(){
+        sidebar?.classList.remove('active');
+        overlay?.classList.remove('active');
+        sidebar?.setAttribute('aria-hidden','true');
+        overlay?.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+
+      openBtn?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', close);
+      overlay?.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    })();
+
+    // ====== Mobile Important Sidebar ======
+    (function(){
+      const openBtn = document.getElementById('openImportantBtn');
+      const closeBtn = document.getElementById('closeImportantBtn');
+      const sidebar = document.getElementById('importantSidebar');
+      const overlay = document.getElementById('importantOverlay');
+
+      function open(){
+        sidebar?.classList.add('active');
+        overlay?.classList.add('active');
+        sidebar?.setAttribute('aria-hidden','false');
+        overlay?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close(){
+        sidebar?.classList.remove('active');
+        overlay?.classList.remove('active');
+        sidebar?.setAttribute('aria-hidden','true');
+        overlay?.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+
+      openBtn?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', close);
+      overlay?.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
 
 </body>
 </html>
